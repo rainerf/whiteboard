@@ -13,6 +13,7 @@ public:
 
     void mouseDoubleClickEvent(QGraphicsSceneMouseEvent *) override;
     void focusOutEvent(QFocusEvent *event) override;
+    void keyPressEvent(QKeyEvent *event) override;
 };
 
 #endif // WHITEBOARDTEXTITEM_H

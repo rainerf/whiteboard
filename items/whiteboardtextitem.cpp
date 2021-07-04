@@ -1,4 +1,5 @@
 #include <QTextCursor>
+#include <QKeyEvent>
 
 #include "whiteboardtextitem.h"
 
@@ -18,4 +19,11 @@ void WhiteBoardTextItem::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *) {
 void WhiteBoardTextItem::focusOutEvent(QFocusEvent *) {
     setTextInteractionFlags(Qt::NoTextInteraction);
     setTextCursor(QTextCursor(document()));
+}
+
+void WhiteBoardTextItem::keyPressEvent(QKeyEvent *event) {
+    if (event->key() == Qt::Key_Escape) {
+        clearFocus();
+    }
+    QGraphicsTextItem::keyPressEvent(event);
 }
