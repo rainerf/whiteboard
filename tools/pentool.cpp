@@ -19,6 +19,8 @@ void PenTool::handleTabletPress(QGraphicsView &view, QTabletEvent &event) {
 void PenTool::handleTabletMove(QGraphicsView &view, QTabletEvent &event) {
     if (m_group) {
         auto current = view.mapToScene(event.pos());
+        if (current == m_previous)
+            return;
 
         QPainterPath p;
         p.moveTo(m_previous);
