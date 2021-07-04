@@ -13,13 +13,12 @@ InteractiveView::InteractiveView(QWidget *&parent) : QGraphicsView(parent) {
     setDragMode(QGraphicsView::RubberBandDrag);
 }
 
-qreal InteractiveView::getScale() const {
-    return _scale;
-}
-
 void InteractiveView::setScale(qreal newScale) {
     setTransform(QTransform() * newScale);
-    _scale = newScale;
+}
+
+void InteractiveView::zoomToFit() {
+    fitInView(scene()->sceneRect(), Qt::KeepAspectRatio);
 }
 
 void InteractiveView::mouseMoveEvent(QMouseEvent *event) {
@@ -64,7 +63,6 @@ void InteractiveView::setMaxSize() {
 
 void InteractiveView::zoom(float scaleFactor) {
     scale(scaleFactor, scaleFactor);
-    _scale *= scaleFactor;
 }
 
 void InteractiveView::zoomIn() {
@@ -77,7 +75,7 @@ void InteractiveView::zoomOut() {
 
 void InteractiveView::pan(QPointF delta) {
     // Scale the pan amount by the current zoom.
-    delta *= _scale;
+    delta = delta * transform();
 
     // Have panning be anchored from the mouse.
     setTransformationAnchor(QGraphicsView::AnchorUnderMouse);

@@ -53,6 +53,7 @@ void MainWindow::setupUiActions() {
     connect(ui->actionOpen, &QAction::triggered, this, &MainWindow::loadFromFile);
     connect(ui->actionClear, &QAction::triggered, ui->graphicsView, &WhiteBoardGraphicsView::clear);
     connect(ui->actionZoomOriginal, &QAction::triggered, [=]() { ui->graphicsView->setScale(1); });
+    connect(ui->actionZoomFit, &QAction::triggered, ui->graphicsView, &WhiteBoardGraphicsView::zoomToFit);
     // connect(ui->actionHighlight, &QAction::toggled, [=](bool x) { m_colorSelector->setEnabled(!x); });
 }
 

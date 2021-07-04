@@ -11,6 +11,7 @@ public:
     void zoom(float scaleFactor);
     void zoomIn();
     void zoomOut();
+    void zoomToFit();
 
     qreal getScale() const;
     void setScale(qreal);
@@ -25,7 +26,6 @@ private:
     // Flags to determine if zooming or panning should be done.
     bool _doMousePanning = false;
     QPoint _lastMousePos;
-    qreal _scale = 1;
 
     qreal const _zoomDelta = 1.1;
     Qt::MouseButton const panButton = Qt::MiddleButton;
