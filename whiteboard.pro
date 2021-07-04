@@ -25,6 +25,7 @@ SOURCES += \
     main.cpp \
     mainwindow.cpp \
     actions/penaction.cpp \
+    tools/pantool.cpp \
     tools/pentool.cpp \
     tools/pointertool.cpp \
     tools/texttool.cpp \
@@ -39,6 +40,7 @@ HEADERS += \
     lib/interactiveview.h \
     mainwindow.h \
     actions/penaction.h \
+    tools/pantool.h \
     tools/pentool.h \
     tools/pointertool.h \
     tools/texttool.h \

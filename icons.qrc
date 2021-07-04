@@ -15,5 +15,6 @@
         <file>icons/file_upload_black_24dp.svg</file>
         <file>icons/wysiwyg_black_24dp.svg</file>
         <file>icons/zoom_tool_black_24dp.svg</file>
+        <file>icons/pan_tool_black_24dp.svg</file>
     </qresource>
 </RCC>

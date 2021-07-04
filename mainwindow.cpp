@@ -37,12 +37,14 @@ void MainWindow::setupToolSelectors() {
     toolSelector->addAction(ui->actionPointer);
     toolSelector->addAction(ui->actionPen);
     toolSelector->addAction(ui->actionZoomTool);
+    toolSelector->addAction(ui->actionPanTool);
 
     connect(ui->actionPen, &QAction::triggered, ui->graphicsView, &WhiteBoardGraphicsView::setPenTool);
     connect(ui->actionText, &QAction::triggered, ui->graphicsView, &WhiteBoardGraphicsView::setTextTool);
     connect(ui->actionHighlight, &QAction::triggered, ui->graphicsView, &WhiteBoardGraphicsView::setHighlightTool);
     connect(ui->actionPointer, &QAction::triggered, ui->graphicsView, &WhiteBoardGraphicsView::setPointerTool);
     connect(ui->actionZoomTool, &QAction::triggered, ui->graphicsView, &WhiteBoardGraphicsView::setZoomTool);
+    connect(ui->actionPanTool, &QAction::triggered, ui->graphicsView, &WhiteBoardGraphicsView::setPanTool);
 
     connect(ui->actionDelete, &QAction::triggered, ui->graphicsView, &WhiteBoardGraphicsView::deleteSelectedItems);
 

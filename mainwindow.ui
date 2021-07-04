@@ -98,6 +98,7 @@
    <addaction name="actionText"/>
    <addaction name="actionPointer"/>
    <addaction name="actionZoomTool"/>
+   <addaction name="actionPanTool"/>
    <addaction name="actionDelete"/>
   </widget>
   <widget class="QToolBar" name="toolBarFont">
@@ -327,6 +328,24 @@
    </property>
    <property name="shortcut">
     <string>Ctrl+5</string>
+   </property>
+  </action>
+  <action name="actionPanTool">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="icons.qrc">
+     <normaloff>:/icons/icons/pan_tool_black_24dp.svg</normaloff>:/icons/icons/pan_tool_black_24dp.svg</iconset>
+   </property>
+   <property name="text">
+    <string>Pan Tool</string>
+   </property>
+   <property name="toolTip">
+    <string>Pan Tool</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+6</string>
    </property>
   </action>
  </widget>

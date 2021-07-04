@@ -7,7 +7,7 @@ class InteractiveView : public QGraphicsView {
 public:
     InteractiveView(QWidget *&);
 
-    void pan(QPointF delta);
+    void pan(QPointF delta, bool mouse);
     void zoom(float scaleFactor);
     void zoomIn();
     void zoomOut();

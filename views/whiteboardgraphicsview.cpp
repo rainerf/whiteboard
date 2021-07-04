@@ -90,6 +90,12 @@ void WhiteBoardGraphicsView::setZoomTool() {
     currentTool = &zoomTool;
 }
 
+void WhiteBoardGraphicsView::setPanTool() {
+    if (m_deviceDown)
+        throw std::logic_error("Changing a tool while it's in use should not be possible!");
+    currentTool = &panTool;
+}
+
 void WhiteBoardGraphicsView::deleteSelectedItems() {
     for (auto &&i : scene()->selectedItems()) {
         scene()->removeItem(i);

@@ -23,8 +23,8 @@ void InteractiveView::zoomToFit() {
 
 void InteractiveView::mouseMoveEvent(QMouseEvent *event) {
     if (_doMousePanning) {
-        QPointF mouseDelta = mapToScene(event->pos()) - mapToScene(_lastMousePos);
-        pan(mouseDelta);
+        QPointF mouseDelta = event->pos() - _lastMousePos;
+        pan(mouseDelta, true);
     }
 
     QGraphicsView::mouseMoveEvent(event);
@@ -73,12 +73,12 @@ void InteractiveView::zoomOut() {
     zoom(1 / _zoomDelta);
 }
 
-void InteractiveView::pan(QPointF delta) {
-    // Scale the pan amount by the current zoom.
-    delta = delta * transform();
+void InteractiveView::pan(QPointF delta, bool mouse) {
+    if (mouse) {
+        // Have panning be anchored from the mouse.
+        setTransformationAnchor(QGraphicsView::AnchorUnderMouse);
+    }
 
-    // Have panning be anchored from the mouse.
-    setTransformationAnchor(QGraphicsView::AnchorUnderMouse);
     auto const view_width = viewport()->rect().width();
     auto const view_height = viewport()->rect().height();
     QPoint newCenter(view_width / 2 - delta.x(), view_height / 2 - delta.y());
