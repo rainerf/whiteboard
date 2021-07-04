@@ -34,7 +34,6 @@ void PenTool::handleTabletMove(QGraphicsView &view, QTabletEvent &event) {
         p.moveTo(m_previous);
         m_path->setPath(p);
         m_group->addToGroup(m_path);
-        (void)(0);
     }
 }
 

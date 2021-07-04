@@ -400,13 +400,13 @@ void WhiteBoardGraphicsView::paste() {
         item->setFlags(QGraphicsItem::ItemIsMovable | QGraphicsItem::ItemIsSelectable);
         scene()->addItem(item);
     } else if (mimeData->hasHtml()) {
-        auto myTextItem = new WhiteBoardTextItem();
-        myTextItem->setHtml(mimeData->html());
-        scene()->addItem(myTextItem);
+        auto textItem = new WhiteBoardTextItem();
+        textItem->setHtml(mimeData->html());
+        scene()->addItem(textItem);
     } else if (mimeData->hasText()) {
-        auto myTextItem = new WhiteBoardTextItem();
-        myTextItem->setPlainText(mimeData->text());
-        scene()->addItem(myTextItem);
+        auto textItem = new WhiteBoardTextItem();
+        textItem->setPlainText(mimeData->text());
+        scene()->addItem(textItem);
     }
 }
 

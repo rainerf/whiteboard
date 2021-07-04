@@ -16,6 +16,14 @@ class MainWindow : public QMainWindow {
 
 public:
     MainWindow(QWidget *parent = nullptr);
+    ~MainWindow();
+
+private:
+    Ui::MainWindow *ui;
+    QGraphicsScene *m_scene;
+    QActionGroup *m_colorSelector;
+    QActionGroup *m_toolSelector;
+    QActionGroup *m_penSelector;
 
     void setupToolSelectors();
     void setupUiActions();
@@ -25,14 +33,5 @@ public:
 
     ColorAction *addColorAction(QColor const &color);
     PenAction *addPenAction(int thickness);
-
-    ~MainWindow();
-
-private:
-    Ui::MainWindow *ui;
-    QGraphicsScene *m_scene;
-    QActionGroup *m_colorSelector;
-    QActionGroup *m_toolSelector;
-    QActionGroup *m_penSelector;
 };
 #endif // MAINWINDOW_H
