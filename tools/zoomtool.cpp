@@ -12,10 +12,10 @@ void ZoomTool::handleTabletPress(WhiteBoardGraphicsView &view, QTabletEvent &eve
 void ZoomTool::handleTabletMove(WhiteBoardGraphicsView &view, QTabletEvent &event) {
     QPointF current = event.pos();
     if (current.y() > m_previous.y() + 10) {
-        view.zoomIn();
+        view.zoomOut();
         m_previous = current;
     } else if (current.y() < m_previous.y() - 10) {
-        view.zoomOut();
+        view.zoomIn();
         m_previous = current;
     }
 }
