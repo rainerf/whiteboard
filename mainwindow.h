@@ -20,10 +20,6 @@ public:
 
 private:
     Ui::MainWindow *ui;
-    QGraphicsScene *m_scene;
-    QActionGroup *m_colorSelector;
-    QActionGroup *m_toolSelector;
-    QActionGroup *m_penSelector;
 
     void setupToolSelectors();
     void setupUiActions();
@@ -31,8 +27,8 @@ private:
     void setupColorActions();
     void setupPenActions();
 
-    ColorAction *addColorAction(QColor const &color);
-    PenAction *addPenAction(int thickness);
+    ColorAction *addColorAction(QColor const &color, QActionGroup *selector);
+    PenAction *addPenAction(int thickness, QActionGroup *selector);
 
     void saveToFile();
     void loadFromFile();

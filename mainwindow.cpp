@@ -30,13 +30,13 @@ QPixmap createTexture() {
 } // namespace detail
 
 void MainWindow::setupToolSelectors() {
-    m_toolSelector = new QActionGroup(this);
-    m_toolSelector->setExclusive(true);
-    m_toolSelector->addAction(ui->actionText);
-    m_toolSelector->addAction(ui->actionHighlight);
-    m_toolSelector->addAction(ui->actionPointer);
-    m_toolSelector->addAction(ui->actionPen);
-    m_toolSelector->addAction(ui->actionZoomTool);
+    auto toolSelector = new QActionGroup(this);
+    toolSelector->setExclusive(true);
+    toolSelector->addAction(ui->actionText);
+    toolSelector->addAction(ui->actionHighlight);
+    toolSelector->addAction(ui->actionPointer);
+    toolSelector->addAction(ui->actionPen);
+    toolSelector->addAction(ui->actionZoomTool);
 
     connect(ui->actionPen, &QAction::triggered, ui->graphicsView, &WhiteBoardGraphicsView::setPenTool);
     connect(ui->actionText, &QAction::triggered, ui->graphicsView, &WhiteBoardGraphicsView::setTextTool);
@@ -47,7 +47,7 @@ void MainWindow::setupToolSelectors() {
     connect(ui->actionDelete, &QAction::triggered, ui->graphicsView, &WhiteBoardGraphicsView::deleteSelectedItems);
 
     // disable changing the tool while one is in use
-    connect(ui->graphicsView, &WhiteBoardGraphicsView::toolInUse, m_toolSelector, &QActionGroup::setDisabled);
+    connect(ui->graphicsView, &WhiteBoardGraphicsView::toolInUse, toolSelector, &QActionGroup::setDisabled);
 }
 
 void MainWindow::setupUiActions() {
@@ -79,11 +79,11 @@ void MainWindow::setupFontToolbar() {
 }
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow) {
-    m_scene = new QGraphicsScene(this);
-    m_scene->setBackgroundBrush(QBrush(detail::createTexture()));
+    auto scene = new QGraphicsScene(this);
+    scene->setBackgroundBrush(QBrush(detail::createTexture()));
 
     ui->setupUi(this);
-    ui->graphicsView->setScene(m_scene);
+    ui->graphicsView->setScene(scene);
 
     setupToolSelectors();
     setupColorActions();
@@ -109,49 +109,49 @@ QLabel *createToolbarHeader(QString const &name) {
 void MainWindow::setupColorActions() {
     ui->toolBarSettings->addWidget(createToolbarHeader("Color"));
 
-    m_colorSelector = new QActionGroup(this);
-    m_colorSelector->setExclusive(true);
+    auto colorSelector = new QActionGroup(this);
+    colorSelector->setExclusive(true);
 
-    addColorAction(QColor(0, 0, 0))->trigger();
-    addColorAction(QColor(128, 128, 128));
-    addColorAction(QColor(240, 0, 0));
-    addColorAction(QColor(0, 240, 0));
-    addColorAction(QColor(0, 0, 240));
-    addColorAction(QColor(240, 240, 0));
-    addColorAction(QColor(240, 0, 240));
-    addColorAction(QColor(0, 240, 240));
-    addColorAction(QColor(240, 128, 0));
-    addColorAction(QColor(240, 0, 128));
-    addColorAction(QColor(0, 240, 128));
-    addColorAction(QColor(128, 240, 0));
-    addColorAction(QColor(128, 0, 240));
-    addColorAction(QColor(0, 128, 240));
+    addColorAction(QColor(0, 0, 0), colorSelector)->trigger();
+    addColorAction(QColor(128, 128, 128), colorSelector);
+    addColorAction(QColor(240, 0, 0), colorSelector);
+    addColorAction(QColor(0, 240, 0), colorSelector);
+    addColorAction(QColor(0, 0, 240), colorSelector);
+    addColorAction(QColor(240, 240, 0), colorSelector);
+    addColorAction(QColor(240, 0, 240), colorSelector);
+    addColorAction(QColor(0, 240, 240), colorSelector);
+    addColorAction(QColor(240, 128, 0), colorSelector);
+    addColorAction(QColor(240, 0, 128), colorSelector);
+    addColorAction(QColor(0, 240, 128), colorSelector);
+    addColorAction(QColor(128, 240, 0), colorSelector);
+    addColorAction(QColor(128, 0, 240), colorSelector);
+    addColorAction(QColor(0, 128, 240), colorSelector);
 }
 
 void MainWindow::setupPenActions() {
     ui->toolBarSettings->addWidget(createToolbarHeader("Pen"));
 
-    m_penSelector = new QActionGroup(this);
-    m_penSelector->setExclusive(true);
+    auto penSelector = new QActionGroup(this);
+    penSelector->setExclusive(true);
 
-    addPenAction(10);
-    addPenAction(5)->trigger();
-    addPenAction(1);
+    addPenAction(10, penSelector);
+    addPenAction(5, penSelector)->trigger();
+    addPenAction(1, penSelector);
 }
 
-ColorAction *MainWindow::addColorAction(const QColor &color) {
+ColorAction *MainWindow::addColorAction(const QColor &color, QActionGroup *selector) {
     ColorAction *newAction = new ColorAction(color, this);
     connect(newAction, &ColorAction::colorSelected, ui->graphicsView, &WhiteBoardGraphicsView::setColor);
     ui->toolBarSettings->addAction(newAction);
-    m_colorSelector->addAction(newAction);
+    selector->addAction(newAction);
     return newAction;
 }
 
-PenAction *MainWindow::addPenAction(int thickness) {
+PenAction *MainWindow::addPenAction(int thickness, QActionGroup *selector) {
     PenAction *newAction = new PenAction(thickness, this);
     connect(newAction, &PenAction::penSelected, ui->graphicsView, &WhiteBoardGraphicsView::setPenThickness);
     ui->toolBarSettings->addAction(newAction);
-    m_penSelector->addAction(newAction);
+    selector->addAction(newAction);
     return newAction;
 }
 
