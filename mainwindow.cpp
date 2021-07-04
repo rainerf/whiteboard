@@ -150,15 +150,25 @@ PenAction *MainWindow::addPenAction(int thickness) {
 }
 
 void MainWindow::saveToFile() {
-    QString filename = QFileDialog::getSaveFileName(this, "Save Whiteboard", "", "Whiteboard (*.whb);;All Files (*)");
-    if (!filename.isEmpty())
+    QFileDialog dialog(this, "Save Whiteboard", "", "Whiteboard (*.whb);;All Files (*)");
+    dialog.setDefaultSuffix(".whb");
+    dialog.setAcceptMode(QFileDialog::AcceptSave);
+
+    if (dialog.exec()) {
+        const auto filename = dialog.selectedFiles().front();
         ui->graphicsView->saveToFile(filename);
+    }
 }
 
 void MainWindow::loadFromFile() {
-    QString filename = QFileDialog::getOpenFileName(this, "Open Whiteboard", "", "Whiteboard (*.whb);;All Files (*)");
-    if (!filename.isEmpty())
+    QFileDialog dialog(this, "Save Whiteboard", "", "Whiteboard (*.whb);;All Files (*)");
+    dialog.setDefaultSuffix(".whb");
+    dialog.setAcceptMode(QFileDialog::AcceptOpen);
+
+    if (dialog.exec()) {
+        const auto filename = dialog.selectedFiles().front();
         ui->graphicsView->loadFromFile(filename);
+    }
 }
 
 MainWindow::~MainWindow() {
