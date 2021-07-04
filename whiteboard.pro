@@ -19,6 +19,7 @@ INCLUDEPATH += /usr/lib/gcc/x86_64-linux-gnu/9/include/
 
 SOURCES += \
     actions/coloraction.cpp \
+    lib/qgraphicsscenestorage.cpp \
     tools/highlighttool.cpp \
     lib/interactiveview.cpp \
     main.cpp \
@@ -32,6 +33,7 @@ SOURCES += \
 
 HEADERS += \
     actions/coloraction.h \
+    lib/qgraphicsscenestorage.h \
     tools/highlighttool.h \
     lib/interactiveview.h \
     mainwindow.h \
