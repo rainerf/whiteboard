@@ -14,3 +14,8 @@ void WhiteBoardTextItem::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *) {
     setTextInteractionFlags(Qt::TextEditorInteraction);
     setFocus();
 }
+
+void WhiteBoardTextItem::focusOutEvent(QFocusEvent *) {
+    setTextInteractionFlags(Qt::NoTextInteraction);
+    setTextCursor(QTextCursor(document()));
+}

@@ -9,6 +9,7 @@ public:
     WhiteBoardTextItem(QGraphicsItem *parent = nullptr);
 
     void mouseDoubleClickEvent(QGraphicsSceneMouseEvent *) override;
+    void focusOutEvent(QFocusEvent *event) override;
 };
 
 #endif // WHITEBOARDTEXTITEM_H
