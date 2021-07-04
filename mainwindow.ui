@@ -11,7 +11,11 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>WhiteBoard</string>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="icons.qrc">
+    <normaloff>:/icons/icons/wysiwyg_black_24dp.svg</normaloff>:/icons/icons/wysiwyg_black_24dp.svg</iconset>
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QHBoxLayout" name="horizontalLayout">
@@ -207,7 +211,7 @@
   <action name="actionSave">
    <property name="icon">
     <iconset resource="icons.qrc">
-     <normaloff>:/icons/icons/save_black_24dp.svg</normaloff>:/icons/icons/save_black_24dp.svg</iconset>
+     <normaloff>:/icons/icons/file_download_black_24dp.svg</normaloff>:/icons/icons/file_download_black_24dp.svg</iconset>
    </property>
    <property name="text">
     <string>Save</string>
@@ -219,7 +223,7 @@
   <action name="actionOpen">
    <property name="icon">
     <iconset resource="icons.qrc">
-     <normaloff>:/icons/icons/folder_open_black_24dp.svg</normaloff>:/icons/icons/folder_open_black_24dp.svg</iconset>
+     <normaloff>:/icons/icons/file_upload_black_24dp.svg</normaloff>:/icons/icons/file_upload_black_24dp.svg</iconset>
    </property>
    <property name="text">
     <string>Open</string>

@@ -6,12 +6,13 @@
         <file>icons/content_paste_black_24dp.svg</file>
         <file>icons/drive_file_rename_outline_black_24dp.svg</file>
         <file>icons/content_copy_black_24dp.svg</file>
-        <file>icons/save_black_24dp.svg</file>
-        <file>icons/folder_open_black_24dp.svg</file>
         <file>icons/clear_black_24dp.svg</file>
         <file>icons/zoom_original_black_24dp.svg</file>
         <file>icons/crop_free_black_24dp.svg</file>
         <file>icons/radio_button_checked_black_24dp.svg</file>
         <file>icons/create_black_24dp.svg</file>
+        <file>icons/file_download_black_24dp.svg</file>
+        <file>icons/file_upload_black_24dp.svg</file>
+        <file>icons/wysiwyg_black_24dp.svg</file>
     </qresource>
 </RCC>
