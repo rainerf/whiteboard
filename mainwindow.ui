@@ -147,6 +147,9 @@
    <property name="toolTip">
     <string>Text</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+3</string>
+   </property>
   </action>
   <action name="actionHighlight">
    <property name="checkable">
@@ -161,6 +164,9 @@
    </property>
    <property name="toolTip">
     <string>Highlight</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+2</string>
    </property>
   </action>
   <action name="actionPaste">
@@ -282,6 +288,9 @@
    <property name="toolTip">
     <string>Pointer</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+4</string>
+   </property>
   </action>
   <action name="actionPen">
    <property name="checkable">
@@ -296,6 +305,9 @@
    </property>
    <property name="toolTip">
     <string>Pen</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+1</string>
    </property>
   </action>
  </widget>

@@ -19,6 +19,8 @@
 void WhiteBoardGraphicsView::tabletEvent(QTabletEvent *event) {
     switch (event->type()) {
     case QEvent::TabletPress:
+        // take the focus from other widgets (which Qt doesn't do for some reason),
+        // and unfocus all items in the scene
         setFocus();
         for (auto &&i : scene()->items())
             i->clearFocus();
@@ -26,6 +28,7 @@ void WhiteBoardGraphicsView::tabletEvent(QTabletEvent *event) {
         if (!m_deviceDown) {
             m_deviceDown = true;
             currentTool->handleTabletPress(*this, *event);
+            emit toolInUse(true);
         }
         break;
     case QEvent::TabletMove:
@@ -37,6 +40,7 @@ void WhiteBoardGraphicsView::tabletEvent(QTabletEvent *event) {
         if (m_deviceDown && event->buttons() == Qt::NoButton) {
             m_deviceDown = false;
             currentTool->handleTabletRelease(*this, *event);
+            emit toolInUse(false);
         }
         break;
     default:
@@ -57,18 +61,26 @@ void WhiteBoardGraphicsView::setPenThickness(int thickness) {
 }
 
 void WhiteBoardGraphicsView::setPenTool() {
+    if (m_deviceDown)
+        throw std::logic_error("Changing a tool while it's in use should not be possible!");
     currentTool = &penTool;
 }
 
 void WhiteBoardGraphicsView::setTextTool() {
+    if (m_deviceDown)
+        throw std::logic_error("Changing a tool while it's in use should not be possible!");
     currentTool = &textTool;
 }
 
 void WhiteBoardGraphicsView::setHighlightTool() {
+    if (m_deviceDown)
+        throw std::logic_error("Changing a tool while it's in use should not be possible!");
     currentTool = &highlightTool;
 }
 
 void WhiteBoardGraphicsView::setPointerTool() {
+    if (m_deviceDown)
+        throw std::logic_error("Changing a tool while it's in use should not be possible!");
     currentTool = &pointerTool;
 }
 

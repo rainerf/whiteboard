@@ -8,10 +8,10 @@
 #include "tools/texttool.h"
 
 class WhiteBoardGraphicsView : public InteractiveView {
+public:
+    Q_OBJECT
 
     using InteractiveView::InteractiveView;
-
-    void tabletEvent(QTabletEvent *event) override;
 
 public slots:
     void setColor(QColor const &color);
@@ -35,7 +35,12 @@ public slots:
     void loadFromFile(QString filename);
     void clear();
 
+signals:
+    void toolInUse(bool);
+
 private:
+    void tabletEvent(QTabletEvent *event) override;
+
     QImage renderToPixmap();
 
     bool m_deviceDown = false;

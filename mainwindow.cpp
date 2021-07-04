@@ -43,6 +43,9 @@ void MainWindow::setupToolSelectors() {
     connect(ui->actionPointer, &QAction::triggered, ui->graphicsView, &WhiteBoardGraphicsView::setPointerTool);
 
     connect(ui->actionDelete, &QAction::triggered, ui->graphicsView, &WhiteBoardGraphicsView::deleteSelectedItems);
+
+    // disable changing the tool while one is in use
+    connect(ui->graphicsView, &WhiteBoardGraphicsView::toolInUse, m_toolSelector, &QActionGroup::setDisabled);
 }
 
 void MainWindow::setupUiActions() {
