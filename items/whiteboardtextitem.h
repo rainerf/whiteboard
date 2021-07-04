@@ -5,6 +5,9 @@
 
 class WhiteBoardTextItem : public QGraphicsTextItem {
 public:
+    enum { Type = UserType + 1 };
+    int type() const override { return Type; }
+
     WhiteBoardTextItem(const QString &text, QGraphicsItem *parent = nullptr);
     WhiteBoardTextItem(QGraphicsItem *parent = nullptr);
 

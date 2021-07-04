@@ -3,6 +3,12 @@
 #include <QPen>
 #include <QBrush>
 #include <QFont>
+#include "items/whiteboardtextitem.h"
+
+// inspired by https://stackoverflow.com/a/51498180/1683161
+
+static constexpr quint32 magicNumber = 0x84c2adc1;
+static constexpr quint32 version = 1;
 
 QDataStream &operator<<(QDataStream &out, QGraphicsItem *item) {
     out << item->pos() << item->scale() << item->rotation() << item->transform() << item->transformOriginPoint() << item->flags()
@@ -10,7 +16,7 @@ QDataStream &operator<<(QDataStream &out, QGraphicsItem *item) {
     return out;
 }
 
-QDataStream &operator>>(QDataStream &in, QGraphicsItem *&item) {
+QDataStream &operator>>(QDataStream &in, QGraphicsItem *item) {
     QPointF pos;
     qreal scale;
     qreal rotation;
@@ -28,6 +34,7 @@ QDataStream &operator>>(QDataStream &in, QGraphicsItem *&item) {
     item->setFlags(flags);
     item->setEnabled(isEnabled);
     item->setZValue(zValue);
+
     return in;
 }
 
@@ -36,7 +43,8 @@ QDataStream &operator<<(QDataStream &out, QAbstractGraphicsShapeItem *item) {
     out << item->pen() << item->brush();
     return out;
 }
-QDataStream &operator>>(QDataStream &in, QAbstractGraphicsShapeItem *&item) {
+
+QDataStream &operator>>(QDataStream &in, QAbstractGraphicsShapeItem *item) {
     QGraphicsItem *tmp = dynamic_cast<QGraphicsItem *>(item);
     in >> tmp;
     QPen pen;
@@ -53,7 +61,7 @@ QDataStream &operator<<(QDataStream &out, QGraphicsEllipseItem *item) {
     return out;
 }
 
-QDataStream &operator>>(QDataStream &in, QGraphicsEllipseItem *&item) {
+QDataStream &operator>>(QDataStream &in, QGraphicsEllipseItem *item) {
     QAbstractGraphicsShapeItem *tmp = dynamic_cast<QAbstractGraphicsShapeItem *>(item);
     in >> tmp;
     QRectF rect;
@@ -72,7 +80,7 @@ QDataStream &operator<<(QDataStream &out, QGraphicsPathItem *item) {
     return out;
 }
 
-QDataStream &operator>>(QDataStream &in, QGraphicsPathItem *&item) {
+QDataStream &operator>>(QDataStream &in, QGraphicsPathItem *item) {
     QAbstractGraphicsShapeItem *tmp = dynamic_cast<QAbstractGraphicsShapeItem *>(item);
     in >> tmp;
     QPainterPath path;
@@ -87,7 +95,7 @@ QDataStream &operator<<(QDataStream &out, QGraphicsPolygonItem *item) {
     return out;
 }
 
-QDataStream &operator>>(QDataStream &in, QGraphicsPolygonItem *&item) {
+QDataStream &operator>>(QDataStream &in, QGraphicsPolygonItem *item) {
     QAbstractGraphicsShapeItem *tmp = dynamic_cast<QAbstractGraphicsShapeItem *>(item);
     in >> tmp;
     QPolygonF polygon;
@@ -104,7 +112,7 @@ QDataStream &operator<<(QDataStream &out, QGraphicsRectItem *item) {
     return out;
 }
 
-QDataStream &operator>>(QDataStream &in, QGraphicsRectItem *&item) {
+QDataStream &operator>>(QDataStream &in, QGraphicsRectItem *item) {
     QAbstractGraphicsShapeItem *tmp = dynamic_cast<QAbstractGraphicsShapeItem *>(item);
     in >> tmp;
     QRectF rect;
@@ -119,7 +127,7 @@ QDataStream &operator<<(QDataStream &out, QGraphicsSimpleTextItem *item) {
     return out;
 }
 
-QDataStream &operator>>(QDataStream &in, QGraphicsSimpleTextItem *&item) {
+QDataStream &operator>>(QDataStream &in, QGraphicsSimpleTextItem *item) {
     QAbstractGraphicsShapeItem *tmp = dynamic_cast<QAbstractGraphicsShapeItem *>(item);
     in >> tmp;
     QString text;
@@ -136,7 +144,7 @@ QDataStream &operator<<(QDataStream &out, QGraphicsLineItem *item) {
     return out;
 }
 
-QDataStream &operator>>(QDataStream &in, QGraphicsLineItem *&item) {
+QDataStream &operator>>(QDataStream &in, QGraphicsLineItem *item) {
     QGraphicsItem *tmp = dynamic_cast<QGraphicsItem *>(item);
     in >> tmp;
     QPen pen;
@@ -153,7 +161,7 @@ QDataStream &operator<<(QDataStream &out, QGraphicsPixmapItem *item) {
     return out;
 }
 
-QDataStream &operator>>(QDataStream &in, QGraphicsPixmapItem *&item) {
+QDataStream &operator>>(QDataStream &in, QGraphicsPixmapItem *item) {
     QGraphicsItem *tmp = dynamic_cast<QGraphicsItem *>(item);
     in >> tmp;
     QPixmap pixmap;
@@ -168,14 +176,13 @@ QDataStream &operator>>(QDataStream &in, QGraphicsPixmapItem *&item) {
     return in;
 }
 
-// FIXME: this is going to store (and restore) WhiteboardTextItems as plain QGraphicsTextItem
 QDataStream &operator<<(QDataStream &out, QGraphicsTextItem *item) {
     out << dynamic_cast<QGraphicsItem *>(item);
     out << item->toHtml();
     return out;
 }
 
-QDataStream &operator>>(QDataStream &in, QGraphicsTextItem *&item) {
+QDataStream &operator>>(QDataStream &in, QGraphicsTextItem *item) {
     QGraphicsItem *tmp = dynamic_cast<QGraphicsItem *>(item);
     in >> tmp;
     QString html;
@@ -188,23 +195,27 @@ void saveItem(QGraphicsItem *item, QDataStream &out, bool ignoreParent = false);
 QGraphicsItem *readItem(QDataStream &in);
 
 QDataStream &operator<<(QDataStream &out, QGraphicsItemGroup *item) {
-    out << dynamic_cast<QGraphicsItem *>(item);
     auto children = item->childItems();
     out << children.size();
     for (auto &&i : item->childItems())
         saveItem(i, out, true);
+    out << dynamic_cast<QGraphicsItem *>(item);
     return out;
 }
 
-QDataStream &operator>>(QDataStream &in, QGraphicsItemGroup *&item) {
-    QGraphicsItem *tmp = dynamic_cast<QGraphicsItem *>(item);
-    in >> tmp;
+QDataStream &operator>>(QDataStream &in, QGraphicsItemGroup *item) {
     int size;
     in >> size;
     for (int i = 0; i < size; ++i) {
         if (auto x = readItem(in))
             item->addToGroup(x);
     }
+
+    // NB: we need to restore the position of the Group *after* adding the items,
+    // otherwise we're going to mess up the original positioning
+    QGraphicsItem *tmp = dynamic_cast<QGraphicsItem *>(item);
+    in >> tmp;
+
     return in;
 }
 
@@ -232,6 +243,10 @@ void saveItem(QGraphicsItem *item, QDataStream &out, bool ignoreParent) {
     case QGraphicsPixmapItem::Type:
         out << dynamic_cast<QGraphicsPixmapItem *>(item);
         break;
+    case WhiteBoardTextItem::Type:
+        // type was already serialized above, otherwise, it's the same thing as
+        // a QGraphicsTextItem (from a data point of view), so there's nothing
+        // special to do here
     case QGraphicsTextItem::Type:
         out << dynamic_cast<QGraphicsTextItem *>(item);
         break;
@@ -242,6 +257,9 @@ void saveItem(QGraphicsItem *item, QDataStream &out, bool ignoreParent) {
 }
 
 void saveItems(QList<QGraphicsItem *> items, QDataStream &out) {
+    out << magicNumber;
+    out << version;
+
     for (QGraphicsItem *item : items) {
         saveItem(item, out);
     }
@@ -298,12 +316,27 @@ QGraphicsItem *readItem(QDataStream &in) {
         return item;
         break;
     }
+    case WhiteBoardTextItem::Type: {
+        WhiteBoardTextItem *item = new WhiteBoardTextItem;
+        in >> static_cast<QGraphicsTextItem*>(item);
+        return item;
+        break;
+    }
     }
     return nullptr;
 }
 
 QList<QGraphicsItem *> readItems(QDataStream &in) {
     QList<QGraphicsItem *> items;
+
+    quint32 magicNumber_, version_;
+    in >> magicNumber_ >> version_;
+    if (magicNumber_ != magicNumber) {
+        throw FileFormatError();
+    }
+    if (version_ != version) {
+        throw FileVersionError();
+    }
 
     while (!in.atEnd()) {
         if (auto x = readItem(in))

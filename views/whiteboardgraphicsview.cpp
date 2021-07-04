@@ -10,6 +10,7 @@
 #include <QSettings>
 #include <QTabletEvent>
 #include <QtMath>
+#include <QMessageBox>
 
 #include "whiteboardgraphicsview.h"
 #include "items/whiteboardtextitem.h"
@@ -140,9 +141,13 @@ void WhiteBoardGraphicsView::loadFromFile(QString filename) {
         scene()->clear();
 
         QDataStream in(&fileIn);
-        QList<QGraphicsItem *> items = readItems(in);
-        for (QGraphicsItem *item : items) {
-            scene()->addItem(item);
+        try {
+            QList<QGraphicsItem *> items = readItems(in);
+            for (QGraphicsItem *item : items) {
+                scene()->addItem(item);
+            }
+        } catch (FileError &) {
+            QMessageBox::critical(this, "Whiteboard", "File format incorrect!");
         }
     }
 }
