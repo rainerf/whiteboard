@@ -1,7 +1,8 @@
 #ifndef POINTERTOOL_H
 #define POINTERTOOL_H
 
-#include <QGraphicsItemGroup>
+#include <QColor>
+#include <QGraphicsEllipseItem>
 
 #include "whiteboardtool.h"
 
@@ -9,9 +10,9 @@ class PointerTool : public WhiteBoardTool {
 public:
     void setColor(QColor const &color);
 
-    void handleTabletPress(QGraphicsView &view, QTabletEvent &event) override;
-    void handleTabletMove(QGraphicsView &view, QTabletEvent &event) override;
-    void handleTabletRelease(QGraphicsView &view, QTabletEvent &) override;
+    void handleTabletPress(WhiteBoardGraphicsView &view, QTabletEvent &event) override;
+    void handleTabletMove(WhiteBoardGraphicsView &view, QTabletEvent &event) override;
+    void handleTabletRelease(WhiteBoardGraphicsView &view, QTabletEvent &) override;
 
     PointerTool operator=(PointerTool &) = delete;
     PointerTool(PointerTool &) = delete;

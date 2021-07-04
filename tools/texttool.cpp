@@ -1,5 +1,6 @@
 #include "texttool.h"
 #include "items/whiteboardtextitem.h"
+#include "views/whiteboardgraphicsview.h"
 
 void TextTool::setColor(const QColor &color) {
     m_color = color;
@@ -15,7 +16,7 @@ void TextTool::setFontSize(int size) {
     m_font.setPixelSize(m_fontSize);
 }
 
-void TextTool::handleTabletPress(QGraphicsView &view, QTabletEvent &event) {
+void TextTool::handleTabletPress(WhiteBoardGraphicsView &view, QTabletEvent &event) {
     m_textItem = new WhiteBoardTextItem("");
     m_textItem->setTextInteractionFlags(Qt::TextEditorInteraction);
     m_textItem->setPos(view.mapToScene(event.pos()));
@@ -27,7 +28,7 @@ void TextTool::handleTabletPress(QGraphicsView &view, QTabletEvent &event) {
     m_textItem->setSelected(true);
 }
 
-void TextTool::handleTabletMove(QGraphicsView &view, QTabletEvent &event) {
+void TextTool::handleTabletMove(WhiteBoardGraphicsView &view, QTabletEvent &event) {
     if (m_textItem) {
         m_textItem->setPos(view.mapToScene(event.pos()));
         m_textItem->setFocus();

@@ -1,4 +1,5 @@
 #include "pentool.h"
+#include "views/whiteboardgraphicsview.h"
 
 void PenTool::setColor(const QColor &color) {
     m_color = color;
@@ -8,7 +9,7 @@ void PenTool::setPen(int thickness) {
     m_thickness = thickness;
 }
 
-void PenTool::handleTabletPress(QGraphicsView &view, QTabletEvent &event) {
+void PenTool::handleTabletPress(WhiteBoardGraphicsView &view, QTabletEvent &event) {
     m_group = new QGraphicsItemGroup();
     m_group->setFlags(QGraphicsItem::ItemIsMovable | QGraphicsItem::ItemIsSelectable);
     view.scene()->addItem(m_group);
@@ -16,7 +17,7 @@ void PenTool::handleTabletPress(QGraphicsView &view, QTabletEvent &event) {
     m_previous = view.mapToScene(event.pos());
 }
 
-void PenTool::handleTabletMove(QGraphicsView &view, QTabletEvent &event) {
+void PenTool::handleTabletMove(WhiteBoardGraphicsView &view, QTabletEvent &event) {
     if (m_group) {
         auto current = view.mapToScene(event.pos());
         if (current == m_previous)

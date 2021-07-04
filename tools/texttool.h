@@ -2,6 +2,8 @@
 #define TEXTTOOL_H
 
 #include <QFont>
+#include <QColor>
+#include <QGraphicsTextItem>
 
 #include "whiteboardtool.h"
 
@@ -11,8 +13,8 @@ public:
     void setFont(QFont const &font);
     void setFontSize(int size);
 
-    void handleTabletPress(QGraphicsView &view, QTabletEvent &event);
-    void handleTabletMove(QGraphicsView &view, QTabletEvent &event);
+    void handleTabletPress(WhiteBoardGraphicsView &view, QTabletEvent &event);
+    void handleTabletMove(WhiteBoardGraphicsView &view, QTabletEvent &event);
 
     TextTool operator=(TextTool &) = delete;
     TextTool(TextTool &) = delete;

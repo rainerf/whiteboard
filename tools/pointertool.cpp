@@ -1,19 +1,21 @@
 #include "pointertool.h"
+#include "views/whiteboardgraphicsview.h"
+
 
 void PointerTool::setColor(const QColor &color) {
     m_color = color;
 }
 
-void PointerTool::handleTabletPress(QGraphicsView &view, QTabletEvent &event) {
+void PointerTool::handleTabletPress(WhiteBoardGraphicsView &view, QTabletEvent &event) {
     m_pointer.setPos(view.mapToScene(event.pos()));
     view.scene()->addItem(&m_pointer);
 }
 
-void PointerTool::handleTabletMove(QGraphicsView &view, QTabletEvent &event) {
+void PointerTool::handleTabletMove(WhiteBoardGraphicsView &view, QTabletEvent &event) {
     m_pointer.setPos(view.mapToScene(event.pos()));
 }
 
-void PointerTool::handleTabletRelease(QGraphicsView &view, QTabletEvent &) {
+void PointerTool::handleTabletRelease(WhiteBoardGraphicsView &view, QTabletEvent &) {
     view.scene()->removeItem(&m_pointer);
 }
 
