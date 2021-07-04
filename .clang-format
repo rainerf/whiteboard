@@ -1,0 +1,9 @@
+﻿---
+BasedOnStyle: LLVM
+AccessModifierOffset: '-4'
+AllowShortFunctionsOnASingleLine: InlineOnly
+ColumnLimit: '140'
+IndentWidth: '4'
+Language: Cpp
+
+...
