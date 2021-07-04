@@ -6,6 +6,7 @@
 #include "tools/pentool.h"
 #include "tools/pointertool.h"
 #include "tools/texttool.h"
+#include "tools/zoomtool.h"
 
 class WhiteBoardGraphicsView : public InteractiveView {
 public:
@@ -21,6 +22,7 @@ public slots:
     void setTextTool();
     void setHighlightTool();
     void setPointerTool();
+    void setZoomTool();
 
     void deleteSelectedItems();
 
@@ -49,6 +51,7 @@ private:
     TextTool textTool;
     HighlightTool highlightTool;
     PointerTool pointerTool;
+    ZoomTool zoomTool;
     WhiteBoardTool *currentTool = &penTool;
 };
 

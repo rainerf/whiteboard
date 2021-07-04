@@ -28,6 +28,7 @@ SOURCES += \
     tools/pentool.cpp \
     tools/pointertool.cpp \
     tools/texttool.cpp \
+    tools/zoomtool.cpp \
     views/whiteboardgraphicsview.cpp \
     items/whiteboardtextitem.cpp
 
@@ -41,6 +42,7 @@ HEADERS += \
     tools/pentool.h \
     tools/pointertool.h \
     tools/texttool.h \
+    tools/zoomtool.h \
     views/whiteboardgraphicsview.h \
     items/whiteboardtextitem.h \
     tools/whiteboardtool.h
