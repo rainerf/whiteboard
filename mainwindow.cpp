@@ -1,6 +1,7 @@
 #include <QColor>
 #include <QFontComboBox>
 #include <QLabel>
+#include <QFileDialog>
 //#include <QGLWidget>
 
 #include "mainwindow.h"
@@ -48,8 +49,8 @@ void MainWindow::setupUiActions() {
     connect(ui->actionCopy, &QAction::triggered, ui->graphicsView, &WhiteBoardGraphicsView::copy);
     connect(ui->actionPaste, &QAction::triggered, ui->graphicsView, &WhiteBoardGraphicsView::paste);
     connect(ui->actionSelectAll, &QAction::triggered, ui->graphicsView, &WhiteBoardGraphicsView::selectAll);
-    connect(ui->actionSave, &QAction::triggered, ui->graphicsView, &WhiteBoardGraphicsView::saveToFile);
-    connect(ui->actionOpen, &QAction::triggered, ui->graphicsView, &WhiteBoardGraphicsView::loadFromFile);
+    connect(ui->actionSave, &QAction::triggered, this, &MainWindow::saveToFile);
+    connect(ui->actionOpen, &QAction::triggered, this, &MainWindow::loadFromFile);
     connect(ui->actionClear, &QAction::triggered, ui->graphicsView, &WhiteBoardGraphicsView::clear);
     connect(ui->actionZoomOriginal, &QAction::triggered, [=]() { ui->graphicsView->setScale(1); });
     // connect(ui->actionHighlight, &QAction::toggled, [=](bool x) { m_colorSelector->setEnabled(!x); });
@@ -146,6 +147,18 @@ PenAction *MainWindow::addPenAction(int thickness) {
     ui->toolBarSettings->addAction(newAction);
     m_penSelector->addAction(newAction);
     return newAction;
+}
+
+void MainWindow::saveToFile() {
+    QString filename = QFileDialog::getSaveFileName(this, "Save Whiteboard", "", "Whiteboard (*.whb);;All Files (*)");
+    if (!filename.isEmpty())
+        ui->graphicsView->saveToFile(filename);
+}
+
+void MainWindow::loadFromFile() {
+    QString filename = QFileDialog::getOpenFileName(this, "Open Whiteboard", "", "Whiteboard (*.whb);;All Files (*)");
+    if (!filename.isEmpty())
+        ui->graphicsView->loadFromFile(filename);
 }
 
 MainWindow::~MainWindow() {

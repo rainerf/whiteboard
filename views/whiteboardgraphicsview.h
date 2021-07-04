@@ -31,8 +31,8 @@ public slots:
     void copy();
 
     void selectAll();
-    void saveToFile();
-    void loadFromFile();
+    void saveToFile(QString filename);
+    void loadFromFile(QString filename);
     void clear();
 
 private:

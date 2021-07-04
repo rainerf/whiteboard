@@ -125,8 +125,8 @@ void WhiteBoardGraphicsView::selectAll() {
         i->setSelected(true);
 }
 
-void WhiteBoardGraphicsView::saveToFile() {
-    QFile fileOut("/home/rainer/file.txt");
+void WhiteBoardGraphicsView::saveToFile(QString filename) {
+    QFile fileOut(filename);
     if (fileOut.open(QIODevice::WriteOnly)) {
         QDataStream out(&fileOut);
         saveItems(scene()->items(), out);
@@ -134,9 +134,11 @@ void WhiteBoardGraphicsView::saveToFile() {
     }
 }
 
-void WhiteBoardGraphicsView::loadFromFile() {
-    QFile fileIn("/home/rainer/file.txt");
+void WhiteBoardGraphicsView::loadFromFile(QString filename) {
+    QFile fileIn(filename);
     if (fileIn.open(QIODevice::ReadOnly)) {
+        scene()->clear();
+
         QDataStream in(&fileIn);
         QList<QGraphicsItem *> items = readItems(in);
         for (QGraphicsItem *item : items) {

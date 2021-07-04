@@ -33,5 +33,8 @@ private:
 
     ColorAction *addColorAction(QColor const &color);
     PenAction *addPenAction(int thickness);
+
+    void saveToFile();
+    void loadFromFile();
 };
 #endif // MAINWINDOW_H
