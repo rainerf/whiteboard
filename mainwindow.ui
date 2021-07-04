@@ -81,6 +81,7 @@
    <addaction name="actionHighlight"/>
    <addaction name="actionText"/>
    <addaction name="actionPointer"/>
+   <addaction name="actionDelete"/>
   </widget>
   <widget class="QToolBar" name="toolBarFont">
    <property name="windowTitle">
@@ -88,6 +89,17 @@
    </property>
    <attribute name="toolBarArea">
     <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+  </widget>
+  <widget class="QToolBar" name="toolBarSettings">
+   <property name="windowTitle">
+    <string>toolBar</string>
+   </property>
+   <attribute name="toolBarArea">
+    <enum>RightToolBarArea</enum>
    </attribute>
    <attribute name="toolBarBreak">
     <bool>false</bool>

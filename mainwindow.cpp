@@ -40,10 +40,11 @@ void MainWindow::setupToolSelectors() {
     connect(ui->actionText, &QAction::triggered, ui->graphicsView, &WhiteBoardGraphicsView::setTextTool);
     connect(ui->actionHighlight, &QAction::triggered, ui->graphicsView, &WhiteBoardGraphicsView::setHighlightTool);
     connect(ui->actionPointer, &QAction::triggered, ui->graphicsView, &WhiteBoardGraphicsView::setPointerTool);
+
+    connect(ui->actionDelete, &QAction::triggered, ui->graphicsView, &WhiteBoardGraphicsView::deleteSelectedItems);
 }
 
 void MainWindow::setupUiActions() {
-    connect(ui->actionDelete, &QAction::triggered, ui->graphicsView, &WhiteBoardGraphicsView::deleteSelectedItems);
     connect(ui->actionCopy, &QAction::triggered, ui->graphicsView, &WhiteBoardGraphicsView::copy);
     connect(ui->actionPaste, &QAction::triggered, ui->graphicsView, &WhiteBoardGraphicsView::paste);
     connect(ui->actionSelectAll, &QAction::triggered, ui->graphicsView, &WhiteBoardGraphicsView::selectAll);
@@ -83,8 +84,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     setupUiActions();
     setupFontToolbar();
 
-    ui->toolBarTools->addAction(ui->actionDelete);
-
     // ui->graphicsView->setViewport(new QGLWidget);
     // ui->graphicsView->setRenderHint(QPainter::HighQualityAntialiasing);
     ui->graphicsView->setRenderHint(QPainter::Antialiasing);
@@ -93,8 +92,15 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     ui->actionPen->trigger();
 }
 
+QLabel *createToolbarHeader(QString const &name) {
+    auto item = new QLabel(name);
+    item->setAlignment(Qt::AlignCenter);
+    item->setMargin(2);
+    return item;
+}
+
 void MainWindow::setupColorActions() {
-    ui->toolBarTools->addWidget(new QLabel("Color"));
+    ui->toolBarSettings->addWidget(createToolbarHeader("Color"));
 
     m_colorSelector = new QActionGroup(this);
     m_colorSelector->setExclusive(true);
@@ -116,7 +122,7 @@ void MainWindow::setupColorActions() {
 }
 
 void MainWindow::setupPenActions() {
-    ui->toolBarTools->addWidget(new QLabel("Tool"));
+    ui->toolBarSettings->addWidget(createToolbarHeader("Pen"));
 
     m_penSelector = new QActionGroup(this);
     m_penSelector->setExclusive(true);
@@ -129,7 +135,7 @@ void MainWindow::setupPenActions() {
 ColorAction *MainWindow::addColorAction(const QColor &color) {
     ColorAction *newAction = new ColorAction(color, this);
     connect(newAction, &ColorAction::colorSelected, ui->graphicsView, &WhiteBoardGraphicsView::setColor);
-    ui->toolBarTools->addAction(newAction);
+    ui->toolBarSettings->addAction(newAction);
     m_colorSelector->addAction(newAction);
     return newAction;
 }
@@ -137,7 +143,7 @@ ColorAction *MainWindow::addColorAction(const QColor &color) {
 PenAction *MainWindow::addPenAction(int thickness) {
     PenAction *newAction = new PenAction(thickness, this);
     connect(newAction, &PenAction::penSelected, ui->graphicsView, &WhiteBoardGraphicsView::setPenThickness);
-    ui->toolBarTools->addAction(newAction);
+    ui->toolBarSettings->addAction(newAction);
     m_penSelector->addAction(newAction);
     return newAction;
 }
