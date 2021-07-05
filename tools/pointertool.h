@@ -17,7 +17,6 @@ public:
     PointerTool operator=(PointerTool &) = delete;
     PointerTool(PointerTool &) = delete;
     PointerTool();
-    ;
 
 private:
     qreal const m_size = 30;
