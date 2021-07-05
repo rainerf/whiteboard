@@ -117,6 +117,7 @@ void WhiteBoardGraphicsView::paste() {
     if (mimeData->hasImage()) {
         auto item = new QGraphicsPixmapItem(qvariant_cast<QPixmap>(mimeData->imageData()));
         item->setFlags(QGraphicsItem::ItemIsMovable | QGraphicsItem::ItemIsSelectable);
+        item->setTransformationMode(Qt::SmoothTransformation);
         scene()->addItem(item);
     } else if (mimeData->hasHtml()) {
         auto textItem = new WhiteBoardTextItem();
