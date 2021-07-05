@@ -8,6 +8,7 @@ void PointerTool::setColor(const QColor &color) {
 
 void PointerTool::handleTabletPress(WhiteBoardGraphicsView &view, QTabletEvent &event) {
     m_pointer.setPos(view.mapToScene(event.pos()));
+    m_pointer.setFlags(QGraphicsItem::ItemIgnoresTransformations);
     view.scene()->addItem(&m_pointer);
 }
 
