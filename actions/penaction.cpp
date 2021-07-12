@@ -10,7 +10,7 @@ PenAction::PenAction(int thickness, QObject *parent) : QAction(parent), m_thickn
     setIcon(createIcon());
 }
 
-QPixmap PenAction::createIcon() {
+QPixmap PenAction::createIcon() const {
     constexpr int GRID_SIZE = 30;
     QPixmap pixmap(QSize(GRID_SIZE, GRID_SIZE));
     pixmap.fill(Qt::transparent);

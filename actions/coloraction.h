@@ -9,7 +9,7 @@ class ColorAction : public QAction {
     Q_OBJECT
 
 public:
-    ColorAction(QColor const &color, QObject *parent = nullptr);
+    ColorAction(QColor color, QObject *parent = nullptr);
 
 signals:
     void colorSelected(QColor const &color);
@@ -17,7 +17,7 @@ signals:
 private:
     QColor m_color;
 
-    QPixmap createIcon();
+    QPixmap createIcon() const;
 };
 
 #endif // COLORACTION_H

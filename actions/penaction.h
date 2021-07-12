@@ -16,7 +16,7 @@ signals:
 private:
     int m_thickness;
 
-    QPixmap createIcon();
+    QPixmap createIcon() const;
 };
 
 #endif // PENACTION_H

@@ -1,10 +1,10 @@
+#include "mainwindow.h"
+
 #include <QColor>
+#include <QFileDialog>
 #include <QFontComboBox>
 #include <QLabel>
-#include <QFileDialog>
 //#include <QGLWidget>
-
-#include "mainwindow.h"
 
 #include "actions/coloraction.h"
 #include "actions/penaction.h"
@@ -30,7 +30,7 @@ QPixmap createTexture() {
 } // namespace detail
 
 void MainWindow::setupToolSelectors() {
-    auto toolSelector = new QActionGroup(this);
+    auto *toolSelector = new QActionGroup(this);
     toolSelector->setExclusive(true);
     toolSelector->addAction(ui->actionText);
     toolSelector->addAction(ui->actionHighlight);
@@ -65,11 +65,11 @@ void MainWindow::setupUiActions() {
 }
 
 void MainWindow::setupFontToolbar() {
-    auto fontSelectionBox = new QFontComboBox();
+    auto *fontSelectionBox = new QFontComboBox();
     ui->toolBarFont->addWidget(fontSelectionBox);
     connect(fontSelectionBox, &QFontComboBox::currentFontChanged, ui->graphicsView, &WhiteBoardGraphicsView::setFont);
 
-    auto fontSizeBox = new QComboBox();
+    auto *fontSizeBox = new QComboBox();
     ui->toolBarFont->addWidget(fontSizeBox);
     fontSizeBox->insertItems(0, {"4", "6", "8", "10", "12", "16", "20", "24", "36", "48"});
     fontSizeBox->setEditable(true);
@@ -81,7 +81,7 @@ void MainWindow::setupFontToolbar() {
 }
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow) {
-    auto scene = new QGraphicsScene(this);
+    auto *scene = new QGraphicsScene(this);
     scene->setBackgroundBrush(QBrush(detail::createTexture()));
 
     ui->setupUi(this);
@@ -102,7 +102,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 }
 
 QLabel *createToolbarHeader(QString const &name) {
-    auto item = new QLabel(name);
+    auto *item = new QLabel(name);
     item->setAlignment(Qt::AlignCenter);
     item->setMargin(2);
     return item;
@@ -111,7 +111,7 @@ QLabel *createToolbarHeader(QString const &name) {
 void MainWindow::setupColorActions() {
     ui->toolBarSettings->addWidget(createToolbarHeader("Color"));
 
-    auto colorSelector = new QActionGroup(this);
+    auto *colorSelector = new QActionGroup(this);
     colorSelector->setExclusive(true);
 
     addColorAction(QColor(0, 0, 0), colorSelector)->trigger();
@@ -133,7 +133,7 @@ void MainWindow::setupColorActions() {
 void MainWindow::setupPenActions() {
     ui->toolBarSettings->addWidget(createToolbarHeader("Pen"));
 
-    auto penSelector = new QActionGroup(this);
+    auto *penSelector = new QActionGroup(this);
     penSelector->setExclusive(true);
 
     addPenAction(10, penSelector);
@@ -142,7 +142,7 @@ void MainWindow::setupPenActions() {
 }
 
 ColorAction *MainWindow::addColorAction(const QColor &color, QActionGroup *selector) {
-    ColorAction *newAction = new ColorAction(color, this);
+    auto *newAction = new ColorAction(color, this);
     connect(newAction, &ColorAction::colorSelected, ui->graphicsView, &WhiteBoardGraphicsView::setColor);
     ui->toolBarSettings->addAction(newAction);
     selector->addAction(newAction);
@@ -150,7 +150,7 @@ ColorAction *MainWindow::addColorAction(const QColor &color, QActionGroup *selec
 }
 
 PenAction *MainWindow::addPenAction(int thickness, QActionGroup *selector) {
-    PenAction *newAction = new PenAction(thickness, this);
+    auto *newAction = new PenAction(thickness, this);
     connect(newAction, &PenAction::penSelected, ui->graphicsView, &WhiteBoardGraphicsView::setPenThickness);
     ui->toolBarSettings->addAction(newAction);
     selector->addAction(newAction);
@@ -162,7 +162,7 @@ void MainWindow::saveToFile() {
     dialog.setDefaultSuffix(".whb");
     dialog.setAcceptMode(QFileDialog::AcceptSave);
 
-    if (dialog.exec()) {
+    if (dialog.exec() == QDialog::Accepted) {
         const auto filename = dialog.selectedFiles().front();
         ui->graphicsView->saveToFile(filename);
     }
@@ -173,7 +173,7 @@ void MainWindow::loadFromFile() {
     dialog.setDefaultSuffix(".whb");
     dialog.setAcceptMode(QFileDialog::AcceptOpen);
 
-    if (dialog.exec()) {
+    if (dialog.exec() == QDialog::Accepted) {
         const auto filename = dialog.selectedFiles().front();
         ui->graphicsView->loadFromFile(filename);
     }

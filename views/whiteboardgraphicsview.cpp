@@ -1,3 +1,5 @@
+#include "whiteboardgraphicsview.h"
+
 #include <QApplication>
 #include <QClipboard>
 #include <QDataStream>
@@ -12,7 +14,6 @@
 #include <QtMath>
 #include <QMessageBox>
 
-#include "whiteboardgraphicsview.h"
 #include "items/whiteboardtextitem.h"
 #include "lib/qgraphicsscenestorage.h"
 
@@ -115,16 +116,16 @@ void WhiteBoardGraphicsView::paste() {
     const QMimeData *mimeData = clipboard->mimeData();
 
     if (mimeData->hasImage()) {
-        auto item = new QGraphicsPixmapItem(qvariant_cast<QPixmap>(mimeData->imageData()));
+        auto *item = new QGraphicsPixmapItem(qvariant_cast<QPixmap>(mimeData->imageData()));
         item->setFlags(QGraphicsItem::ItemIsMovable | QGraphicsItem::ItemIsSelectable);
         item->setTransformationMode(Qt::SmoothTransformation);
         scene()->addItem(item);
     } else if (mimeData->hasHtml()) {
-        auto textItem = new WhiteBoardTextItem();
+        auto *textItem = new WhiteBoardTextItem();
         textItem->setHtml(mimeData->html());
         scene()->addItem(textItem);
     } else if (mimeData->hasText()) {
-        auto textItem = new WhiteBoardTextItem();
+        auto *textItem = new WhiteBoardTextItem();
         textItem->setPlainText(mimeData->text());
         scene()->addItem(textItem);
     }
@@ -151,7 +152,7 @@ void WhiteBoardGraphicsView::selectAll() {
         i->setSelected(true);
 }
 
-void WhiteBoardGraphicsView::saveToFile(QString filename) {
+void WhiteBoardGraphicsView::saveToFile(QString const &filename) {
     QFile fileOut(filename);
     if (fileOut.open(QIODevice::WriteOnly)) {
         QDataStream out(&fileOut);
@@ -160,7 +161,7 @@ void WhiteBoardGraphicsView::saveToFile(QString filename) {
     }
 }
 
-void WhiteBoardGraphicsView::loadFromFile(QString filename) {
+void WhiteBoardGraphicsView::loadFromFile(QString const &filename) {
     QFile fileIn(filename);
     if (fileIn.open(QIODevice::ReadOnly)) {
         scene()->clear();

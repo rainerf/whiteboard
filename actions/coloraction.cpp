@@ -2,13 +2,13 @@
 
 #include <QPainter>
 
-ColorAction::ColorAction(const QColor &color, QObject *parent) : QAction(parent), m_color(color) {
+ColorAction::ColorAction(QColor color, QObject *parent) : QAction(parent), m_color(std::move(color)) {
     connect(this, &QAction::triggered, [=]() { emit colorSelected(m_color); });
     setCheckable(true);
     setIcon(createIcon());
 }
 
-QPixmap ColorAction::createIcon() {
+QPixmap ColorAction::createIcon() const {
     constexpr int GRID_SIZE = 20;
     QPixmap pixmap(QSize(GRID_SIZE, GRID_SIZE));
     pixmap.fill(Qt::transparent);
