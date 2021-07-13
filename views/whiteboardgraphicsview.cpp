@@ -15,6 +15,7 @@
 #include <QMessageBox>
 
 #include "items/whiteboardtextitem.h"
+#include "items/whiteboardpixmapitem.h"
 #include "lib/qgraphicsscenestorage.h"
 
 void WhiteBoardGraphicsView::tabletEvent(QTabletEvent *event) {
@@ -116,9 +117,7 @@ void WhiteBoardGraphicsView::paste() {
     const QMimeData *mimeData = clipboard->mimeData();
 
     if (mimeData->hasImage()) {
-        auto *item = new QGraphicsPixmapItem(qvariant_cast<QPixmap>(mimeData->imageData()));
-        item->setFlags(QGraphicsItem::ItemIsMovable | QGraphicsItem::ItemIsSelectable);
-        item->setTransformationMode(Qt::SmoothTransformation);
+        auto *item = new WhiteBoardPixmapItem(qvariant_cast<QPixmap>(mimeData->imageData()));
         scene()->addItem(item);
     } else if (mimeData->hasHtml()) {
         auto *textItem = new WhiteBoardTextItem();

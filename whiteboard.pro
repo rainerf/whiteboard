@@ -19,6 +19,8 @@ INCLUDEPATH += /usr/lib/gcc/x86_64-linux-gnu/9/include/
 
 SOURCES += \
     actions/coloraction.cpp \
+    items/whiteboarditemgroup.cpp \
+    items/whiteboardpixmapitem.cpp \
     lib/qgraphicsscenestorage.cpp \
     tools/highlighttool.cpp \
     lib/interactiveview.cpp \
@@ -35,6 +37,9 @@ SOURCES += \
 
 HEADERS += \
     actions/coloraction.h \
+    items/whiteboarditem.h \
+    items/whiteboarditemgroup.h \
+    items/whiteboardpixmapitem.h \
     lib/qgraphicsscenestorage.h \
     tools/highlighttool.h \
     lib/interactiveview.h \

@@ -1,10 +1,10 @@
 #ifndef PENTOOL_H
 #define PENTOOL_H
 
-#include <QGraphicsItemGroup>
 #include <QGraphicsPathItem>
 
 #include "whiteboardtool.h"
+#include "items/whiteboarditemgroup.h"
 
 class PenTool : public WhiteBoardTool {
 public:
@@ -19,14 +19,14 @@ public:
     PenTool() = default;
 
 protected:
-    QGraphicsItemGroup *currentGroup();
+    WhiteBoardItemGroup *currentGroup();
 
 private:
     QColor m_color = QColor(200, 200, 200);
     int m_thickness = 10;
 
     QGraphicsPathItem *m_path;
-    QGraphicsItemGroup *m_group;
+    WhiteBoardItemGroup *m_group;
     QPointF m_previous;
 };
 

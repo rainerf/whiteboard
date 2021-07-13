@@ -10,7 +10,7 @@ void PenTool::setPen(int thickness) {
 }
 
 void PenTool::handleTabletPress(WhiteBoardGraphicsView &view, QTabletEvent &event) {
-    m_group = new QGraphicsItemGroup();
+    m_group = new WhiteBoardItemGroup();
     m_group->setFlags(QGraphicsItem::ItemIsMovable | QGraphicsItem::ItemIsSelectable);
     view.scene()->addItem(m_group);
 
@@ -36,6 +36,6 @@ void PenTool::handleTabletMove(WhiteBoardGraphicsView &view, QTabletEvent &event
     }
 }
 
-QGraphicsItemGroup *PenTool::currentGroup() {
+WhiteBoardItemGroup *PenTool::currentGroup() {
     return m_group;
 }

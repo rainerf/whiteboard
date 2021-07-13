@@ -4,6 +4,8 @@
 #include <QBrush>
 #include <QFont>
 #include "items/whiteboardtextitem.h"
+#include "items/whiteboarditemgroup.h"
+#include "items/whiteboardpixmapitem.h"
 
 // inspired by https://stackoverflow.com/a/51498180/1683161
 
@@ -168,11 +170,34 @@ QDataStream &operator>>(QDataStream &in, QGraphicsPixmapItem *item) {
     QPointF offset;
     int transformationMode;
     int shapeMode;
-    in >> pixmap >> offset >> shapeMode >> transformationMode;
+    in >> pixmap >> offset >> transformationMode >> shapeMode;
     item->setPixmap(pixmap);
     item->setOffset(offset);
     item->setTransformationMode(Qt::TransformationMode(transformationMode));
     item->setShapeMode(QGraphicsPixmapItem::ShapeMode(shapeMode));
+    return in;
+}
+
+QDataStream &operator<<(QDataStream &out, WhiteBoardPixmapItem *item) {
+    out << dynamic_cast<QGraphicsItem *>(item);
+    out << item->originalPixmap() << item->offset() << item->transformationMode() << item->shapeMode() << item->zoom();
+    return out;
+}
+
+QDataStream &operator>>(QDataStream &in, WhiteBoardPixmapItem *item) {
+    QGraphicsItem *tmp = dynamic_cast<QGraphicsItem *>(item);
+    in >> tmp;
+    QPixmap pixmap;
+    QPointF offset;
+    int transformationMode;
+    int shapeMode;
+    qreal zoom;
+    in >> pixmap >> offset >> transformationMode >> shapeMode >> zoom;
+    item->setOriginalPixmap(pixmap);
+    item->setOffset(offset);
+    item->setTransformationMode(Qt::TransformationMode(transformationMode));
+    item->setShapeMode(QGraphicsPixmapItem::ShapeMode(shapeMode));
+    item->setZoom(zoom);
     return in;
 }
 
@@ -240,16 +265,23 @@ void saveItem(QGraphicsItem *item, QDataStream &out, bool ignoreParent) {
     case QGraphicsPathItem::Type:
         out << dynamic_cast<QGraphicsPathItem *>(item);
         break;
+    case WhiteBoardPixmapItem::Type:
+        out << dynamic_cast<WhiteBoardPixmapItem *>(item);
+        break;
     case QGraphicsPixmapItem::Type:
         out << dynamic_cast<QGraphicsPixmapItem *>(item);
         break;
     case WhiteBoardTextItem::Type:
         // type was already serialized above, otherwise, it's the same thing as
-        // a QGraphicsTextItem (from a data point of view), so there's nothing
+        // the general type (from a data point of view), so there's nothing
         // special to do here
     case QGraphicsTextItem::Type:
         out << dynamic_cast<QGraphicsTextItem *>(item);
         break;
+    case WhiteBoardItemGroup::Type:
+        // type was already serialized above, otherwise, it's the same thing as
+        // the general type (from a data point of view), so there's nothing
+        // special to do here
     case QGraphicsItemGroup::Type:
         out << dynamic_cast<QGraphicsItemGroup *>(item);
         break;
@@ -319,6 +351,18 @@ QGraphicsItem *readItem(QDataStream &in) {
     case WhiteBoardTextItem::Type: {
         WhiteBoardTextItem *item = new WhiteBoardTextItem;
         in >> static_cast<QGraphicsTextItem*>(item);
+        return item;
+        break;
+    }
+    case WhiteBoardItemGroup::Type: {
+        WhiteBoardItemGroup *item = new WhiteBoardItemGroup;
+        in >> static_cast<QGraphicsItemGroup*>(item);
+        return item;
+        break;
+    }
+    case WhiteBoardPixmapItem::Type: {
+        WhiteBoardPixmapItem *item = new WhiteBoardPixmapItem;
+        in >> item;
         return item;
         break;
     }
