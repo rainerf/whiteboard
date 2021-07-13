@@ -1,7 +1,7 @@
 #include "zoomtool.h"
 #include "views/whiteboardgraphicsview.h"
 
-void ZoomTool::handleTabletPress(WhiteBoardGraphicsView &view, QTabletEvent &event) {
+void ZoomTool::handleTabletPress(WhiteBoardGraphicsView &, QTabletEvent &event) {
     // NB: we're deliberately not mapping the event's position to the scene here:
     // we'll be zooming the scene, therefore we'll be changing the scene coordinates
     // the widget's point maps to. Also, the zooming should not depend on the current

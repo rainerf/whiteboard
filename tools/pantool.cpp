@@ -1,7 +1,7 @@
 #include "zoomtool.h"
 #include "views/whiteboardgraphicsview.h"
 
-void PanTool::handleTabletPress(WhiteBoardGraphicsView &view, QTabletEvent &event) {
+void PanTool::handleTabletPress(WhiteBoardGraphicsView &, QTabletEvent &event) {
     m_previous = event.pos();
 }
 
