@@ -171,7 +171,7 @@ void MainWindow::saveToFile() {
 }
 
 void MainWindow::loadFromFile() {
-    QFileDialog dialog(this, "Save Whiteboard", "", "Whiteboard (*.whb);;All Files (*)");
+    QFileDialog dialog(this, "Open Whiteboard", "", "Whiteboard (*.whb);;All Files (*)");
     dialog.setDefaultSuffix(".whb");
     dialog.setAcceptMode(QFileDialog::AcceptOpen);
 
