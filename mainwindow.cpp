@@ -80,7 +80,7 @@ void MainWindow::setupFontToolbar() {
     fontSizeBox->setCurrentText("20");
 }
 
-MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow) {
+MainWindow::MainWindow(TabletApplication &app, QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow) {
     auto *scene = new QGraphicsScene(this);
     scene->setBackgroundBrush(QBrush(detail::createTexture()));
 
@@ -99,6 +99,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 
     // default settings
     ui->actionPen->trigger();
+
+    connect(&app, &TabletApplication::sendTabletActive, this, &MainWindow::tabletActive);
 }
 
 QLabel *createToolbarHeader(QString const &name) {
@@ -177,6 +179,15 @@ void MainWindow::loadFromFile() {
         const auto filename = dialog.selectedFiles().front();
         ui->graphicsView->loadFromFile(filename);
     }
+}
+
+bool MainWindow::eventFilter(QObject *obj, QEvent *event) {
+    if (event->type() == QEvent::MouseButtonPress || event->type() == QEvent::MouseMove || event->type() == QEvent::MouseButtonRelease) {
+        if (obj == ui->graphicsView->viewport()) {
+            return m_tabletActive;
+        }
+    }
+    return QMainWindow::eventFilter(obj, event);
 }
 
 MainWindow::~MainWindow() {

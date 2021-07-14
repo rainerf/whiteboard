@@ -42,6 +42,7 @@ HEADERS += \
     items/whiteboarditemgroup.h \
     items/whiteboardpixmapitem.h \
     lib/qgraphicsscenestorage.h \
+    lib/tabletapplication.h \
     tools/highlighttool.h \
     lib/interactiveview.h \
     mainwindow.h \

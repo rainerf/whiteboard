@@ -4,6 +4,7 @@
 #include <QActionGroup>
 #include <QGraphicsScene>
 #include <QMainWindow>
+#include "lib/tabletapplication.h"
 
 class ColorAction;
 class PenAction;
@@ -15,11 +16,17 @@ class MainWindow : public QMainWindow {
     Q_OBJECT
 
 public:
-    MainWindow(QWidget *parent = nullptr);
+    MainWindow(TabletApplication &app, QWidget *parent = nullptr);
     ~MainWindow();
+
+public slots:
+    void tabletActive(bool x) {
+        m_tabletActive = x;
+    }
 
 private:
     Ui::MainWindow *ui;
+    bool m_tabletActive = false;
 
     void setupToolSelectors();
     void setupUiActions();
@@ -32,5 +39,7 @@ private:
 
     void saveToFile();
     void loadFromFile();
+
+    bool eventFilter(QObject *obj, QEvent *event) override;
 };
 #endif // MAINWINDOW_H
