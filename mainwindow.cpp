@@ -100,6 +100,7 @@ MainWindow::MainWindow(TabletApplication &app, QWidget *parent) : QMainWindow(pa
     // default settings
     ui->actionPen->trigger();
 
+    qApp->installEventFilter(this);
     connect(&app, &TabletApplication::sendTabletActive, this, &MainWindow::tabletActive);
 }
 
