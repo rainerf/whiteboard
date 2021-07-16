@@ -25,7 +25,6 @@ private:
     QColor m_color = QColor(200, 200, 200);
     int m_thickness = 10;
 
-    QGraphicsPathItem *m_path;
     WhiteBoardItemGroup *m_group;
     QPointF m_previous;
 };

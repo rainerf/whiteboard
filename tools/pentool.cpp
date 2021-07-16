@@ -27,10 +27,10 @@ void PenTool::handleTabletMove(WhiteBoardGraphicsView &view, QTabletEvent &event
         p.moveTo(m_previous);
         p.lineTo(current);
 
-        m_path = new QGraphicsPathItem();
-        m_path->setPen(QPen(m_color, event.pressure() * m_thickness*3/4 + m_thickness/4, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));
-        m_path->setPath(p);
-        m_group->addToGroup(m_path);
+        auto *path = new QGraphicsPathItem();
+        path->setPen(QPen(m_color, event.pressure() * m_thickness*3/4 + m_thickness/4, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));
+        path->setPath(p);
+        m_group->addToGroup(path);
 
         m_previous = current;
     }
