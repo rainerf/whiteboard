@@ -34,6 +34,7 @@ SOURCES += \
     tools/texttool.cpp \
     tools/zoomtool.cpp \
     views/whiteboardcommands.cpp \
+    views/whiteboardcopypastesupport.cpp \
     views/whiteboardgraphicsview.cpp \
     items/whiteboardtextitem.cpp
 
@@ -54,6 +55,7 @@ HEADERS += \
     tools/texttool.h \
     tools/zoomtool.h \
     views/whiteboardcommands.h \
+    views/whiteboardcopypastesupport.h \
     views/whiteboardgraphicsview.h \
     items/whiteboardtextitem.h \
     tools/whiteboardtool.h

@@ -1,13 +1,11 @@
 #include "whiteboardgraphicsview.h"
 
-#include <QApplication>
-#include <QClipboard>
 #include <QGraphicsView>
 #include <QTabletEvent>
-#include <QtMath>
 #include <QMessageBox>
 
 #include "whiteboardcommands.h"
+#include "whiteboardcopypastesupport.h"
 #include "lib/qgraphicsscenestorage.h"
 
 void WhiteBoardGraphicsView::tabletEvent(QTabletEvent *event) {
@@ -106,20 +104,8 @@ void WhiteBoardGraphicsView::paste() {
     undoStack.push(new PasteCommand(scene()));
 }
 
-QImage WhiteBoardGraphicsView::renderToPixmap() {
-    auto const boundingRect = scene()->itemsBoundingRect();
-    int width = qCeil(boundingRect.width());
-    int height = qCeil(boundingRect.height());
-    QImage pixmap(width * 8, height * 8, QImage::Format_ARGB32);
-    QPainter painter(&pixmap);
-    painter.setRenderHints(QPainter::SmoothPixmapTransform | QPainter::HighQualityAntialiasing);
-    scene()->render(&painter, pixmap.rect(), boundingRect);
-    return pixmap;
-}
-
 void WhiteBoardGraphicsView::copy() {
-    QClipboard *clipboard = QApplication::clipboard();
-    clipboard->setImage(renderToPixmap());
+    copyGraphicsItems(scene()->selectedItems());
 }
 
 void WhiteBoardGraphicsView::selectAll() {

@@ -2,7 +2,9 @@
 #define WHITEBOARDCOMMANDS_H
 
 #include <QUndoCommand>
-#include <QGraphicsScene>
+
+class QGraphicsScene;
+class QGraphicsItem;
 
 class PasteCommand : public QUndoCommand {
 public:
@@ -12,7 +14,7 @@ public:
     void redo() override;
 
 private:
-    QGraphicsItem *m_item;
+    QList<QGraphicsItem*> m_items;
     QGraphicsScene *m_scene;
 };
 

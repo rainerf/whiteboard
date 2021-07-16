@@ -51,8 +51,6 @@ signals:
 private:
     void tabletEvent(QTabletEvent *event) override;
 
-    QImage renderToPixmap();
-
     bool m_deviceDown = false;
 
     PenTool penTool;
