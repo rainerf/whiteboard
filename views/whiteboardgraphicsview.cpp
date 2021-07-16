@@ -2,20 +2,12 @@
 
 #include <QApplication>
 #include <QClipboard>
-#include <QDataStream>
-#include <QDebug>
-#include <QGraphicsItemGroup>
-#include <QGraphicsPathItem>
 #include <QGraphicsView>
-#include <QMimeData>
-#include <QPixmap>
-#include <QSettings>
 #include <QTabletEvent>
 #include <QtMath>
 #include <QMessageBox>
 
-#include "items/whiteboardtextitem.h"
-#include "items/whiteboardpixmapitem.h"
+#include "whiteboardcommands.h"
 #include "lib/qgraphicsscenestorage.h"
 
 void WhiteBoardGraphicsView::tabletEvent(QTabletEvent *event) {
@@ -99,9 +91,7 @@ void WhiteBoardGraphicsView::setPanTool() {
 }
 
 void WhiteBoardGraphicsView::deleteSelectedItems() {
-    for (auto &&i : scene()->selectedItems()) {
-        scene()->removeItem(i);
-    }
+    undoStack.push(new DeleteCommand(scene()));
 }
 
 void WhiteBoardGraphicsView::setFont(const QFont &font) {
@@ -113,21 +103,7 @@ void WhiteBoardGraphicsView::setFontSize(int size) {
 }
 
 void WhiteBoardGraphicsView::paste() {
-    const QClipboard *clipboard = QApplication::clipboard();
-    const QMimeData *mimeData = clipboard->mimeData();
-
-    if (mimeData->hasImage()) {
-        auto *item = new WhiteBoardPixmapItem(qvariant_cast<QPixmap>(mimeData->imageData()));
-        scene()->addItem(item);
-    } else if (mimeData->hasHtml()) {
-        auto *textItem = new WhiteBoardTextItem();
-        textItem->setHtml(mimeData->html());
-        scene()->addItem(textItem);
-    } else if (mimeData->hasText()) {
-        auto *textItem = new WhiteBoardTextItem();
-        textItem->setPlainText(mimeData->text());
-        scene()->addItem(textItem);
-    }
+    undoStack.push(new PasteCommand(scene()));
 }
 
 QImage WhiteBoardGraphicsView::renderToPixmap() {

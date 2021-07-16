@@ -10,7 +10,8 @@ void HighlightTool::setPen(int thickness) {
     PenTool::setPen(thickness * 10);
 }
 
-void HighlightTool::handleTabletPress(WhiteBoardGraphicsView &view, QTabletEvent &event) {
-    PenTool::handleTabletPress(view, event);
-    currentGroup()->setZValue(-1);
+WhiteBoardItemGroup *HighlightTool::createGroup() {
+    auto *group = PenTool::createGroup();
+    group->setZValue(-1);
+    return group;
 }

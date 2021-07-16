@@ -8,7 +8,7 @@ public:
     void setColor(QColor const &color) override;
     void setPen(int thickness) override;
 
-    void handleTabletPress(WhiteBoardGraphicsView &view, QTabletEvent &event) override;
+    WhiteBoardItemGroup *createGroup() override;
 };
 
 #endif // HIGHLIGHTTOOL_H

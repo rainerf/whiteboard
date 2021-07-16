@@ -62,6 +62,15 @@ void MainWindow::setupUiActions() {
     connect(ui->actionZoomOriginal, &QAction::triggered, [=]() { ui->graphicsView->setScale(1); });
     connect(ui->actionZoomFit, &QAction::triggered, ui->graphicsView, &WhiteBoardGraphicsView::zoomToFit);
     // connect(ui->actionHighlight, &QAction::toggled, [=](bool x) { m_colorSelector->setEnabled(!x); });
+
+    auto *undoAction = ui->graphicsView->getUndoStack()->createUndoAction(this);
+    undoAction->setIcon(QIcon(QString::fromUtf8(":/icons/icons/undo_black_24dp.svg")));
+    undoAction->setShortcut(QKeySequence::Undo);
+    auto *redoAction = ui->graphicsView->getUndoStack()->createRedoAction(this);
+    redoAction->setIcon(QIcon(QString::fromUtf8(":/icons/icons/redo_black_24dp.svg")));
+    redoAction->setShortcut(QKeySequence::Redo);
+    ui->toolBarCommon->addAction(undoAction);
+    ui->toolBarCommon->addAction(redoAction);
 }
 
 void MainWindow::setupFontToolbar() {

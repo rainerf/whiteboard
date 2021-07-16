@@ -1,6 +1,8 @@
 #ifndef WHITEBOARDGRAPHICSVIEW_H
 #define WHITEBOARDGRAPHICSVIEW_H
 
+#include <QUndoStack>
+
 #include "lib/interactiveview.h"
 #include "tools/highlighttool.h"
 #include "tools/pentool.h"
@@ -10,10 +12,14 @@
 #include "tools/pantool.h"
 
 class WhiteBoardGraphicsView : public InteractiveView {
-public:
     Q_OBJECT
 
+public:
     using InteractiveView::InteractiveView;
+
+    QUndoStack * getUndoStack() {
+        return &undoStack;
+    }
 
 public slots:
     void setColor(QColor const &color);
@@ -56,6 +62,8 @@ private:
     ZoomTool zoomTool;
     PanTool panTool;
     WhiteBoardTool *currentTool = &penTool;
+
+    QUndoStack undoStack;
 };
 
 #endif // WHITEBOARDGRAPHICSVIEW_H

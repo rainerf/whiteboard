@@ -3,12 +3,14 @@
 
 #include <QFont>
 #include <QColor>
-#include <QGraphicsTextItem>
 
 #include "whiteboardtool.h"
+#include "items/whiteboardtextitem.h"
 
 class TextTool : public WhiteBoardTool {
 public:
+    class AddCommand;
+
     void setColor(QColor const &color);
     void setFont(QFont const &font);
     void setFontSize(int size);
@@ -21,8 +23,9 @@ public:
     TextTool() = default;
 
 private:
+    AddCommand *m_currentCommand;
+
     QColor m_color = QColor(200, 200, 200);
-    QGraphicsTextItem *m_textItem;
     QFont m_font;
     int m_fontSize = 8;
 };
