@@ -22,7 +22,7 @@ public:
 
 private:
     QPixmap m_originalPixmap;
-    qreal m_zoom;
+    qreal m_zoom = 1;
 };
 
 using WhiteBoardPixmapItem = WhiteBoardItem<WhiteBoardPixmapItemBase>;
