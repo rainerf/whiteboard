@@ -22,6 +22,7 @@
 #include "tools/highlight_tool.h"
 #include "tools/pen_tool.h"
 #include "tools/pointer_tool.h"
+#include "tools/select_tool.h"
 #include "tools/text_tool.h"
 #include "tools/zoom_tool.h"
 #include "tools/pan_tool.h"
@@ -46,6 +47,7 @@ public slots:
     void setPointerTool();
     void setZoomTool();
     void setPanTool();
+    void setSelectTool();
 
     void deleteSelectedItems();
 
@@ -74,6 +76,7 @@ private:
     PointerTool pointerTool;
     ZoomTool zoomTool;
     PanTool panTool;
+    SelectTool selectTool;
     ToolBase *currentTool = &penTool;
 
     QUndoStack undoStack;

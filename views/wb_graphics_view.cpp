@@ -67,6 +67,12 @@ void WB_GraphicsView::setPenThickness(int thickness) {
     highlightTool.setPen(thickness);
 }
 
+void WB_GraphicsView::setSelectTool() {
+    if (m_deviceDown)
+        throw std::logic_error("Changing a tool while it's in use should not be possible!");
+    currentTool = &selectTool;
+}
+
 void WB_GraphicsView::setPenTool() {
     if (m_deviceDown)
         throw std::logic_error("Changing a tool while it's in use should not be possible!");

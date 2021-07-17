@@ -32,6 +32,7 @@ SOURCES += \
     tools/pan_tool.cpp \
     tools/pen_tool.cpp \
     tools/pointer_tool.cpp \
+    tools/select_tool.cpp \
     tools/text_tool.cpp \
     tools/zoom_tool.cpp \
     views/commands.cpp \
@@ -53,6 +54,7 @@ HEADERS += \
     tools/pan_tool.h \
     tools/pen_tool.h \
     tools/pointer_tool.h \
+    tools/select_tool.h \
     tools/text_tool.h \
     tools/tool_base.h \
     tools/zoom_tool.h \
