@@ -22,8 +22,8 @@
 
 class PanTool : public ToolBase {
 public:
-    void handleTabletPress(WB_GraphicsView &view, QTabletEvent &event);
-    void handleTabletMove(WB_GraphicsView &view, QTabletEvent &event);
+    void handleTabletPress(WB_GraphicsView &view, QTabletEvent &event) override;
+    void handleTabletMove(WB_GraphicsView &view, QTabletEvent &event) override;
 
     PanTool operator=(PanTool &) = delete;
     PanTool(PanTool &) = delete;

@@ -30,8 +30,8 @@ public:
     void setFont(QFont const &font);
     void setFontSize(int size);
 
-    void handleTabletPress(WB_GraphicsView &view, QTabletEvent &event);
-    void handleTabletMove(WB_GraphicsView &view, QTabletEvent &event);
+    void handleTabletPress(WB_GraphicsView &view, QTabletEvent &event) override;
+    void handleTabletMove(WB_GraphicsView &view, QTabletEvent &event) override;
 
     TextTool operator=(TextTool &) = delete;
     TextTool(TextTool &) = delete;

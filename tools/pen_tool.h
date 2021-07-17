@@ -29,8 +29,8 @@ public:
     virtual void setColor(QColor const &color);
     virtual void setPen(int thickness);
 
-    void handleTabletPress(WB_GraphicsView &view, QTabletEvent &event);
-    void handleTabletMove(WB_GraphicsView &view, QTabletEvent &event);
+    void handleTabletPress(WB_GraphicsView &view, QTabletEvent &event) override;
+    void handleTabletMove(WB_GraphicsView &view, QTabletEvent &event) override;
 
     PenTool operator=(PenTool &) = delete;
     PenTool(PenTool &) = delete;
