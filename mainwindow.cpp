@@ -25,25 +25,6 @@
 #include "actions/pen_action.h"
 #include "ui_mainwindow.h"
 
-namespace detail {
-
-QPixmap createTexture() {
-    constexpr int GRID_SIZE = 40;
-    QPixmap pixmap(QSize(GRID_SIZE, GRID_SIZE));
-    pixmap.fill();
-
-    QPainter painter(&pixmap);
-    QPen penHLines(QColor(200, 200, 200), 1, Qt::DotLine, Qt::FlatCap, Qt::RoundJoin);
-    painter.setPen(penHLines);
-    painter.drawLine(0, 0, 0, GRID_SIZE);
-    painter.drawLine(0, 0, GRID_SIZE, 0);
-    painter.end();
-
-    return pixmap;
-}
-
-} // namespace detail
-
 void MainWindow::setupToolSelectors() {
     auto *toolSelector = new QActionGroup(this);
     toolSelector->setExclusive(true);
@@ -107,11 +88,7 @@ void MainWindow::setupFontToolbar() {
 }
 
 MainWindow::MainWindow(TabletApplication &app, QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow) {
-    auto *scene = new QGraphicsScene(this);
-    scene->setBackgroundBrush(QBrush(detail::createTexture()));
-
     ui->setupUi(this);
-    ui->graphicsView->setScene(scene);
 
     setupToolSelectors();
     setupColorActions();

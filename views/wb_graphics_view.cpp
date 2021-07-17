@@ -21,7 +21,7 @@
 
 #include "commands.h"
 #include "copy_paste_support.h"
-#include "lib/qgraphicsscene_storage.h"
+#include "wb_graphics_scene.h"
 
 void WB_GraphicsView::tabletEvent(QTabletEvent *event) {
     switch (event->type()) {
@@ -54,6 +54,10 @@ void WB_GraphicsView::tabletEvent(QTabletEvent *event) {
         break;
     }
     event->accept();
+}
+
+WB_GraphicsView::WB_GraphicsView(QWidget *parent): InteractiveView(parent) {
+    setScene(m_scene = new WB_GraphicsScene(this));
 }
 
 void WB_GraphicsView::setColor(const QColor &color) {
@@ -135,28 +139,14 @@ void WB_GraphicsView::selectAll() {
 }
 
 void WB_GraphicsView::saveToFile(QString const &filename) {
-    QFile fileOut(filename);
-    if (fileOut.open(QIODevice::WriteOnly)) {
-        QDataStream out(&fileOut);
-        saveItems(scene()->items(), out);
-        fileOut.close();
-    }
+    m_scene->saveToFile(filename);
 }
 
 void WB_GraphicsView::loadFromFile(QString const &filename) {
-    QFile fileIn(filename);
-    if (fileIn.open(QIODevice::ReadOnly)) {
-        scene()->clear();
-
-        QDataStream in(&fileIn);
-        try {
-            QList<QGraphicsItem *> items = readItems(in);
-            for (QGraphicsItem *item : items) {
-                scene()->addItem(item);
-            }
-        } catch (FileError &) {
-            QMessageBox::critical(this, "Whiteboard", "File format incorrect!");
-        }
+    try {
+        m_scene->loadFromFile(filename);
+    } catch (...) {
+        QMessageBox::critical(this, "Whiteboard", "File format incorrect!");
     }
 }
 

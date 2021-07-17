@@ -37,6 +37,7 @@ SOURCES += \
     tools/zoom_tool.cpp \
     views/commands.cpp \
     views/copy_paste_support.cpp \
+    views/wb_graphics_scene.cpp \
     views/wb_graphics_view.cpp
 
 HEADERS += \
@@ -60,6 +61,7 @@ HEADERS += \
     tools/zoom_tool.h \
     views/commands.h \
     views/copy_paste_support.h \
+    views/wb_graphics_scene.h \
     views/wb_graphics_view.h
 
 FORMS += \

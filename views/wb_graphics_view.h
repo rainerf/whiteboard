@@ -27,11 +27,13 @@
 #include "tools/zoom_tool.h"
 #include "tools/pan_tool.h"
 
+class WB_GraphicsScene;
+
 class WB_GraphicsView : public InteractiveView {
     Q_OBJECT
 
 public:
-    using InteractiveView::InteractiveView;
+    WB_GraphicsView(QWidget *parent);
 
     QUndoStack * getUndoStack() {
         return &undoStack;
@@ -67,6 +69,8 @@ signals:
 
 private:
     void tabletEvent(QTabletEvent *event) override;
+
+    WB_GraphicsScene *m_scene;
 
     bool m_deviceDown = false;
 
