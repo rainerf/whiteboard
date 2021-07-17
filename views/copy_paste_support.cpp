@@ -1,4 +1,4 @@
-#include "whiteboardcopypastesupport.h"
+#include "copy_paste_support.h"
 
 #include <QList>
 #include <QImage>
@@ -10,7 +10,7 @@
 #include <QApplication>
 #include <QClipboard>
 
-#include "lib/qgraphicsscenestorage.h"
+#include "lib/qgraphicsscene_storage.h"
 
 QList<QGraphicsItem*> pasteFromBinary(QByteArray &itemData) {
     QDataStream inData(&itemData, QIODevice::ReadOnly);

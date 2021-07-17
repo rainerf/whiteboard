@@ -32,7 +32,7 @@
      <number>0</number>
     </property>
     <item>
-     <widget class="WhiteBoardGraphicsView" name="graphicsView"/>
+     <widget class="WB_GraphicsView" name="graphicsView"/>
     </item>
    </layout>
   </widget>
@@ -351,9 +351,9 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>WhiteBoardGraphicsView</class>
+   <class>WB_GraphicsView</class>
    <extends>QGraphicsView</extends>
-   <header>views/whiteboardgraphicsview.h</header>
+   <header>views/wb_graphics_view.h</header>
   </customwidget>
  </customwidgets>
  <resources>

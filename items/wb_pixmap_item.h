@@ -3,15 +3,15 @@
 
 #include <QGraphicsPixmapItem>
 
-#include "whiteboarditem.h"
+#include "wb_item.h"
 
-class WhiteBoardPixmapItemBase : public QGraphicsPixmapItem {
+class WB_PixmapItemBase : public QGraphicsPixmapItem {
 public:
     enum { Type = UserType + 2 };
     int type() const override;
 
-    WhiteBoardPixmapItemBase(QGraphicsItem *parent = nullptr);
-    WhiteBoardPixmapItemBase(const QPixmap &pixmap, QGraphicsItem *parent = nullptr);
+    WB_PixmapItemBase(QGraphicsItem *parent = nullptr);
+    WB_PixmapItemBase(const QPixmap &pixmap, QGraphicsItem *parent = nullptr);
 
     void setOriginalPixmap(const QPixmap &pixmap);
     QPixmap originalPixmap() const;
@@ -25,6 +25,6 @@ private:
     qreal m_zoom = 1;
 };
 
-using WhiteBoardPixmapItem = WhiteBoardItem<WhiteBoardPixmapItemBase>;
+using WB_PixmapItem = WB_Item<WB_PixmapItemBase>;
 
 #endif // WHITEBOARDPIXMAPITEM_H

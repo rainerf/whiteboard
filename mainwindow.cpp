@@ -6,8 +6,8 @@
 #include <QLabel>
 //#include <QGLWidget>
 
-#include "actions/coloraction.h"
-#include "actions/penaction.h"
+#include "actions/color_action.h"
+#include "actions/pen_action.h"
 #include "ui_mainwindow.h"
 
 namespace detail {
@@ -39,28 +39,28 @@ void MainWindow::setupToolSelectors() {
     toolSelector->addAction(ui->actionZoomTool);
     toolSelector->addAction(ui->actionPanTool);
 
-    connect(ui->actionPen, &QAction::triggered, ui->graphicsView, &WhiteBoardGraphicsView::setPenTool);
-    connect(ui->actionText, &QAction::triggered, ui->graphicsView, &WhiteBoardGraphicsView::setTextTool);
-    connect(ui->actionHighlight, &QAction::triggered, ui->graphicsView, &WhiteBoardGraphicsView::setHighlightTool);
-    connect(ui->actionPointer, &QAction::triggered, ui->graphicsView, &WhiteBoardGraphicsView::setPointerTool);
-    connect(ui->actionZoomTool, &QAction::triggered, ui->graphicsView, &WhiteBoardGraphicsView::setZoomTool);
-    connect(ui->actionPanTool, &QAction::triggered, ui->graphicsView, &WhiteBoardGraphicsView::setPanTool);
+    connect(ui->actionPen, &QAction::triggered, ui->graphicsView, &WB_GraphicsView::setPenTool);
+    connect(ui->actionText, &QAction::triggered, ui->graphicsView, &WB_GraphicsView::setTextTool);
+    connect(ui->actionHighlight, &QAction::triggered, ui->graphicsView, &WB_GraphicsView::setHighlightTool);
+    connect(ui->actionPointer, &QAction::triggered, ui->graphicsView, &WB_GraphicsView::setPointerTool);
+    connect(ui->actionZoomTool, &QAction::triggered, ui->graphicsView, &WB_GraphicsView::setZoomTool);
+    connect(ui->actionPanTool, &QAction::triggered, ui->graphicsView, &WB_GraphicsView::setPanTool);
 
-    connect(ui->actionDelete, &QAction::triggered, ui->graphicsView, &WhiteBoardGraphicsView::deleteSelectedItems);
+    connect(ui->actionDelete, &QAction::triggered, ui->graphicsView, &WB_GraphicsView::deleteSelectedItems);
 
     // disable changing the tool while one is in use
-    connect(ui->graphicsView, &WhiteBoardGraphicsView::toolInUse, toolSelector, &QActionGroup::setDisabled);
+    connect(ui->graphicsView, &WB_GraphicsView::toolInUse, toolSelector, &QActionGroup::setDisabled);
 }
 
 void MainWindow::setupUiActions() {
-    connect(ui->actionCopy, &QAction::triggered, ui->graphicsView, &WhiteBoardGraphicsView::copy);
-    connect(ui->actionPaste, &QAction::triggered, ui->graphicsView, &WhiteBoardGraphicsView::paste);
-    connect(ui->actionSelectAll, &QAction::triggered, ui->graphicsView, &WhiteBoardGraphicsView::selectAll);
+    connect(ui->actionCopy, &QAction::triggered, ui->graphicsView, &WB_GraphicsView::copy);
+    connect(ui->actionPaste, &QAction::triggered, ui->graphicsView, &WB_GraphicsView::paste);
+    connect(ui->actionSelectAll, &QAction::triggered, ui->graphicsView, &WB_GraphicsView::selectAll);
     connect(ui->actionSave, &QAction::triggered, this, &MainWindow::saveToFile);
     connect(ui->actionOpen, &QAction::triggered, this, &MainWindow::loadFromFile);
-    connect(ui->actionClear, &QAction::triggered, ui->graphicsView, &WhiteBoardGraphicsView::clear);
+    connect(ui->actionClear, &QAction::triggered, ui->graphicsView, &WB_GraphicsView::clear);
     connect(ui->actionZoomOriginal, &QAction::triggered, [=]() { ui->graphicsView->setScale(1); });
-    connect(ui->actionZoomFit, &QAction::triggered, ui->graphicsView, &WhiteBoardGraphicsView::zoomToFit);
+    connect(ui->actionZoomFit, &QAction::triggered, ui->graphicsView, &WB_GraphicsView::zoomToFit);
     // connect(ui->actionHighlight, &QAction::toggled, [=](bool x) { m_colorSelector->setEnabled(!x); });
 
     auto *undoAction = ui->graphicsView->getUndoStack()->createUndoAction(this);
@@ -76,7 +76,7 @@ void MainWindow::setupUiActions() {
 void MainWindow::setupFontToolbar() {
     auto *fontSelectionBox = new QFontComboBox();
     ui->toolBarFont->addWidget(fontSelectionBox);
-    connect(fontSelectionBox, &QFontComboBox::currentFontChanged, ui->graphicsView, &WhiteBoardGraphicsView::setFont);
+    connect(fontSelectionBox, &QFontComboBox::currentFontChanged, ui->graphicsView, &WB_GraphicsView::setFont);
 
     auto *fontSizeBox = new QComboBox();
     ui->toolBarFont->addWidget(fontSizeBox);
@@ -155,7 +155,7 @@ void MainWindow::setupPenActions() {
 
 ColorAction *MainWindow::addColorAction(const QColor &color, QActionGroup *selector) {
     auto *newAction = new ColorAction(color, this);
-    connect(newAction, &ColorAction::colorSelected, ui->graphicsView, &WhiteBoardGraphicsView::setColor);
+    connect(newAction, &ColorAction::colorSelected, ui->graphicsView, &WB_GraphicsView::setColor);
     ui->toolBarSettings->addAction(newAction);
     selector->addAction(newAction);
     return newAction;
@@ -163,7 +163,7 @@ ColorAction *MainWindow::addColorAction(const QColor &color, QActionGroup *selec
 
 PenAction *MainWindow::addPenAction(int thickness, QActionGroup *selector) {
     auto *newAction = new PenAction(thickness, this);
-    connect(newAction, &PenAction::penSelected, ui->graphicsView, &WhiteBoardGraphicsView::setPenThickness);
+    connect(newAction, &PenAction::penSelected, ui->graphicsView, &WB_GraphicsView::setPenThickness);
     ui->toolBarSettings->addAction(newAction);
     selector->addAction(newAction);
     return newAction;

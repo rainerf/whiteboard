@@ -4,7 +4,7 @@
 #include <QActionGroup>
 #include <QGraphicsScene>
 #include <QMainWindow>
-#include "lib/tabletapplication.h"
+#include "lib/tablet_application.h"
 
 class ColorAction;
 class PenAction;

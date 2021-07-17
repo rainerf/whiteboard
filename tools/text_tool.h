@@ -4,10 +4,10 @@
 #include <QFont>
 #include <QColor>
 
-#include "whiteboardtool.h"
-#include "items/whiteboardtextitem.h"
+#include "tool_base.h"
+#include "items/wb_text_item.h"
 
-class TextTool : public WhiteBoardTool {
+class TextTool : public ToolBase {
 public:
     class AddCommand;
 
@@ -15,8 +15,8 @@ public:
     void setFont(QFont const &font);
     void setFontSize(int size);
 
-    void handleTabletPress(WhiteBoardGraphicsView &view, QTabletEvent &event);
-    void handleTabletMove(WhiteBoardGraphicsView &view, QTabletEvent &event);
+    void handleTabletPress(WB_GraphicsView &view, QTabletEvent &event);
+    void handleTabletMove(WB_GraphicsView &view, QTabletEvent &event);
 
     TextTool operator=(TextTool &) = delete;
     TextTool(TextTool &) = delete;

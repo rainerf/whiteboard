@@ -4,15 +4,15 @@
 #include <QColor>
 #include <QGraphicsEllipseItem>
 
-#include "whiteboardtool.h"
+#include "tool_base.h"
 
-class PointerTool : public WhiteBoardTool {
+class PointerTool : public ToolBase {
 public:
     void setColor(QColor const &color);
 
-    void handleTabletPress(WhiteBoardGraphicsView &view, QTabletEvent &event) override;
-    void handleTabletMove(WhiteBoardGraphicsView &view, QTabletEvent &event) override;
-    void handleTabletRelease(WhiteBoardGraphicsView &view, QTabletEvent &) override;
+    void handleTabletPress(WB_GraphicsView &view, QTabletEvent &event) override;
+    void handleTabletMove(WB_GraphicsView &view, QTabletEvent &event) override;
+    void handleTabletRelease(WB_GraphicsView &view, QTabletEvent &) override;
 
     PointerTool operator=(PointerTool &) = delete;
     PointerTool(PointerTool &) = delete;

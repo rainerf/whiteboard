@@ -3,15 +3,15 @@
 
 #include <QGraphicsTextItem>
 
-#include "whiteboarditem.h"
+#include "wb_item.h"
 
-class WhiteBoardTextItemBase : public QGraphicsTextItem {
+class WB_TextItemBase : public QGraphicsTextItem {
 public:
     enum { Type = UserType + 1 };
     int type() const override;
 
-    WhiteBoardTextItemBase(const QString &text, QGraphicsItem *parent = nullptr);
-    WhiteBoardTextItemBase(QGraphicsItem *parent = nullptr);
+    WB_TextItemBase(const QString &text, QGraphicsItem *parent = nullptr);
+    WB_TextItemBase(QGraphicsItem *parent = nullptr);
 
     void mouseDoubleClickEvent(QGraphicsSceneMouseEvent *) override;
     void focusOutEvent(QFocusEvent *event) override;
@@ -21,6 +21,6 @@ public:
     qreal originalWidth() const;
 };
 
-using WhiteBoardTextItem = WhiteBoardItem<WhiteBoardTextItemBase>;
+using WB_TextItem = WB_Item<WB_TextItemBase>;
 
 #endif // WHITEBOARDTEXTITEM_H

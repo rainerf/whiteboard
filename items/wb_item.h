@@ -7,11 +7,11 @@
 #include <QGraphicsSceneMouseEvent>
 
 template <typename BASE>
-class WhiteBoardItem : public BASE {
+class WB_Item : public BASE {
 public:
 
     template<typename... Args>
-    explicit WhiteBoardItem(Args&&... args): BASE(std::forward<Args>(args)...) {
+    explicit WB_Item(Args&&... args): BASE(std::forward<Args>(args)...) {
         this->setFlags(QGraphicsItem::ItemIsMovable | QGraphicsItem::ItemIsSelectable | QGraphicsItem::ItemSendsGeometryChanges);
     }
 

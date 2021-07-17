@@ -3,12 +3,12 @@
 
 #include <QFont>
 
-#include "whiteboardtool.h"
+#include "tool_base.h"
 
-class ZoomTool : public WhiteBoardTool {
+class ZoomTool : public ToolBase {
 public:
-    void handleTabletPress(WhiteBoardGraphicsView &view, QTabletEvent &event);
-    void handleTabletMove(WhiteBoardGraphicsView &view, QTabletEvent &event);
+    void handleTabletPress(WB_GraphicsView &view, QTabletEvent &event);
+    void handleTabletMove(WB_GraphicsView &view, QTabletEvent &event);
 
     ZoomTool operator=(ZoomTool &) = delete;
     ZoomTool(ZoomTool &) = delete;

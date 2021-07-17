@@ -19,46 +19,46 @@ DEFINES += QT_DEPRECATED_WARNINGS
 INCLUDEPATH += /usr/lib/gcc/x86_64-linux-gnu/9/include/
 
 SOURCES += \
-    actions/coloraction.cpp \
-    items/whiteboarditemgroup.cpp \
-    items/whiteboardpixmapitem.cpp \
-    lib/qgraphicsscenestorage.cpp \
-    tools/highlighttool.cpp \
-    lib/interactiveview.cpp \
+    actions/color_action.cpp \
+    actions/pen_action.cpp \
+    items/wb_item_group.cpp \
+    items/wb_pixmap_item.cpp \
+    items/wb_text_item.cpp \
+    lib/interactive_view.cpp \
+    lib/qgraphicsscene_storage.cpp \
     main.cpp \
     mainwindow.cpp \
-    actions/penaction.cpp \
-    tools/pantool.cpp \
-    tools/pentool.cpp \
-    tools/pointertool.cpp \
-    tools/texttool.cpp \
-    tools/zoomtool.cpp \
-    views/whiteboardcommands.cpp \
-    views/whiteboardcopypastesupport.cpp \
-    views/whiteboardgraphicsview.cpp \
-    items/whiteboardtextitem.cpp
+    tools/highlight_tool.cpp \
+    tools/pan_tool.cpp \
+    tools/pen_tool.cpp \
+    tools/pointer_tool.cpp \
+    tools/text_tool.cpp \
+    tools/zoom_tool.cpp \
+    views/commands.cpp \
+    views/copy_paste_support.cpp \
+    views/wb_graphics_view.cpp
 
 HEADERS += \
-    actions/coloraction.h \
-    items/whiteboarditem.h \
-    items/whiteboarditemgroup.h \
-    items/whiteboardpixmapitem.h \
-    lib/qgraphicsscenestorage.h \
-    lib/tabletapplication.h \
-    tools/highlighttool.h \
-    lib/interactiveview.h \
+    actions/color_action.h \
+    actions/pen_action.h \
+    items/wb_item.h \
+    items/wb_item_group.h \
+    items/wb_pixmap_item.h \
+    items/wb_text_item.h \
+    lib/interactive_view.h \
+    lib/qgraphicsscene_storage.h \
+    lib/tablet_application.h \
     mainwindow.h \
-    actions/penaction.h \
-    tools/pantool.h \
-    tools/pentool.h \
-    tools/pointertool.h \
-    tools/texttool.h \
-    tools/zoomtool.h \
-    views/whiteboardcommands.h \
-    views/whiteboardcopypastesupport.h \
-    views/whiteboardgraphicsview.h \
-    items/whiteboardtextitem.h \
-    tools/whiteboardtool.h
+    tools/highlight_tool.h \
+    tools/pan_tool.h \
+    tools/pen_tool.h \
+    tools/pointer_tool.h \
+    tools/text_tool.h \
+    tools/tool_base.h \
+    tools/zoom_tool.h \
+    views/commands.h \
+    views/copy_paste_support.h \
+    views/wb_graphics_view.h
 
 FORMS += \
     mainwindow.ui

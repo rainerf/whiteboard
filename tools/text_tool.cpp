@@ -1,14 +1,14 @@
-#include "texttool.h"
+#include "text_tool.h"
 
 #include <QUndoCommand>
 
-#include "items/whiteboardtextitem.h"
-#include "views/whiteboardgraphicsview.h"
+#include "items/wb_text_item.h"
+#include "views/wb_graphics_view.h"
 
 
 class TextTool::AddCommand : public QUndoCommand {
 public:
-    explicit AddCommand(WhiteBoardTextItem *item, QGraphicsScene *graphicsScene, QUndoCommand *parent = nullptr) :
+    explicit AddCommand(WB_TextItem *item, QGraphicsScene *graphicsScene, QUndoCommand *parent = nullptr) :
             QUndoCommand("Add Text", parent),
             m_item(item),
             m_scene(graphicsScene) {
@@ -48,8 +48,8 @@ void TextTool::setFontSize(int size) {
     m_font.setPixelSize(m_fontSize);
 }
 
-void TextTool::handleTabletPress(WhiteBoardGraphicsView &view, QTabletEvent &event) {
-    auto *textItem = new WhiteBoardTextItem("");
+void TextTool::handleTabletPress(WB_GraphicsView &view, QTabletEvent &event) {
+    auto *textItem = new WB_TextItem("");
     textItem->setTextInteractionFlags(Qt::TextEditorInteraction);
     textItem->setPos(view.mapToScene(event.pos()));
     textItem->setFocus();
@@ -60,7 +60,7 @@ void TextTool::handleTabletPress(WhiteBoardGraphicsView &view, QTabletEvent &eve
     view.getUndoStack()->push(m_currentCommand);
 }
 
-void TextTool::handleTabletMove(WhiteBoardGraphicsView &view, QTabletEvent &event) {
+void TextTool::handleTabletMove(WB_GraphicsView &view, QTabletEvent &event) {
     if (m_currentCommand) {
         m_currentCommand->setPos(view.mapToScene(event.pos()));
     }

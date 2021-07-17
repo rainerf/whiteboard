@@ -3,15 +3,15 @@
 
 #include <QUndoStack>
 
-#include "lib/interactiveview.h"
-#include "tools/highlighttool.h"
-#include "tools/pentool.h"
-#include "tools/pointertool.h"
-#include "tools/texttool.h"
-#include "tools/zoomtool.h"
-#include "tools/pantool.h"
+#include "lib/interactive_view.h"
+#include "tools/highlight_tool.h"
+#include "tools/pen_tool.h"
+#include "tools/pointer_tool.h"
+#include "tools/text_tool.h"
+#include "tools/zoom_tool.h"
+#include "tools/pan_tool.h"
 
-class WhiteBoardGraphicsView : public InteractiveView {
+class WB_GraphicsView : public InteractiveView {
     Q_OBJECT
 
 public:
@@ -59,7 +59,7 @@ private:
     PointerTool pointerTool;
     ZoomTool zoomTool;
     PanTool panTool;
-    WhiteBoardTool *currentTool = &penTool;
+    ToolBase *currentTool = &penTool;
 
     QUndoStack undoStack;
 };

@@ -1,4 +1,4 @@
-#include "coloraction.h"
+#include "color_action.h"
 
 #include <QPainter>
 

@@ -1,14 +1,14 @@
 #ifndef HIGHLIGHTTOOL_H
 #define HIGHLIGHTTOOL_H
 
-#include "pentool.h"
+#include "pen_tool.h"
 
 class HighlightTool : public PenTool {
 public:
     void setColor(QColor const &color) override;
     void setPen(int thickness) override;
 
-    WhiteBoardItemGroup *createGroup() override;
+    WB_ItemGroup *createGroup() override;
 };
 
 #endif // HIGHLIGHTTOOL_H

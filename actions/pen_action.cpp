@@ -2,7 +2,7 @@
 #include <QPainter>
 #include <QtGlobal>
 
-#include "penaction.h"
+#include "pen_action.h"
 
 PenAction::PenAction(int thickness, QObject *parent) : QAction(parent), m_thickness(thickness) {
     connect(this, &QAction::triggered, [=]() { emit penSelected(m_thickness); });

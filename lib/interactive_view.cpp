@@ -1,7 +1,7 @@
 #include <QKeyEvent>
 #include <QWheelEvent>
 
-#include "interactiveview.h"
+#include "interactive_view.h"
 
 InteractiveView::InteractiveView(QWidget *&parent) : QGraphicsView(parent) {
     setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);

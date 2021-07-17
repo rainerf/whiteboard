@@ -1,5 +1,5 @@
 #include "mainwindow.h"
-#include "lib/tabletapplication.h"
+#include "lib/tablet_application.h"
 
 int main(int argc, char *argv[]) {
     TabletApplication a(argc, argv);

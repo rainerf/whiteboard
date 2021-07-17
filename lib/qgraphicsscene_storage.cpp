@@ -1,11 +1,11 @@
-#include "lib/qgraphicsscenestorage.h"
+#include "lib/qgraphicsscene_storage.h"
 
 #include <QPen>
 #include <QBrush>
 #include <QFont>
-#include "items/whiteboardtextitem.h"
-#include "items/whiteboarditemgroup.h"
-#include "items/whiteboardpixmapitem.h"
+#include "items/wb_text_item.h"
+#include "items/wb_item_group.h"
+#include "items/wb_pixmap_item.h"
 
 // inspired by https://stackoverflow.com/a/51498180/1683161
 
@@ -178,13 +178,13 @@ QDataStream &operator>>(QDataStream &in, QGraphicsPixmapItem *item) {
     return in;
 }
 
-QDataStream &operator<<(QDataStream &out, WhiteBoardPixmapItem *item) {
+QDataStream &operator<<(QDataStream &out, WB_PixmapItem *item) {
     out << dynamic_cast<QGraphicsItem *>(item);
     out << item->originalPixmap() << item->offset() << item->transformationMode() << item->shapeMode() << item->zoom();
     return out;
 }
 
-QDataStream &operator>>(QDataStream &in, WhiteBoardPixmapItem *item) {
+QDataStream &operator>>(QDataStream &in, WB_PixmapItem *item) {
     QGraphicsItem *tmp = dynamic_cast<QGraphicsItem *>(item);
     in >> tmp;
     QPixmap pixmap;
@@ -265,20 +265,20 @@ void saveItem(QGraphicsItem *item, QDataStream &out, bool ignoreParent) {
     case QGraphicsPathItem::Type:
         out << dynamic_cast<QGraphicsPathItem *>(item);
         break;
-    case WhiteBoardPixmapItem::Type:
-        out << dynamic_cast<WhiteBoardPixmapItem *>(item);
+    case WB_PixmapItem::Type:
+        out << dynamic_cast<WB_PixmapItem *>(item);
         break;
     case QGraphicsPixmapItem::Type:
         out << dynamic_cast<QGraphicsPixmapItem *>(item);
         break;
-    case WhiteBoardTextItem::Type:
+    case WB_TextItem::Type:
         // type was already serialized above, otherwise, it's the same thing as
         // the general type (from a data point of view), so there's nothing
         // special to do here
     case QGraphicsTextItem::Type:
         out << dynamic_cast<QGraphicsTextItem *>(item);
         break;
-    case WhiteBoardItemGroup::Type:
+    case WB_ItemGroup::Type:
         // type was already serialized above, otherwise, it's the same thing as
         // the general type (from a data point of view), so there's nothing
         // special to do here
@@ -348,20 +348,20 @@ QGraphicsItem *readItem(QDataStream &in) {
         return item;
         break;
     }
-    case WhiteBoardTextItem::Type: {
-        WhiteBoardTextItem *item = new WhiteBoardTextItem;
+    case WB_TextItem::Type: {
+        WB_TextItem *item = new WB_TextItem;
         in >> static_cast<QGraphicsTextItem*>(item);
         return item;
         break;
     }
-    case WhiteBoardItemGroup::Type: {
-        WhiteBoardItemGroup *item = new WhiteBoardItemGroup;
+    case WB_ItemGroup::Type: {
+        WB_ItemGroup *item = new WB_ItemGroup;
         in >> static_cast<QGraphicsItemGroup*>(item);
         return item;
         break;
     }
-    case WhiteBoardPixmapItem::Type: {
-        WhiteBoardPixmapItem *item = new WhiteBoardPixmapItem;
+    case WB_PixmapItem::Type: {
+        WB_PixmapItem *item = new WB_PixmapItem;
         in >> item;
         return item;
         break;

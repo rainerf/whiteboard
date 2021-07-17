@@ -1,14 +1,14 @@
-#include "whiteboardgraphicsview.h"
+#include "wb_graphics_view.h"
 
 #include <QGraphicsView>
 #include <QTabletEvent>
 #include <QMessageBox>
 
-#include "whiteboardcommands.h"
-#include "whiteboardcopypastesupport.h"
-#include "lib/qgraphicsscenestorage.h"
+#include "commands.h"
+#include "copy_paste_support.h"
+#include "lib/qgraphicsscene_storage.h"
 
-void WhiteBoardGraphicsView::tabletEvent(QTabletEvent *event) {
+void WB_GraphicsView::tabletEvent(QTabletEvent *event) {
     switch (event->type()) {
     case QEvent::TabletPress:
         // take the focus from other widgets (which Qt doesn't do for some reason),
@@ -41,79 +41,79 @@ void WhiteBoardGraphicsView::tabletEvent(QTabletEvent *event) {
     event->accept();
 }
 
-void WhiteBoardGraphicsView::setColor(const QColor &color) {
+void WB_GraphicsView::setColor(const QColor &color) {
     penTool.setColor(color);
     textTool.setColor(color);
     highlightTool.setColor(color);
 }
 
-void WhiteBoardGraphicsView::setPenThickness(int thickness) {
+void WB_GraphicsView::setPenThickness(int thickness) {
     penTool.setPen(thickness);
     highlightTool.setPen(thickness);
 }
 
-void WhiteBoardGraphicsView::setPenTool() {
+void WB_GraphicsView::setPenTool() {
     if (m_deviceDown)
         throw std::logic_error("Changing a tool while it's in use should not be possible!");
     currentTool = &penTool;
 }
 
-void WhiteBoardGraphicsView::setTextTool() {
+void WB_GraphicsView::setTextTool() {
     if (m_deviceDown)
         throw std::logic_error("Changing a tool while it's in use should not be possible!");
     currentTool = &textTool;
 }
 
-void WhiteBoardGraphicsView::setHighlightTool() {
+void WB_GraphicsView::setHighlightTool() {
     if (m_deviceDown)
         throw std::logic_error("Changing a tool while it's in use should not be possible!");
     currentTool = &highlightTool;
 }
 
-void WhiteBoardGraphicsView::setPointerTool() {
+void WB_GraphicsView::setPointerTool() {
     if (m_deviceDown)
         throw std::logic_error("Changing a tool while it's in use should not be possible!");
     currentTool = &pointerTool;
 }
 
-void WhiteBoardGraphicsView::setZoomTool() {
+void WB_GraphicsView::setZoomTool() {
     if (m_deviceDown)
         throw std::logic_error("Changing a tool while it's in use should not be possible!");
     currentTool = &zoomTool;
 }
 
-void WhiteBoardGraphicsView::setPanTool() {
+void WB_GraphicsView::setPanTool() {
     if (m_deviceDown)
         throw std::logic_error("Changing a tool while it's in use should not be possible!");
     currentTool = &panTool;
 }
 
-void WhiteBoardGraphicsView::deleteSelectedItems() {
+void WB_GraphicsView::deleteSelectedItems() {
     undoStack.push(new DeleteCommand(scene()));
 }
 
-void WhiteBoardGraphicsView::setFont(const QFont &font) {
+void WB_GraphicsView::setFont(const QFont &font) {
     textTool.setFont(font);
 }
 
-void WhiteBoardGraphicsView::setFontSize(int size) {
+void WB_GraphicsView::setFontSize(int size) {
     textTool.setFontSize(size);
 }
 
-void WhiteBoardGraphicsView::paste() {
+void WB_GraphicsView::paste() {
     undoStack.push(new PasteCommand(scene()));
 }
 
-void WhiteBoardGraphicsView::copy() {
+void WB_GraphicsView::copy() {
     copyGraphicsItems(scene()->selectedItems());
 }
 
-void WhiteBoardGraphicsView::selectAll() {
+void WB_GraphicsView::selectAll() {
     for (auto &&i : scene()->items())
         i->setSelected(true);
 }
 
-void WhiteBoardGraphicsView::saveToFile(QString const &filename) {
+void WB_GraphicsView::saveToFile(QString const &filename) {
     QFile fileOut(filename);
     if (fileOut.open(QIODevice::WriteOnly)) {
         QDataStream out(&fileOut);
@@ -122,7 +122,7 @@ void WhiteBoardGraphicsView::saveToFile(QString const &filename) {
     }
 }
 
-void WhiteBoardGraphicsView::loadFromFile(QString const &filename) {
+void WB_GraphicsView::loadFromFile(QString const &filename) {
     QFile fileIn(filename);
     if (fileIn.open(QIODevice::ReadOnly)) {
         scene()->clear();
@@ -139,6 +139,6 @@ void WhiteBoardGraphicsView::loadFromFile(QString const &filename) {
     }
 }
 
-void WhiteBoardGraphicsView::clear() {
+void WB_GraphicsView::clear() {
     scene()->clear();
 }

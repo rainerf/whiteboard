@@ -1,4 +1,4 @@
-#include "whiteboardcommands.h"
+#include "commands.h"
 
 #include <QApplication>
 #include <QMimeData>
@@ -6,10 +6,10 @@
 #include <QGraphicsScene>
 #include <QGraphicsItem>
 
-#include "items/whiteboardpixmapitem.h"
-#include "items/whiteboardtextitem.h"
-#include "lib/qgraphicsscenestorage.h"
-#include "whiteboardcopypastesupport.h"
+#include "items/wb_pixmap_item.h"
+#include "items/wb_text_item.h"
+#include "lib/qgraphicsscene_storage.h"
+#include "copy_paste_support.h"
 
 PasteCommand::PasteCommand(QGraphicsScene *graphicsScene, QUndoCommand *parent) : QUndoCommand("Paste", parent), m_scene(graphicsScene) {
     const QClipboard *clipboard = QApplication::clipboard();
@@ -18,13 +18,13 @@ PasteCommand::PasteCommand(QGraphicsScene *graphicsScene, QUndoCommand *parent) 
     if (mimeData->formats().contains(MIME_TYPE)) {
         m_items = pasteFromMimeData(mimeData);
     } else if (mimeData->hasImage()) {
-        m_items.append(new WhiteBoardPixmapItem(qvariant_cast<QPixmap>(mimeData->imageData())));
+        m_items.append(new WB_PixmapItem(qvariant_cast<QPixmap>(mimeData->imageData())));
     } else if (mimeData->hasHtml()) {
-        auto *textItem = new WhiteBoardTextItem();
+        auto *textItem = new WB_TextItem();
         textItem->setHtml(mimeData->html());
         m_items.append(textItem);
     } else if (mimeData->hasText()) {
-        auto *textItem = new WhiteBoardTextItem();
+        auto *textItem = new WB_TextItem();
         textItem->setPlainText(mimeData->text());
         m_items.append(textItem);
     }
