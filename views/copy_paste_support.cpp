@@ -47,8 +47,6 @@ namespace detail {
 // call.
 QImage renderToPixmap(QByteArray &itemData) {
     QGraphicsScene s;
-    // set a white background since windows doesn't support transparency
-    s.setBackgroundBrush(Qt::white);
     for (auto &&i: pasteFromBinary(itemData))
         s.addItem(i);
     s.clearSelection();
@@ -59,7 +57,8 @@ QImage renderToPixmap(QByteArray &itemData) {
     auto const boundingRect = s.itemsBoundingRect();
     int width = qCeil(boundingRect.width());
     int height = qCeil(boundingRect.height());
-    QImage image(width * oversampling, height * oversampling, QImage::Format_ARGB32);
+    QImage image(width * oversampling, height * oversampling, QImage::Format_RGB32);
+    image.fill(Qt::white);
     image.setDotsPerMeterX(image.dotsPerMeterX()*oversampling);
     image.setDotsPerMeterY(image.dotsPerMeterY()*oversampling);
     QPainter painter(&image);
