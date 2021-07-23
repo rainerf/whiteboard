@@ -47,6 +47,8 @@ namespace detail {
 // call.
 QImage renderToPixmap(QByteArray &itemData) {
     QGraphicsScene s;
+    // set a white background since windows doesn't support transparency
+    s.setBackgroundBrush(Qt::white);
     for (auto &&i: pasteFromBinary(itemData))
         s.addItem(i);
     s.clearSelection();
