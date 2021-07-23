@@ -28,7 +28,7 @@ InteractiveView::InteractiveView(QWidget *&parent) : QGraphicsView(parent) {
     setDragMode(QGraphicsView::RubberBandDrag);
 }
 
-void InteractiveView::setScale(qreal newScale) {
+void InteractiveView::setZoom(qreal newScale) {
     setTransform(QTransform() * newScale);
 }
 
@@ -76,16 +76,16 @@ void InteractiveView::setMaxSize() {
     setSceneRect(INT_MIN / 2, INT_MIN / 2, INT_MAX, INT_MAX);
 }
 
-void InteractiveView::zoom(float scaleFactor) {
+void InteractiveView::zoomDelta(float scaleFactor) {
     scale(scaleFactor, scaleFactor);
 }
 
 void InteractiveView::zoomIn() {
-    zoom(_zoomDelta);
+    zoomDelta(_zoomDelta);
 }
 
 void InteractiveView::zoomOut() {
-    zoom(1 / _zoomDelta);
+    zoomDelta(1 / _zoomDelta);
 }
 
 void InteractiveView::pan(QPointF delta, bool mouse) {

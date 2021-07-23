@@ -57,7 +57,7 @@ void MainWindow::setupUiActions() {
     connect(ui->actionSave, &QAction::triggered, this, &MainWindow::saveToFile);
     connect(ui->actionOpen, &QAction::triggered, this, &MainWindow::loadFromFile);
     connect(ui->actionClear, &QAction::triggered, ui->graphicsView, &WB_GraphicsView::clear);
-    connect(ui->actionZoomOriginal, &QAction::triggered, [=]() { ui->graphicsView->setScale(1); });
+    connect(ui->actionZoomOriginal, &QAction::triggered, [=]() { ui->graphicsView->setZoom(1); });
     connect(ui->actionZoomFit, &QAction::triggered, ui->graphicsView, &WB_GraphicsView::zoomToFit);
     // connect(ui->actionHighlight, &QAction::toggled, [=](bool x) { m_colorSelector->setEnabled(!x); });
 

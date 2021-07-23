@@ -23,13 +23,10 @@ public:
     InteractiveView(QWidget *&);
 
     void pan(QPointF delta, bool mouse);
-    void zoom(float scaleFactor);
     void zoomIn();
     void zoomOut();
     void zoomToFit();
-
-    qreal getScale() const;
-    void setScale(qreal);
+    void setZoom(qreal);
 
 protected:
     void mouseMoveEvent(QMouseEvent *) override;
@@ -46,6 +43,7 @@ private:
     Qt::MouseButton const panButton = Qt::MiddleButton;
 
     void setMaxSize();
+    void zoomDelta(float scaleFactor);
 };
 
 #endif // INTERACTIVEVIEW_H
