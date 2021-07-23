@@ -33,7 +33,7 @@ void InteractiveView::setZoom(qreal newScale) {
 }
 
 void InteractiveView::zoomToFit() {
-    fitInView(scene()->sceneRect(), Qt::KeepAspectRatio);
+    fitInView(scene()->itemsBoundingRect(), Qt::KeepAspectRatio);
 }
 
 void InteractiveView::mouseMoveEvent(QMouseEvent *event) {
