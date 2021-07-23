@@ -75,7 +75,6 @@ void copyGraphicsItems(QList<QGraphicsItem *> items) {
     QDataStream outData(&itemData, QIODevice::WriteOnly);
     saveItems(items, outData);
     QMimeData* mimeData = new QMimeData;
-    mimeData->removeFormat(MIME_TYPE);
     mimeData->setData(MIME_TYPE, itemData);
     mimeData->setImageData(detail::renderToPixmap(itemData));
 
