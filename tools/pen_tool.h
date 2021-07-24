@@ -31,6 +31,7 @@ public:
 
     void handleTabletPress(WB_GraphicsView &view, QTabletEvent &event) override;
     void handleTabletMove(WB_GraphicsView &view, QTabletEvent &event) override;
+    void handleTabletRelease(WB_GraphicsView &view, QTabletEvent &event) override;
 
     PenTool operator=(PenTool &) = delete;
     PenTool(PenTool &) = delete;
@@ -41,10 +42,9 @@ protected:
 
 private:
     QColor m_color = QColor(200, 200, 200);
-    int m_thickness = 10;
+    int m_maxThickness = 10;
 
     DrawCommand *m_currentCommand;
-    QPointF m_previous;
 };
 
 #endif // PENTOOL_H
