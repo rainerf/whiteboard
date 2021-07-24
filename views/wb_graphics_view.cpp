@@ -58,6 +58,7 @@ void WB_GraphicsView::tabletEvent(QTabletEvent *event) {
 
 WB_GraphicsView::WB_GraphicsView(QWidget *parent): InteractiveView(parent) {
     setScene(m_scene = new WB_GraphicsScene(this));
+    setCursor(Qt::CrossCursor);
 }
 
 void WB_GraphicsView::setColor(const QColor &color) {
