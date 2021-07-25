@@ -20,6 +20,7 @@
 #include <QFontComboBox>
 #include <QLabel>
 #include <QSettings>
+#include <QShortcut>
 //#include <QGLWidget>
 
 #include "actions/color_action.h"
@@ -44,8 +45,6 @@ void WB_PaintWindow::setupToolSelectors() {
     connect(ui->actionZoomTool, &QAction::triggered, ui->graphicsView, &WB_GraphicsView::setZoomTool);
     connect(ui->actionPanTool, &QAction::triggered, ui->graphicsView, &WB_GraphicsView::setPanTool);
     connect(ui->actionSelectMove, &QAction::triggered, ui->graphicsView, &WB_GraphicsView::setSelectTool);
-
-    connect(ui->actionDelete, &QAction::triggered, ui->graphicsView, &WB_GraphicsView::deleteSelectedItems);
 
     // disable changing the tool while one is in use
     connect(ui->graphicsView, &WB_GraphicsView::toolInUse, toolSelector, &QActionGroup::setDisabled);
@@ -72,6 +71,9 @@ void WB_PaintWindow::setupUiActions() {
     redoAction->setShortcut(QKeySequence::Redo);
     ui->toolBarCommon->addAction(undoAction);
     ui->toolBarCommon->addAction(redoAction);
+
+    auto *deleteShortcut = new QShortcut(QKeySequence("Del"), this);
+    connect(deleteShortcut, &QShortcut::activated, ui->graphicsView, &WB_GraphicsView::deleteSelectedItems);
 }
 
 void WB_PaintWindow::setupFontToolbar() {

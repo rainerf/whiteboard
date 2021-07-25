@@ -49,13 +49,9 @@
    <attribute name="toolBarBreak">
     <bool>false</bool>
    </attribute>
-   <addaction name="actionSave"/>
    <addaction name="actionOpen"/>
-   <addaction name="actionClear"/>
+   <addaction name="actionSave"/>
    <addaction name="separator"/>
-   <addaction name="actionCopy"/>
-   <addaction name="actionPaste"/>
-   <addaction name="actionSelectAll"/>
   </widget>
   <widget class="QToolBar" name="toolBarZoom">
    <property name="windowTitle">
@@ -93,18 +89,6 @@
    <addaction name="actionPointer"/>
    <addaction name="actionZoomTool"/>
    <addaction name="actionPanTool"/>
-   <addaction name="actionDelete"/>
-  </widget>
-  <widget class="QToolBar" name="toolBarFont">
-   <property name="windowTitle">
-    <string>toolBar</string>
-   </property>
-   <attribute name="toolBarArea">
-    <enum>TopToolBarArea</enum>
-   </attribute>
-   <attribute name="toolBarBreak">
-    <bool>false</bool>
-   </attribute>
   </widget>
   <widget class="QToolBar" name="toolBarSettings">
    <property name="windowTitle">
@@ -117,18 +101,32 @@
     <bool>false</bool>
    </attribute>
   </widget>
-  <action name="actionDelete">
-   <property name="icon">
-    <iconset resource="icons.qrc">
-     <normaloff>:/icons/icons/delete_outline_black_24dp.svg</normaloff>:/icons/icons/delete_outline_black_24dp.svg</iconset>
+  <widget class="QToolBar" name="toolBarEdit">
+   <property name="windowTitle">
+    <string>toolBar</string>
    </property>
-   <property name="text">
-    <string>Delete</string>
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+   <addaction name="actionCopy"/>
+   <addaction name="actionPaste"/>
+   <addaction name="actionSelectAll"/>
+   <addaction name="actionClear"/>
+  </widget>
+  <widget class="QToolBar" name="toolBarFont">
+   <property name="windowTitle">
+    <string>toolBar</string>
    </property>
-   <property name="shortcut">
-    <string>Del</string>
-   </property>
-  </action>
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+  </widget>
   <action name="actionText">
    <property name="checkable">
     <bool>true</bool>
@@ -237,7 +235,7 @@
   <action name="actionClear">
    <property name="icon">
     <iconset resource="icons.qrc">
-     <normaloff>:/icons/icons/clear_black_24dp.svg</normaloff>:/icons/icons/clear_black_24dp.svg</iconset>
+     <normaloff>:/icons/icons/delete_outline_black_24dp.svg</normaloff>:/icons/icons/delete_outline_black_24dp.svg</iconset>
    </property>
    <property name="text">
     <string>Clear</string>
