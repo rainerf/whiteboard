@@ -34,6 +34,8 @@ public:
     WB_PaintWindow(TabletApplication &app, QWidget *parent = nullptr);
     ~WB_PaintWindow();
 
+    void closeEvent(QCloseEvent *event) override;
+
 public slots:
     void tabletActive(bool x) {
         m_tabletActive = x;

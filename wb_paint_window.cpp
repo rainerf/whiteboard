@@ -27,6 +27,12 @@
 #include "actions/pen_action.h"
 #include "ui_wb_paint_window.h"
 
+
+namespace detail {
+constexpr char STATE_SETTING[] = "paintWindow/windowState";
+}
+
+
 void WB_PaintWindow::setupToolSelectors() {
     auto *toolSelector = new QActionGroup(this);
     toolSelector->setExclusive(true);
@@ -110,6 +116,9 @@ WB_PaintWindow::WB_PaintWindow(TabletApplication &app, QWidget *parent) : QMainW
 
     qApp->installEventFilter(this);
     connect(&app, &TabletApplication::sendTabletActive, this, &WB_PaintWindow::tabletActive);
+
+    QSettings settings;
+    restoreState(settings.value(detail::STATE_SETTING).toByteArray());
 }
 
 QLabel *createToolbarHeader(QString const &name) {
@@ -219,6 +228,12 @@ bool WB_PaintWindow::eventFilter(QObject *obj, QEvent *event) {
         }
     }
     return QMainWindow::eventFilter(obj, event);
+}
+
+void WB_PaintWindow::closeEvent(QCloseEvent *event) {
+    QSettings settings;
+    settings.setValue(detail::STATE_SETTING, saveState());
+    QMainWindow::closeEvent(event);
 }
 
 WB_PaintWindow::~WB_PaintWindow() {
