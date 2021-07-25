@@ -158,5 +158,6 @@ void WB_GraphicsView::loadFromFile(QString const &filename) {
 }
 
 void WB_GraphicsView::clear() {
-    scene()->clear();
+    selectAll();
+    deleteSelectedItems();
 }
