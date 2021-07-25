@@ -18,6 +18,7 @@
 
 int main(int argc, char *argv[]) {
     TabletApplication a(argc, argv);
+    a.setOrganizationName("rainerf");
     MainWindow w(a);
     w.show();
     return a.exec();

@@ -52,8 +52,11 @@ private:
     ColorAction *addColorAction(QColor const &color, QActionGroup *selector);
     PenAction *addPenAction(int thickness, QActionGroup *selector);
 
-    void saveToFile();
-    void loadFromFile();
+    void showFileSaveDialog();
+    void showFileLoadDialog();
+    void loadFromFile(QString filename);
+    void addFileToRecentlyUsed(QString filename);
+    void updateRecentlyUsedFiles();
 
     bool eventFilter(QObject *obj, QEvent *event) override;
 };

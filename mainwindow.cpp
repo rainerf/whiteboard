@@ -19,6 +19,7 @@
 #include <QFileDialog>
 #include <QFontComboBox>
 #include <QLabel>
+#include <QSettings>
 //#include <QGLWidget>
 
 #include "actions/color_action.h"
@@ -54,8 +55,10 @@ void MainWindow::setupUiActions() {
     connect(ui->actionCopy, &QAction::triggered, ui->graphicsView, &WB_GraphicsView::copy);
     connect(ui->actionPaste, &QAction::triggered, ui->graphicsView, &WB_GraphicsView::paste);
     connect(ui->actionSelectAll, &QAction::triggered, ui->graphicsView, &WB_GraphicsView::selectAll);
-    connect(ui->actionSave, &QAction::triggered, this, &MainWindow::saveToFile);
-    connect(ui->actionOpen, &QAction::triggered, this, &MainWindow::loadFromFile);
+    connect(ui->actionSave, &QAction::triggered, this, &MainWindow::showFileSaveDialog);
+    connect(ui->actionOpen, &QAction::triggered, this, &MainWindow::showFileLoadDialog);
+    ui->actionOpen->setMenu(new QMenu()); // recently used menu
+    updateRecentlyUsedFiles();
     connect(ui->actionClear, &QAction::triggered, ui->graphicsView, &WB_GraphicsView::clear);
     connect(ui->actionZoomOriginal, &QAction::triggered, [=]() { ui->graphicsView->setZoom(1); });
     connect(ui->actionZoomFit, &QAction::triggered, ui->graphicsView, &WB_GraphicsView::zoomToFit);
@@ -163,7 +166,7 @@ PenAction *MainWindow::addPenAction(int thickness, QActionGroup *selector) {
     return newAction;
 }
 
-void MainWindow::saveToFile() {
+void MainWindow::showFileSaveDialog() {
     QFileDialog dialog(this, "Save Whiteboard", "", "Whiteboard (*.whb);;All Files (*)");
     dialog.setDefaultSuffix(".whb");
     dialog.setAcceptMode(QFileDialog::AcceptSave);
@@ -171,18 +174,40 @@ void MainWindow::saveToFile() {
     if (dialog.exec() == QDialog::Accepted) {
         const auto filename = dialog.selectedFiles().front();
         ui->graphicsView->saveToFile(filename);
+        addFileToRecentlyUsed(filename);
     }
 }
 
-void MainWindow::loadFromFile() {
+void MainWindow::showFileLoadDialog() {
     QFileDialog dialog(this, "Open Whiteboard", "", "Whiteboard (*.whb);;All Files (*)");
     dialog.setDefaultSuffix(".whb");
     dialog.setAcceptMode(QFileDialog::AcceptOpen);
 
     if (dialog.exec() == QDialog::Accepted) {
-        const auto filename = dialog.selectedFiles().front();
-        ui->graphicsView->loadFromFile(filename);
+        loadFromFile(dialog.selectedFiles().front());
     }
+}
+
+void MainWindow::loadFromFile(QString filename) {
+    ui->graphicsView->loadFromFile(filename);
+    addFileToRecentlyUsed(filename);
+}
+
+void MainWindow::addFileToRecentlyUsed(QString filename) {
+    QSettings settings;
+    auto files = settings.value("recentlyUsedFiles").toStringList();
+    files.removeAll(filename);
+    files.prepend(filename);
+    settings.setValue("recentlyUsedFiles", QVariant::fromValue(files));
+    updateRecentlyUsedFiles();
+}
+
+void MainWindow::updateRecentlyUsedFiles() {
+    ui->actionOpen->menu()->clear();
+    QSettings settings;
+    auto const files = settings.value("recentlyUsedFiles").toStringList();
+    for (auto const &i: files)
+        ui->actionOpen->menu()->addAction(i, [this, i](){loadFromFile(i);});
 }
 
 bool MainWindow::eventFilter(QObject *obj, QEvent *event) {
