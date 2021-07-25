@@ -36,6 +36,8 @@ void WB_TextItemBase::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *) {
 void WB_TextItemBase::focusOutEvent(QFocusEvent *) {
     setTextInteractionFlags(Qt::NoTextInteraction);
     setTextCursor(QTextCursor(document()));
+    if (toPlainText() == "")
+        deleteLater();
 }
 
 void WB_TextItemBase::keyPressEvent(QKeyEvent *event) {
