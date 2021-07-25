@@ -22,7 +22,9 @@ class WB_GraphicsView;
 
 class ToolBase {
 public:
-    virtual void handleTabletPress(WB_GraphicsView &, QTabletEvent &) = 0;
+    // handle the tablet press event; return true if, after the press, all
+    // selections should be cleared
+    virtual bool handleTabletPress(WB_GraphicsView &, QTabletEvent &) = 0;
     virtual void handleTabletMove(WB_GraphicsView &, QTabletEvent &) = 0;
     virtual void handleTabletRelease(WB_GraphicsView &, QTabletEvent &){};
 };

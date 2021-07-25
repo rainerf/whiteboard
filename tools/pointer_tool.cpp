@@ -21,10 +21,11 @@ void PointerTool::setColor(const QColor &color) {
     m_color = color;
 }
 
-void PointerTool::handleTabletPress(WB_GraphicsView &view, QTabletEvent &event) {
+bool PointerTool::handleTabletPress(WB_GraphicsView &view, QTabletEvent &event) {
     m_pointer.setPos(view.mapToScene(event.pos()));
     m_pointer.setFlags(QGraphicsItem::ItemIgnoresTransformations);
     view.scene()->addItem(&m_pointer);
+    return true;
 }
 
 void PointerTool::handleTabletMove(WB_GraphicsView &view, QTabletEvent &event) {

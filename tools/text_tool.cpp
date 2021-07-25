@@ -63,7 +63,7 @@ void TextTool::setFontSize(int size) {
     m_font.setPixelSize(m_fontSize);
 }
 
-void TextTool::handleTabletPress(WB_GraphicsView &view, QTabletEvent &event) {
+bool TextTool::handleTabletPress(WB_GraphicsView &view, QTabletEvent &event) {
     auto *textItem = new WB_TextItem("");
     textItem->setTextInteractionFlags(Qt::TextEditorInteraction);
     textItem->setPos(view.mapToScene(event.pos()));
@@ -73,6 +73,7 @@ void TextTool::handleTabletPress(WB_GraphicsView &view, QTabletEvent &event) {
 
     m_currentCommand = new AddCommand(textItem, view.scene());
     view.getUndoStack()->push(m_currentCommand);
+    return true;
 }
 
 void TextTool::handleTabletMove(WB_GraphicsView &view, QTabletEvent &event) {

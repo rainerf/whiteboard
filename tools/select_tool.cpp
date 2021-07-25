@@ -38,7 +38,7 @@ private:
     QPointF m_final;
 };
 
-void SelectTool::handleTabletPress(WB_GraphicsView &view, QTabletEvent &event) {
+bool SelectTool::handleTabletPress(WB_GraphicsView &view, QTabletEvent &event) {
     m_previous = view.mapToScene(event.pos());
     if (auto *item = view.scene()->itemAt(m_previous, view.transform())) {
         // if the item is part of a group, we'll always use the group
@@ -66,7 +66,7 @@ void SelectTool::handleTabletPress(WB_GraphicsView &view, QTabletEvent &event) {
 
         view.scene()->addItem(&m_selectionRect);
     }
-
+    return false;
 }
 
 void SelectTool::handleTabletMove(WB_GraphicsView &view, QTabletEvent &event) {

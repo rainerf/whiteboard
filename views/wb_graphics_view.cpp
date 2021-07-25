@@ -34,7 +34,11 @@ void WB_GraphicsView::tabletEvent(QTabletEvent *event) {
 
         if (!m_deviceDown) {
             m_deviceDown = true;
-            currentTool->handleTabletPress(*this, *event);
+            // handle the event; if the function returns true, this means to clear
+            // all focused items
+            if (currentTool->handleTabletPress(*this, *event))
+                for (auto &&i : scene()->items())
+                    i->setSelected(false);
             emit toolInUse(true);
         }
         break;

@@ -128,9 +128,10 @@ void PenTool::setPen(int thickness) {
     m_maxThickness = thickness;
 }
 
-void PenTool::handleTabletPress(WB_GraphicsView &view, QTabletEvent &event) {
+bool PenTool::handleTabletPress(WB_GraphicsView &view, QTabletEvent &event) {
     m_currentCommand = new DrawCommand(view.mapToScene(event.pos()), m_color, createGroup(), view.scene());
     view.getUndoStack()->push(m_currentCommand);
+    return true;
 }
 
 void PenTool::handleTabletMove(WB_GraphicsView &view, QTabletEvent &event) {

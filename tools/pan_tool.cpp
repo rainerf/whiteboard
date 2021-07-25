@@ -16,8 +16,9 @@
 #include "zoom_tool.h"
 #include "views/wb_graphics_view.h"
 
-void PanTool::handleTabletPress(WB_GraphicsView &, QTabletEvent &event) {
+bool PanTool::handleTabletPress(WB_GraphicsView &, QTabletEvent &event) {
     m_previous = event.pos();
+    return false;
 }
 
 void PanTool::handleTabletMove(WB_GraphicsView &view, QTabletEvent &event) {

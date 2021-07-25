@@ -9,7 +9,7 @@ class SelectTool : public ToolBase {
     class MoveCommand;
 
 public:
-    void handleTabletPress(WB_GraphicsView &view, QTabletEvent &event) override;
+    bool handleTabletPress(WB_GraphicsView &view, QTabletEvent &event) override;
     void handleTabletMove(WB_GraphicsView &view, QTabletEvent &event) override;
     void handleTabletRelease(WB_GraphicsView &view, QTabletEvent &event) override;
 
