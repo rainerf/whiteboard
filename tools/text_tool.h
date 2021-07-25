@@ -32,6 +32,7 @@ public:
 
     bool handleTabletPress(WB_GraphicsView &view, QTabletEvent &event) override;
     void handleTabletMove(WB_GraphicsView &view, QTabletEvent &event) override;
+    void handleTabletRelease(WB_GraphicsView &, QTabletEvent &) override;
 
     TextTool operator=(TextTool &) = delete;
     TextTool(TextTool &) = delete;

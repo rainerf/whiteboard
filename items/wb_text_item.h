@@ -32,6 +32,8 @@ public:
     void focusOutEvent(QFocusEvent *event) override;
     void keyPressEvent(QKeyEvent *event) override;
 
+    void enableEditor();
+
     void setZoom(qreal zoom);
     qreal originalWidth() const;
 };

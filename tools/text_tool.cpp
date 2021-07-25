@@ -21,6 +21,8 @@
 #include "views/wb_graphics_view.h"
 
 
+
+
 class TextTool::AddCommand : public QUndoCommand {
 public:
     explicit AddCommand(WB_TextItem *item, QGraphicsScene *graphicsScene, QUndoCommand *parent = nullptr) :
@@ -64,15 +66,20 @@ void TextTool::setFontSize(int size) {
 }
 
 bool TextTool::handleTabletPress(WB_GraphicsView &view, QTabletEvent &event) {
-    auto *textItem = new WB_TextItem("");
-    textItem->setTextInteractionFlags(Qt::TextEditorInteraction);
-    textItem->setPos(view.mapToScene(event.pos()));
-    textItem->setFocus();
-    textItem->setDefaultTextColor(m_color);
-    textItem->setFont(m_font);
+    auto const pos = view.mapToScene(event.pos());
 
-    m_currentCommand = new AddCommand(textItem, view.scene());
-    view.getUndoStack()->push(m_currentCommand);
+    if (WB_TextItem *item = qgraphicsitem_cast<WB_TextItem*>(view.scene()->itemAt(pos, QTransform()))) {
+        item->enableEditor();
+    } else {
+        item = new WB_TextItem("");
+        item->setFocus();
+        item->setDefaultTextColor(m_color);
+        item->setFont(m_font);
+        item->enableEditor();
+
+        m_currentCommand = new AddCommand(item, view.scene());
+        view.getUndoStack()->push(m_currentCommand);
+    }
     return true;
 }
 
@@ -80,4 +87,8 @@ void TextTool::handleTabletMove(WB_GraphicsView &view, QTabletEvent &event) {
     if (m_currentCommand) {
         m_currentCommand->setPos(view.mapToScene(event.pos()));
     }
+}
+
+void TextTool::handleTabletRelease(WB_GraphicsView &, QTabletEvent &) {
+    m_currentCommand = nullptr;
 }

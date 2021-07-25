@@ -29,8 +29,7 @@ WB_TextItemBase::WB_TextItemBase(QGraphicsItem *parent) : WB_TextItemBase("", pa
 }
 
 void WB_TextItemBase::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *) {
-    setTextInteractionFlags(Qt::TextEditorInteraction);
-    setFocus();
+    enableEditor();
 }
 
 void WB_TextItemBase::focusOutEvent(QFocusEvent *) {
@@ -45,6 +44,11 @@ void WB_TextItemBase::keyPressEvent(QKeyEvent *event) {
         clearFocus();
     }
     QGraphicsTextItem::keyPressEvent(event);
+}
+
+void WB_TextItemBase::enableEditor() {
+    setTextInteractionFlags(Qt::TextEditorInteraction);
+    setFocus();
 }
 
 void WB_TextItemBase::setZoom(qreal zoom) {
