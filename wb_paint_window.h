@@ -13,8 +13,8 @@
 // You should have received a copy of the GNU General Public License
 // along with Whiteboard.  If not, see <https://www.gnu.org/licenses/>.
 
-#ifndef MAINWINDOW_H
-#define MAINWINDOW_H
+#ifndef WB_PAINT_WINDOW_H
+#define WB_PAINT_WINDOW_H
 
 #include <QActionGroup>
 #include <QGraphicsScene>
@@ -24,15 +24,15 @@
 class ColorAction;
 class PenAction;
 namespace Ui {
-class MainWindow;
+class WB_PaintWindow;
 }
 
-class MainWindow : public QMainWindow {
+class WB_PaintWindow : public QMainWindow {
     Q_OBJECT
 
 public:
-    MainWindow(TabletApplication &app, QWidget *parent = nullptr);
-    ~MainWindow();
+    WB_PaintWindow(TabletApplication &app, QWidget *parent = nullptr);
+    ~WB_PaintWindow();
 
 public slots:
     void tabletActive(bool x) {
@@ -40,7 +40,7 @@ public slots:
     }
 
 private:
-    Ui::MainWindow *ui;
+    Ui::WB_PaintWindow *ui;
     bool m_tabletActive = false;
 
     void setupToolSelectors();
@@ -60,4 +60,4 @@ private:
 
     bool eventFilter(QObject *obj, QEvent *event) override;
 };
-#endif // MAINWINDOW_H
+#endif // WB_PAINT_WINDOW_H

@@ -13,7 +13,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Whiteboard.  If not, see <https://www.gnu.org/licenses/>.
 
-#include "mainwindow.h"
+#include "wb_paint_window.h"
 
 #include <QColor>
 #include <QFileDialog>
@@ -24,9 +24,9 @@
 
 #include "actions/color_action.h"
 #include "actions/pen_action.h"
-#include "ui_mainwindow.h"
+#include "ui_wb_paint_window.h"
 
-void MainWindow::setupToolSelectors() {
+void WB_PaintWindow::setupToolSelectors() {
     auto *toolSelector = new QActionGroup(this);
     toolSelector->setExclusive(true);
     toolSelector->addAction(ui->actionText);
@@ -51,12 +51,12 @@ void MainWindow::setupToolSelectors() {
     connect(ui->graphicsView, &WB_GraphicsView::toolInUse, toolSelector, &QActionGroup::setDisabled);
 }
 
-void MainWindow::setupUiActions() {
+void WB_PaintWindow::setupUiActions() {
     connect(ui->actionCopy, &QAction::triggered, ui->graphicsView, &WB_GraphicsView::copy);
     connect(ui->actionPaste, &QAction::triggered, ui->graphicsView, &WB_GraphicsView::paste);
     connect(ui->actionSelectAll, &QAction::triggered, ui->graphicsView, &WB_GraphicsView::selectAll);
-    connect(ui->actionSave, &QAction::triggered, this, &MainWindow::showFileSaveDialog);
-    connect(ui->actionOpen, &QAction::triggered, this, &MainWindow::showFileLoadDialog);
+    connect(ui->actionSave, &QAction::triggered, this, &WB_PaintWindow::showFileSaveDialog);
+    connect(ui->actionOpen, &QAction::triggered, this, &WB_PaintWindow::showFileLoadDialog);
     ui->actionOpen->setMenu(new QMenu()); // recently used menu
     updateRecentlyUsedFiles();
     connect(ui->actionClear, &QAction::triggered, ui->graphicsView, &WB_GraphicsView::clear);
@@ -74,7 +74,7 @@ void MainWindow::setupUiActions() {
     ui->toolBarCommon->addAction(redoAction);
 }
 
-void MainWindow::setupFontToolbar() {
+void WB_PaintWindow::setupFontToolbar() {
     auto *fontSelectionBox = new QFontComboBox();
     ui->toolBarFont->addWidget(fontSelectionBox);
     connect(fontSelectionBox, &QFontComboBox::currentFontChanged, ui->graphicsView, &WB_GraphicsView::setFont);
@@ -90,7 +90,7 @@ void MainWindow::setupFontToolbar() {
     fontSizeBox->setCurrentText("20");
 }
 
-MainWindow::MainWindow(TabletApplication &app, QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow) {
+WB_PaintWindow::WB_PaintWindow(TabletApplication &app, QWidget *parent) : QMainWindow(parent), ui(new Ui::WB_PaintWindow) {
     ui->setupUi(this);
 
     setupToolSelectors();
@@ -107,7 +107,7 @@ MainWindow::MainWindow(TabletApplication &app, QWidget *parent) : QMainWindow(pa
     ui->actionPen->trigger();
 
     qApp->installEventFilter(this);
-    connect(&app, &TabletApplication::sendTabletActive, this, &MainWindow::tabletActive);
+    connect(&app, &TabletApplication::sendTabletActive, this, &WB_PaintWindow::tabletActive);
 }
 
 QLabel *createToolbarHeader(QString const &name) {
@@ -117,7 +117,7 @@ QLabel *createToolbarHeader(QString const &name) {
     return item;
 }
 
-void MainWindow::setupColorActions() {
+void WB_PaintWindow::setupColorActions() {
     ui->toolBarSettings->addWidget(createToolbarHeader("Color"));
 
     auto *colorSelector = new QActionGroup(this);
@@ -139,7 +139,7 @@ void MainWindow::setupColorActions() {
     addColorAction(QColor(0, 128, 240), colorSelector);
 }
 
-void MainWindow::setupPenActions() {
+void WB_PaintWindow::setupPenActions() {
     ui->toolBarSettings->addWidget(createToolbarHeader("Pen"));
 
     auto *penSelector = new QActionGroup(this);
@@ -150,7 +150,7 @@ void MainWindow::setupPenActions() {
     addPenAction(1, penSelector);
 }
 
-ColorAction *MainWindow::addColorAction(const QColor &color, QActionGroup *selector) {
+ColorAction *WB_PaintWindow::addColorAction(const QColor &color, QActionGroup *selector) {
     auto *newAction = new ColorAction(color, this);
     connect(newAction, &ColorAction::colorSelected, ui->graphicsView, &WB_GraphicsView::setColor);
     ui->toolBarSettings->addAction(newAction);
@@ -158,7 +158,7 @@ ColorAction *MainWindow::addColorAction(const QColor &color, QActionGroup *selec
     return newAction;
 }
 
-PenAction *MainWindow::addPenAction(int thickness, QActionGroup *selector) {
+PenAction *WB_PaintWindow::addPenAction(int thickness, QActionGroup *selector) {
     auto *newAction = new PenAction(thickness, this);
     connect(newAction, &PenAction::penSelected, ui->graphicsView, &WB_GraphicsView::setPenThickness);
     ui->toolBarSettings->addAction(newAction);
@@ -166,7 +166,7 @@ PenAction *MainWindow::addPenAction(int thickness, QActionGroup *selector) {
     return newAction;
 }
 
-void MainWindow::showFileSaveDialog() {
+void WB_PaintWindow::showFileSaveDialog() {
     QFileDialog dialog(this, "Save Whiteboard", "", "Whiteboard (*.whb);;All Files (*)");
     dialog.setDefaultSuffix(".whb");
     dialog.setAcceptMode(QFileDialog::AcceptSave);
@@ -178,7 +178,7 @@ void MainWindow::showFileSaveDialog() {
     }
 }
 
-void MainWindow::showFileLoadDialog() {
+void WB_PaintWindow::showFileLoadDialog() {
     QFileDialog dialog(this, "Open Whiteboard", "", "Whiteboard (*.whb);;All Files (*)");
     dialog.setDefaultSuffix(".whb");
     dialog.setAcceptMode(QFileDialog::AcceptOpen);
@@ -188,12 +188,12 @@ void MainWindow::showFileLoadDialog() {
     }
 }
 
-void MainWindow::loadFromFile(QString filename) {
+void WB_PaintWindow::loadFromFile(QString filename) {
     ui->graphicsView->loadFromFile(filename);
     addFileToRecentlyUsed(filename);
 }
 
-void MainWindow::addFileToRecentlyUsed(QString filename) {
+void WB_PaintWindow::addFileToRecentlyUsed(QString filename) {
     QSettings settings;
     auto files = settings.value("recentlyUsedFiles").toStringList();
     files.removeAll(filename);
@@ -202,7 +202,7 @@ void MainWindow::addFileToRecentlyUsed(QString filename) {
     updateRecentlyUsedFiles();
 }
 
-void MainWindow::updateRecentlyUsedFiles() {
+void WB_PaintWindow::updateRecentlyUsedFiles() {
     ui->actionOpen->menu()->clear();
     QSettings settings;
     auto const files = settings.value("recentlyUsedFiles").toStringList();
@@ -210,7 +210,7 @@ void MainWindow::updateRecentlyUsedFiles() {
         ui->actionOpen->menu()->addAction(i, [this, i](){loadFromFile(i);});
 }
 
-bool MainWindow::eventFilter(QObject *obj, QEvent *event) {
+bool WB_PaintWindow::eventFilter(QObject *obj, QEvent *event) {
     if (event->type() == QEvent::MouseButtonPress || event->type() == QEvent::MouseMove || event->type() == QEvent::MouseButtonRelease) {
         if (obj == ui->graphicsView->viewport()) {
             return m_tabletActive;
@@ -219,6 +219,6 @@ bool MainWindow::eventFilter(QObject *obj, QEvent *event) {
     return QMainWindow::eventFilter(obj, event);
 }
 
-MainWindow::~MainWindow() {
+WB_PaintWindow::~WB_PaintWindow() {
     delete ui;
 }

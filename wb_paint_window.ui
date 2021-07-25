@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>MainWindow</class>
- <widget class="QMainWindow" name="MainWindow">
+ <class>WB_PaintWindow</class>
+ <widget class="QMainWindow" name="WB_PaintWindow">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -9,13 +9,6 @@
     <width>1191</width>
     <height>735</height>
    </rect>
-  </property>
-  <property name="windowTitle">
-   <string>WhiteBoard</string>
-  </property>
-  <property name="windowIcon">
-   <iconset resource="icons.qrc">
-    <normaloff>:/icons/icons/wysiwyg_black_24dp.svg</normaloff>:/icons/icons/wysiwyg_black_24dp.svg</iconset>
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QHBoxLayout" name="horizontalLayout">

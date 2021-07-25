@@ -13,13 +13,13 @@
 // You should have received a copy of the GNU General Public License
 // along with Whiteboard.  If not, see <https://www.gnu.org/licenses/>.
 
-#include "mainwindow.h"
+#include "wb_mainwindow.h"
 #include "lib/tablet_application.h"
 
 int main(int argc, char *argv[]) {
     TabletApplication a(argc, argv);
     a.setOrganizationName("rainerf");
-    MainWindow w(a);
+    WB_MainWindow w(a);
     w.show();
     return a.exec();
 }

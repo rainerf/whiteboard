@@ -27,7 +27,6 @@ SOURCES += \
     lib/interactive_view.cpp \
     lib/qgraphicsscene_storage.cpp \
     main.cpp \
-    mainwindow.cpp \
     tools/highlight_tool.cpp \
     tools/pan_tool.cpp \
     tools/pen_tool.cpp \
@@ -38,7 +37,9 @@ SOURCES += \
     views/commands.cpp \
     views/copy_paste_support.cpp \
     views/wb_graphics_scene.cpp \
-    views/wb_graphics_view.cpp
+    views/wb_graphics_view.cpp \
+    wb_mainwindow.cpp \
+    wb_paint_window.cpp
 
 HEADERS += \
     actions/color_action.h \
@@ -50,7 +51,6 @@ HEADERS += \
     lib/interactive_view.h \
     lib/qgraphicsscene_storage.h \
     lib/tablet_application.h \
-    mainwindow.h \
     tools/highlight_tool.h \
     tools/pan_tool.h \
     tools/pen_tool.h \
@@ -62,10 +62,12 @@ HEADERS += \
     views/commands.h \
     views/copy_paste_support.h \
     views/wb_graphics_scene.h \
-    views/wb_graphics_view.h
+    views/wb_graphics_view.h \
+    wb_mainwindow.h \
+    wb_paint_window.h
 
 FORMS += \
-    mainwindow.ui
+    wb_paint_window.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

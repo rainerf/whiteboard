@@ -146,6 +146,8 @@ void WB_GraphicsView::saveToFile(QString const &filename) {
 void WB_GraphicsView::loadFromFile(QString const &filename) {
     try {
         m_scene->loadFromFile(filename);
+        setZoom(1);
+        centerOn(0, 0);
     } catch (...) {
         QMessageBox::critical(this, "Whiteboard", "File format incorrect!");
     }
