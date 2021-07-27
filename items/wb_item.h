@@ -24,6 +24,7 @@
 template <typename BASE>
 class WB_Item : public BASE {
 public:
+    constexpr static double HANDLE_SIZE = 10;
 
     template<typename... Args>
     explicit WB_Item(Args&&... args): BASE(std::forward<Args>(args)...) {
@@ -38,7 +39,7 @@ public:
         updateHandlePos();
 
         if (option->state & QStyle::State_Selected) {
-            auto const originalBoundingRect = BASE::boundingRect();
+            auto const originalBoundingRect = boundingRect().adjusted(0, 0, -HANDLE_SIZE/2, -HANDLE_SIZE/2);
             QPen pen(QColor(0, 0, 200));
             pen.setCosmetic(true);
             painter->setPen(pen);
@@ -74,7 +75,10 @@ public:
     }
 
     QRectF boundingRect() const override {
-        return BASE::boundingRect().adjusted(0, 0, 5, 5);
+        // report a bounding box that is HANDLE_SIZE/2 larger in all directions to have some margin,
+        // and, more importantly, additionally HANDLE_SIZE/2 larger on the bottom right to accomodate
+        // for the handle itself
+        return BASE::boundingRect().adjusted(-HANDLE_SIZE/2, -HANDLE_SIZE/2, HANDLE_SIZE, HANDLE_SIZE);
     }
 
     bool contains(const QPointF &point) const override {
@@ -88,7 +92,7 @@ public:
     }
 
     void updateHandlePos() {
-        m_handlePos = QRectF(boundingRect().right() - 10, boundingRect().bottom() - 10, 10, 10);
+        m_handlePos = QRectF(boundingRect().right() - HANDLE_SIZE, boundingRect().bottom() - HANDLE_SIZE, HANDLE_SIZE, HANDLE_SIZE);
     }
 
 private:
