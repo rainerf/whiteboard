@@ -18,32 +18,33 @@
 
 #include <QUndoCommand>
 
+class WB_GraphicsScene;
 class QGraphicsScene;
 class QGraphicsItem;
 
 class PasteCommand : public QUndoCommand {
 public:
-    explicit PasteCommand(QGraphicsScene *graphicsScene, QUndoCommand *parent = nullptr);
+    explicit PasteCommand(WB_GraphicsScene *graphicsScene, QUndoCommand *parent = nullptr);
 
     void undo() override;
     void redo() override;
 
 private:
     QList<QGraphicsItem*> m_items;
-    QGraphicsScene *m_scene;
+    WB_GraphicsScene *m_scene;
 };
 
 
 class DeleteCommand : public QUndoCommand {
 public:
-    explicit DeleteCommand(QGraphicsScene *graphicsScene, QUndoCommand *parent = nullptr);
+    explicit DeleteCommand(WB_GraphicsScene *graphicsScene, QUndoCommand *parent = nullptr);
 
     void undo() override;
     void redo() override;
 
 private:
     QList<QGraphicsItem*> m_items;
-    QGraphicsScene *m_scene;
+    WB_GraphicsScene *m_scene;
 };
 
 #endif // WHITEBOARDCOMMANDS_H

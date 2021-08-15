@@ -14,19 +14,18 @@
 // along with Whiteboard.  If not, see <https://www.gnu.org/licenses/>.
 
 #include "commands.h"
-
-#include <QApplication>
-#include <QMimeData>
-#include <QClipboard>
-#include <QGraphicsScene>
-#include <QGraphicsItem>
-
 #include "items/wb_pixmap_item.h"
 #include "items/wb_text_item.h"
 #include "lib/qgraphicsscene_storage.h"
 #include "copy_paste_support.h"
+#include "views/wb_graphics_scene.h"
 
-PasteCommand::PasteCommand(QGraphicsScene *graphicsScene, QUndoCommand *parent) : QUndoCommand("Paste", parent), m_scene(graphicsScene) {
+#include <QApplication>
+#include <QMimeData>
+#include <QClipboard>
+#include <QGraphicsItem>
+
+PasteCommand::PasteCommand(WB_GraphicsScene *graphicsScene, QUndoCommand *parent) : QUndoCommand("Paste", parent), m_scene(graphicsScene) {
     const QClipboard *clipboard = QApplication::clipboard();
     const QMimeData *mimeData = clipboard->mimeData();
 
@@ -59,7 +58,7 @@ void PasteCommand::redo() {
     m_scene->update();
 }
 
-DeleteCommand::DeleteCommand(QGraphicsScene *graphicsScene, QUndoCommand *parent) : QUndoCommand("Delete", parent), m_scene(graphicsScene) {
+DeleteCommand::DeleteCommand(WB_GraphicsScene *graphicsScene, QUndoCommand *parent) : QUndoCommand("Delete", parent), m_scene(graphicsScene) {
     m_items = graphicsScene->selectedItems();
 }
 

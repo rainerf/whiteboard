@@ -17,7 +17,6 @@
 #define PENTOOL_H
 
 #include <QGraphicsPathItem>
-#include <QGraphicsScene>
 
 #include "tool_base.h"
 #include "items/wb_item_group.h"

@@ -19,13 +19,12 @@
 
 #include "items/wb_text_item.h"
 #include "views/wb_graphics_view.h"
-
-
+#include "views/wb_graphics_scene.h"
 
 
 class TextTool::AddCommand : public QUndoCommand {
 public:
-    explicit AddCommand(WB_TextItem *item, QGraphicsScene *graphicsScene, QUndoCommand *parent = nullptr) :
+    explicit AddCommand(WB_TextItem *item, WB_GraphicsScene *graphicsScene, QUndoCommand *parent = nullptr) :
             QUndoCommand("Add Text", parent),
             m_item(item),
             m_scene(graphicsScene) {
@@ -47,7 +46,7 @@ public:
 
 private:
     QGraphicsTextItem *m_item;
-    QGraphicsScene *m_scene;
+    WB_GraphicsScene *m_scene;
 };
 
 

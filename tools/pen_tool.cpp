@@ -15,6 +15,7 @@
 
 #include "pen_tool.h"
 #include "views/wb_graphics_view.h"
+#include "views/wb_graphics_scene.h"
 
 #include <QUndoCommand>
 #include <QtMath>
@@ -44,7 +45,7 @@ void updateWithMovingAverage(QList<T> &list, int i) {
 
 class PenTool::DrawCommand : public QUndoCommand {
 public:
-    explicit DrawCommand(QPointF initialPoint, QColor color, WB_ItemGroup *group, QGraphicsScene *graphicsScene, QUndoCommand *parent = nullptr) :
+    explicit DrawCommand(QPointF initialPoint, QColor color, WB_ItemGroup *group, WB_GraphicsScene *graphicsScene, QUndoCommand *parent = nullptr) :
             QUndoCommand("Draw", parent),
             m_color(color),
             m_group(group),
@@ -114,7 +115,7 @@ private:
 
     QColor const m_color;
     WB_ItemGroup *m_group;
-    QGraphicsScene *m_scene;
+    WB_GraphicsScene *m_scene;
     QList<QPointF> m_points;
     QList<qreal> m_thicknesses;
     QList<QGraphicsPathItem*> m_items;

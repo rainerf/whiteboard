@@ -39,6 +39,10 @@ public:
         return &undoStack;
     }
 
+    WB_GraphicsScene *scene() {
+        return m_scene;
+    }
+
 public slots:
     void setColor(QColor const &color);
     void setPenThickness(int thickness);
