@@ -58,6 +58,7 @@ void WB_PaintWindow::setupToolSelectors() {
 
 void WB_PaintWindow::setupUiActions() {
     connect(ui->actionCopy, &QAction::triggered, ui->graphicsView, &WB_GraphicsView::copy);
+    connect(ui->actionCut, &QAction::triggered, ui->graphicsView, &WB_GraphicsView::cut);
     connect(ui->actionPaste, &QAction::triggered, ui->graphicsView, &WB_GraphicsView::paste);
     connect(ui->actionSelectAll, &QAction::triggered, ui->graphicsView, &WB_GraphicsView::selectAll);
     connect(ui->actionSave, &QAction::triggered, this, &WB_PaintWindow::showFileSaveDialog);

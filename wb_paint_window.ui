@@ -112,6 +112,7 @@
     <bool>false</bool>
    </attribute>
    <addaction name="actionCopy"/>
+   <addaction name="actionCut"/>
    <addaction name="actionPaste"/>
    <addaction name="actionSelectAll"/>
    <addaction name="actionClear"/>
@@ -356,6 +357,21 @@
    </property>
    <property name="shortcut">
     <string>Ctrl+1</string>
+   </property>
+  </action>
+  <action name="actionCut">
+   <property name="icon">
+    <iconset resource="icons.qrc">
+     <normaloff>:/icons/icons/content_cut_black_24dp.svg</normaloff>:/icons/icons/content_cut_black_24dp.svg</iconset>
+   </property>
+   <property name="text">
+    <string>Cut</string>
+   </property>
+   <property name="toolTip">
+    <string>Cut</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+X</string>
    </property>
   </action>
  </widget>

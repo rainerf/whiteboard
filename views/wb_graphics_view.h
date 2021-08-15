@@ -63,6 +63,7 @@ public slots:
 
     void paste();
     void copy();
+    void cut();
 
     void selectAll();
     void saveToFile(QString const &filename);

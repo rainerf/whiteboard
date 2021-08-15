@@ -141,6 +141,11 @@ void WB_GraphicsView::copy() {
     copyGraphicsItems(scene()->selectedItems());
 }
 
+void WB_GraphicsView::cut() {
+    copy();
+    deleteSelectedItems();
+}
+
 void WB_GraphicsView::selectAll() {
     for (auto &&i : scene()->topLevelItems())
         i->setSelected(true);
