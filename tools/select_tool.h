@@ -28,6 +28,10 @@ public:
     void handleTabletMove(WB_GraphicsView &view, QTabletEvent &event) override;
     void handleTabletRelease(WB_GraphicsView &view, QTabletEvent &event) override;
 
+    SelectTool operator=(SelectTool &) = delete;
+    SelectTool(SelectTool &) = delete;
+    SelectTool();
+
 private:
     QPointF m_previous;
     QGraphicsRectItem m_selectionRect;

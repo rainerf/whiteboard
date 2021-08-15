@@ -40,4 +40,5 @@ void PointerTool::handleTabletRelease(WB_GraphicsView &view, QTabletEvent &) {
 PointerTool::PointerTool() {
     m_pointer.setBrush(QBrush(m_color));
     m_pointer.setPen(QPen(m_color));
+    m_pointer.setZValue(WB_GraphicsScene::getAbsoluteForegroundZ());
 }

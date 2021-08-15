@@ -15,6 +15,8 @@
 
 #include "highlight_tool.h"
 #include "views/wb_graphics_view.h"
+#include "views/wb_graphics_scene.h"
+
 
 void HighlightTool::setColor(QColor const &color) {
     QColor color_ = QColor::fromHsv(color.hue(), color.saturation() / 5, color.value());
@@ -25,8 +27,6 @@ void HighlightTool::setPen(int thickness) {
     PenTool::setPen(thickness * 10);
 }
 
-WB_ItemGroup *HighlightTool::createGroup() {
-    auto *group = PenTool::createGroup();
-    group->setZValue(-1);
-    return group;
+qreal HighlightTool::getZ(WB_GraphicsScene *scene) {
+    return scene->getNewBackgroundZ();
 }

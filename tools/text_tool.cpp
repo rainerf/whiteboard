@@ -28,6 +28,7 @@ public:
             QUndoCommand("Add Text", parent),
             m_item(item),
             m_scene(graphicsScene) {
+        m_item->setZValue(m_scene->getNewForegroundZ());
     }
 
     void undo() override {

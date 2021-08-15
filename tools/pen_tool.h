@@ -21,6 +21,8 @@
 #include "tool_base.h"
 #include "items/wb_item_group.h"
 
+class WB_GraphicsScene;
+
 class PenTool : public ToolBase {
 public:
     class DrawCommand;
@@ -37,7 +39,7 @@ public:
     PenTool() = default;
 
 protected:
-    virtual WB_ItemGroup *createGroup();
+    virtual qreal getZ(WB_GraphicsScene *scene);
 
 private:
     QColor m_color = QColor(200, 200, 200);

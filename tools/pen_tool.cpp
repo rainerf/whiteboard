@@ -130,7 +130,11 @@ void PenTool::setPen(int thickness) {
 }
 
 bool PenTool::handleTabletPress(WB_GraphicsView &view, QTabletEvent &event) {
-    m_currentCommand = new DrawCommand(view.mapToScene(event.pos()), m_color, createGroup(), view.scene());
+    auto *group = new WB_ItemGroup();
+    group->setFlags(QGraphicsItem::ItemIsMovable | QGraphicsItem::ItemIsSelectable);
+    group->setZValue(getZ(view.scene()));
+
+    m_currentCommand = new DrawCommand(view.mapToScene(event.pos()), m_color, group, view.scene());
     view.getUndoStack()->push(m_currentCommand);
     return true;
 }
@@ -143,8 +147,6 @@ void PenTool::handleTabletRelease(WB_GraphicsView & /*view*/, QTabletEvent &/*ev
     m_currentCommand->finalize();
 }
 
-WB_ItemGroup *PenTool::createGroup() {
-    auto *group = new WB_ItemGroup();
-    group->setFlags(QGraphicsItem::ItemIsMovable | QGraphicsItem::ItemIsSelectable);
-    return group;
+qreal PenTool::getZ(WB_GraphicsScene *scene) {
+    return scene->getNewForegroundZ();
 }

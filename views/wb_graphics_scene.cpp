@@ -68,6 +68,8 @@ void WB_GraphicsScene::loadFromFile(const QString &filename) {
             m_scene->addItem(item);
         }
     }
+
+    calculateNextZs();
 }
 
 void WB_GraphicsScene::debugDumpAllItems() {
@@ -109,4 +111,34 @@ void WB_GraphicsScene::update() {
 
 void WB_GraphicsScene::clearSelection() {
     m_scene->clearSelection();
+}
+
+qreal WB_GraphicsScene::getNewBackgroundZ() {
+    return m_nextBackgroundZ++;
+}
+
+qreal WB_GraphicsScene::getNewForegroundZ() {
+    return m_nextForegroundZ++;
+}
+
+qreal WB_GraphicsScene::getAbsoluteForegroundZ() {
+    return std::numeric_limits<qreal>::max();
+}
+
+void WB_GraphicsScene::calculateNextZs() {
+    qreal currentBackgroundZ = INITIAL_BACKGROUND_Z;
+    qreal currentForegroundZ = INITIAL_FOREGROUND_Z;
+
+    static_assert(INITIAL_BACKGROUND_Z < 0, "INITIAL_BACKGROUND_Z has to be negative");
+    static_assert(INITIAL_FOREGROUND_Z >= 0, "INITIAL_FOREGROUND_Z has to be 0 or positive");
+
+    for (auto &&i: topLevelItems()) {
+        if (i->zValue() < 0)
+            currentBackgroundZ = std::max(i->zValue(), currentBackgroundZ);
+        else
+            currentForegroundZ = std::max(i->zValue(), currentForegroundZ);
+    }
+
+    m_nextBackgroundZ = currentBackgroundZ + 1;
+    m_nextForegroundZ = currentForegroundZ + 1;
 }

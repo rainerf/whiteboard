@@ -23,7 +23,7 @@ public:
     void setColor(QColor const &color) override;
     void setPen(int thickness) override;
 
-    WB_ItemGroup *createGroup() override;
+    qreal getZ(WB_GraphicsScene *scene) override;
 };
 
 #endif // HIGHLIGHTTOOL_H

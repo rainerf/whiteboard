@@ -75,11 +75,6 @@ bool SelectTool::handleTabletPress(WB_GraphicsView &view, QTabletEvent &event) {
         mode = selecting;
 
         m_selectionRect.setRect(m_previous.x(), m_previous.y(), 1, 1);
-        QPen pen(QColor(0, 0, 255));
-        pen.setCosmetic(true);
-        m_selectionRect.setPen(pen);
-        m_selectionRect.setBrush(QBrush(QColor(0, 0, 255, 40)));
-
         view.scene()->addItem(&m_selectionRect);
     }
     return false;
@@ -107,4 +102,12 @@ void SelectTool::handleTabletRelease(WB_GraphicsView &view, QTabletEvent & /*eve
     } else {
         view.scene()->removeItem(&m_selectionRect);
     }
+}
+
+SelectTool::SelectTool() {
+    QPen pen(QColor(0, 0, 255));
+    pen.setCosmetic(true);
+    m_selectionRect.setPen(pen);
+    m_selectionRect.setBrush(QBrush(QColor(0, 0, 255, 40)));
+    m_selectionRect.setZValue(WB_GraphicsScene::getAbsoluteForegroundZ());
 }

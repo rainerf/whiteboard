@@ -41,8 +41,20 @@ public:
     void update();
     void clearSelection();
 
+    qreal getNewBackgroundZ();
+    qreal getNewForegroundZ();
+    static qreal getAbsoluteForegroundZ();
+
 private:
     QGraphicsScene *m_scene;
+
+    static constexpr qreal INITIAL_BACKGROUND_Z = std::numeric_limits<int>::min();
+    static constexpr qreal INITIAL_FOREGROUND_Z = 0;
+
+    void calculateNextZs();
+
+    qreal m_nextBackgroundZ = INITIAL_BACKGROUND_Z;
+    qreal m_nextForegroundZ = INITIAL_FOREGROUND_Z;
 };
 
 #endif // WB_GRAPHICSSCENE_H
