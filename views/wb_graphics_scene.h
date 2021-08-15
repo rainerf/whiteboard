@@ -16,16 +16,31 @@
 #ifndef WB_GRAPHICSSCENE_H
 #define WB_GRAPHICSSCENE_H
 
-#include <QGraphicsScene>
+#include <QObject>
 
-class WB_GraphicsScene : public QGraphicsScene
+class WB_GraphicsView;
+class QGraphicsItem;
+class QGraphicsScene;
+
+class WB_GraphicsScene : public QObject
 {
 public:
-    WB_GraphicsScene(QWidget *parent);
+    WB_GraphicsScene(WB_GraphicsView *parent);
 
     void saveToFile(QString const &filename);
     void loadFromFile(QString const &filename);
+
+    QList<QGraphicsItem*> collidingItems(const QGraphicsItem *item, Qt::ItemSelectionMode mode = Qt::IntersectsItemShape) const;
+    QGraphicsItem *itemAt(const QPointF &position, const QTransform &deviceTransform) const;
     QList<QGraphicsItem*> topLevelItems();
+    QList<QGraphicsItem*> selectedItems();
+    void addItem(QGraphicsItem *item);
+    void removeItem(QGraphicsItem *item);
+    void update();
+    void clearSelection();
+
+private:
+    QGraphicsScene *m_scene;
 };
 
 #endif // WB_GRAPHICSSCENE_H

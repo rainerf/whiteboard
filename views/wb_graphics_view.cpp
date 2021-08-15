@@ -60,8 +60,7 @@ void WB_GraphicsView::tabletEvent(QTabletEvent *event) {
     event->accept();
 }
 
-WB_GraphicsView::WB_GraphicsView(QWidget *parent): InteractiveView(parent) {
-    setScene(m_scene = new WB_GraphicsScene(this));
+WB_GraphicsView::WB_GraphicsView(QWidget *parent): InteractiveView(parent), m_scene(new WB_GraphicsScene(this)) {
     setCursor(Qt::CrossCursor);
 }
 
