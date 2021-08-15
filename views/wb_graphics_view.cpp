@@ -121,6 +121,10 @@ void WB_GraphicsView::deleteSelectedItems() {
     undoStack.push(new DeleteCommand(scene()));
 }
 
+void WB_GraphicsView::debugDumpAllItems() {
+    m_scene->debugDumpAllItems();
+}
+
 void WB_GraphicsView::setFont(const QFont &font) {
     textTool.setFont(font);
 }

@@ -30,6 +30,8 @@ public:
     void saveToFile(QString const &filename);
     void loadFromFile(QString const &filename);
 
+    void debugDumpAllItems();
+
     QList<QGraphicsItem*> collidingItems(const QGraphicsItem *item, Qt::ItemSelectionMode mode = Qt::IntersectsItemShape) const;
     QGraphicsItem *itemAt(const QPointF &position, const QTransform &deviceTransform) const;
     QList<QGraphicsItem*> topLevelItems();

@@ -80,6 +80,9 @@ void WB_PaintWindow::setupUiActions() {
 
     auto *deleteShortcut = new QShortcut(QKeySequence("Del"), this);
     connect(deleteShortcut, &QShortcut::activated, ui->graphicsView, &WB_GraphicsView::deleteSelectedItems);
+
+    auto *dumpShortcut = new QShortcut(QKeySequence("Ctrl+Shift+D"), this);
+    connect(dumpShortcut, &QShortcut::activated, ui->graphicsView, &WB_GraphicsView::debugDumpAllItems);
 }
 
 void WB_PaintWindow::setupFontToolbar() {

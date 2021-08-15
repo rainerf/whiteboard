@@ -22,6 +22,7 @@
 #include <QPainter>
 
 #include "lib/qgraphicsscene_storage.h"
+#include "lib/qgraphicsscene_dump.h"
 
 namespace detail {
 
@@ -67,6 +68,11 @@ void WB_GraphicsScene::loadFromFile(const QString &filename) {
             m_scene->addItem(item);
         }
     }
+}
+
+void WB_GraphicsScene::debugDumpAllItems() {
+    QTextStream out(stdout, QIODevice::WriteOnly);
+    dumpItems(m_scene->items(), out);
 }
 
 QList<QGraphicsItem*> WB_GraphicsScene::collidingItems(const QGraphicsItem *item, Qt::ItemSelectionMode mode) const {

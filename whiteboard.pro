@@ -49,6 +49,7 @@ HEADERS += \
     items/wb_pixmap_item.h \
     items/wb_text_item.h \
     lib/interactive_view.h \
+    lib/qgraphicsscene_dump.h \
     lib/qgraphicsscene_storage.h \
     lib/tablet_application.h \
     tools/highlight_tool.h \

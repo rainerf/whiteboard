@@ -56,6 +56,7 @@ public slots:
     void setSelectTool();
 
     void deleteSelectedItems();
+    void debugDumpAllItems();
 
     void setFont(QFont const &font);
     void setFontSize(int size);
