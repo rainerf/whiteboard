@@ -25,6 +25,7 @@ public:
 
     void saveToFile(QString const &filename);
     void loadFromFile(QString const &filename);
+    QList<QGraphicsItem*> topLevelItems();
 };
 
 #endif // WB_GRAPHICSSCENE_H

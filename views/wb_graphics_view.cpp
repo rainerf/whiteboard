@@ -29,7 +29,7 @@ void WB_GraphicsView::tabletEvent(QTabletEvent *event) {
         // take the focus from other widgets (which Qt doesn't do for some reason),
         // and unfocus all items in the scene
         setFocus();
-        for (auto &&i : scene()->items())
+        for (auto &&i : scene()->topLevelItems())
             i->clearFocus();
 
         if (!m_deviceDown) {
@@ -37,7 +37,7 @@ void WB_GraphicsView::tabletEvent(QTabletEvent *event) {
             // handle the event; if the function returns true, this means to clear
             // all focused items
             if (currentTool->handleTabletPress(*this, *event))
-                for (auto &&i : scene()->items())
+                for (auto &&i : scene()->topLevelItems())
                     i->setSelected(false);
             emit toolInUse(true);
         }
@@ -139,7 +139,7 @@ void WB_GraphicsView::copy() {
 }
 
 void WB_GraphicsView::selectAll() {
-    for (auto &&i : scene()->items())
+    for (auto &&i : scene()->topLevelItems())
         i->setSelected(true);
 }
 

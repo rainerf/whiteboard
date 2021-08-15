@@ -65,3 +65,11 @@ void WB_GraphicsScene::loadFromFile(const QString &filename) {
         }
     }
 }
+
+QList<QGraphicsItem*> WB_GraphicsScene::topLevelItems() {
+    QList<QGraphicsItem*> ret;
+    for (auto &&i: items())
+        if (!i->parentItem())
+            ret.append(i);
+    return ret;
+}
