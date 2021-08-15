@@ -18,5 +18,6 @@
         <file>icons/undo_black_24dp.svg</file>
         <file>icons/redo_black_24dp.svg</file>
         <file>icons/select_black_24dp.svg</file>
+        <file>icons/content_cut_black_24dp.svg</file>
     </qresource>
 </RCC>
