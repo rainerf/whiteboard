@@ -39,7 +39,7 @@ public:
     TextTool() = default;
 
 private:
-    AddCommand *m_currentCommand;
+    AddCommand *m_currentCommand = nullptr;
 
     QColor m_color = QColor(200, 200, 200);
     QFont m_font;
