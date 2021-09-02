@@ -98,7 +98,7 @@ void SelectTool::handleTabletMove(WB_GraphicsView &view, QTabletEvent &event) {
 
 void SelectTool::handleTabletRelease(WB_GraphicsView &view, QTabletEvent & /*event*/) {
     if (mode == moving) {
-        // nothing to do
+        m_moveCommand = nullptr;
     } else {
         view.scene()->removeItem(&m_selectionRect);
     }

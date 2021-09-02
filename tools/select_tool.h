@@ -35,7 +35,7 @@ public:
 private:
     QPointF m_previous;
     QGraphicsRectItem m_selectionRect;
-    MoveCommand *m_moveCommand;
+    MoveCommand *m_moveCommand = nullptr;
     enum Mode {selecting, moving} mode;
 };
 

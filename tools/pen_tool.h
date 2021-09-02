@@ -45,7 +45,7 @@ private:
     QColor m_color = QColor(200, 200, 200);
     int m_maxThickness = 10;
 
-    DrawCommand *m_currentCommand;
+    DrawCommand *m_currentCommand = nullptr;
 };
 
 #endif // PENTOOL_H
