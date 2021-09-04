@@ -30,6 +30,6 @@ public:
     PanTool() = default;
 
 private:
-    QPointF m_previous;
+    QPoint m_previous;
 };
 #endif // PANTOOL_H

@@ -22,7 +22,7 @@ class InteractiveView : public QGraphicsView {
 public:
     InteractiveView(QWidget *&);
 
-    void pan(QPointF delta, bool mouse);
+    void pan(QPoint delta);
     void zoomIn();
     void zoomOut();
     void zoomToFit();

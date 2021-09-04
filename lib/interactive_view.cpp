@@ -13,10 +13,11 @@
 // You should have received a copy of the GNU General Public License
 // along with Whiteboard.  If not, see <https://www.gnu.org/licenses/>.
 
+#include "interactive_view.h"
+
 #include <QKeyEvent>
 #include <QWheelEvent>
-
-#include "interactive_view.h"
+#include <QScrollBar>
 
 InteractiveView::InteractiveView(QWidget *&parent) : QGraphicsView(parent) {
     setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
@@ -38,8 +39,8 @@ void InteractiveView::zoomToFit() {
 
 void InteractiveView::mouseMoveEvent(QMouseEvent *event) {
     if (_doMousePanning) {
-        QPointF mouseDelta = event->pos() - _lastMousePos;
-        pan(mouseDelta, true);
+        QPoint mouseDelta = event->pos() - _lastMousePos;
+        pan(mouseDelta);
     }
 
     QGraphicsView::mouseMoveEvent(event);
@@ -88,17 +89,9 @@ void InteractiveView::zoomOut() {
     zoomDelta(1 / _zoomDelta);
 }
 
-void InteractiveView::pan(QPointF delta, bool mouse) {
-    if (mouse) {
-        // Have panning be anchored from the mouse.
-        setTransformationAnchor(QGraphicsView::AnchorUnderMouse);
-    }
-
-    auto const view_width = viewport()->rect().width();
-    auto const view_height = viewport()->rect().height();
-    QPoint newCenter(view_width / 2 - delta.x(), view_height / 2 - delta.y());
-    centerOn(mapToScene(newCenter));
-
-    // For zooming to anchor from the view center.
-    setTransformationAnchor(QGraphicsView::AnchorViewCenter);
+void InteractiveView::pan(QPoint delta) {
+    QScrollBar * const xBar=horizontalScrollBar();
+    QScrollBar * const yBar=verticalScrollBar();
+    xBar->setValue(xBar->value() - delta.x());
+    yBar->setValue(yBar->value() - delta.y());
 }

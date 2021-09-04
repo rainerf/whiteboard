@@ -22,8 +22,8 @@ bool PanTool::handleTabletPress(WB_GraphicsView &, QTabletEvent &event) {
 }
 
 void PanTool::handleTabletMove(WB_GraphicsView &view, QTabletEvent &event) {
-    QPointF current = (event.pos());
-    view.pan(current - m_previous, false);
+    QPoint current = event.pos();
+    view.pan(current - m_previous);
 
     m_previous = current;
 }
