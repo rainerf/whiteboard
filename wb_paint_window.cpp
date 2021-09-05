@@ -41,16 +41,14 @@ void WB_PaintWindow::setupToolSelectors() {
     toolSelector->addAction(ui->actionHighlight);
     toolSelector->addAction(ui->actionPointer);
     toolSelector->addAction(ui->actionPen);
-    toolSelector->addAction(ui->actionZoomTool);
-    toolSelector->addAction(ui->actionPanTool);
+    toolSelector->addAction(ui->actionPanZoomTool);
     toolSelector->addAction(ui->actionSelectMove);
 
     connect(ui->actionPen, &QAction::triggered, ui->graphicsView, &WB_GraphicsView::setPenTool);
     connect(ui->actionText, &QAction::triggered, ui->graphicsView, &WB_GraphicsView::setTextTool);
     connect(ui->actionHighlight, &QAction::triggered, ui->graphicsView, &WB_GraphicsView::setHighlightTool);
     connect(ui->actionPointer, &QAction::triggered, ui->graphicsView, &WB_GraphicsView::setPointerTool);
-    connect(ui->actionZoomTool, &QAction::triggered, ui->graphicsView, &WB_GraphicsView::setZoomTool);
-    connect(ui->actionPanTool, &QAction::triggered, ui->graphicsView, &WB_GraphicsView::setPanTool);
+    connect(ui->actionPanZoomTool, &QAction::triggered, ui->graphicsView, &WB_GraphicsView::setPanZoomTool);
     connect(ui->actionSelectMove, &QAction::triggered, ui->graphicsView, &WB_GraphicsView::setSelectTool);
 
     // disable changing the tool while one is in use

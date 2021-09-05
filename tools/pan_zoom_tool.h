@@ -20,14 +20,14 @@
 
 #include "tool_base.h"
 
-class PanTool : public ToolBase {
+class PanZoomTool : public ToolBase {
 public:
     bool handleTabletPress(WB_GraphicsView &view, QTabletEvent &event) override;
     void handleTabletMove(WB_GraphicsView &view, QTabletEvent &event) override;
 
-    PanTool operator=(PanTool &) = delete;
-    PanTool(PanTool &) = delete;
-    PanTool() = default;
+    PanZoomTool operator=(PanZoomTool &) = delete;
+    PanZoomTool(PanZoomTool &) = delete;
+    PanZoomTool() = default;
 
 private:
     QPoint m_previous;

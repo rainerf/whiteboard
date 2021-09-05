@@ -106,13 +106,7 @@ void WB_GraphicsView::setPointerTool() {
     m_currentTool = &m_pointerTool;
 }
 
-void WB_GraphicsView::setZoomTool() {
-    if (m_deviceDown)
-        throw std::logic_error("Changing a tool while it's in use should not be possible!");
-    m_currentTool = &m_zoomTool;
-}
-
-void WB_GraphicsView::setPanTool() {
+void WB_GraphicsView::setPanZoomTool() {
     if (m_deviceDown)
         throw std::logic_error("Changing a tool while it's in use should not be possible!");
     m_currentTool = &m_panTool;

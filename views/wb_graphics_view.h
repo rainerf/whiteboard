@@ -24,8 +24,7 @@
 #include "tools/pointer_tool.h"
 #include "tools/select_tool.h"
 #include "tools/text_tool.h"
-#include "tools/zoom_tool.h"
-#include "tools/pan_tool.h"
+#include "tools/pan_zoom_tool.h"
 
 class WB_GraphicsScene;
 
@@ -51,8 +50,7 @@ public slots:
     void setTextTool();
     void setHighlightTool();
     void setPointerTool();
-    void setZoomTool();
-    void setPanTool();
+    void setPanZoomTool();
     void setSelectTool();
 
     void deleteSelectedItems();
@@ -85,8 +83,7 @@ private:
     TextTool m_textTool;
     HighlightTool m_highlightTool;
     PointerTool m_pointerTool;
-    ZoomTool m_zoomTool;
-    PanTool m_panTool;
+    PanZoomTool m_panTool;
     SelectTool m_selectTool;
     ToolBase *m_currentTool = &m_penTool;
 

@@ -87,8 +87,7 @@
    <addaction name="actionHighlight"/>
    <addaction name="actionText"/>
    <addaction name="actionPointer"/>
-   <addaction name="actionZoomTool"/>
-   <addaction name="actionPanTool"/>
+   <addaction name="actionPanZoomTool"/>
   </widget>
   <widget class="QToolBar" name="toolBarSettings">
    <property name="windowTitle">
@@ -305,25 +304,7 @@
     <string>Ctrl+2</string>
    </property>
   </action>
-  <action name="actionZoomTool">
-   <property name="checkable">
-    <bool>true</bool>
-   </property>
-   <property name="icon">
-    <iconset resource="icons.qrc">
-     <normaloff>:/icons/icons/zoom_tool_black_24dp.svg</normaloff>:/icons/icons/zoom_tool_black_24dp.svg</iconset>
-   </property>
-   <property name="text">
-    <string>Zoom Tool</string>
-   </property>
-   <property name="toolTip">
-    <string>Zoom Tool</string>
-   </property>
-   <property name="shortcut">
-    <string>Ctrl+6</string>
-   </property>
-  </action>
-  <action name="actionPanTool">
+  <action name="actionPanZoomTool">
    <property name="checkable">
     <bool>true</bool>
    </property>
@@ -332,13 +313,13 @@
      <normaloff>:/icons/icons/pan_tool_black_24dp.svg</normaloff>:/icons/icons/pan_tool_black_24dp.svg</iconset>
    </property>
    <property name="text">
-    <string>Pan Tool</string>
+    <string>Pan and Zoom Tool</string>
    </property>
    <property name="toolTip">
-    <string>Pan Tool</string>
+    <string>Pan and Zoom Tool (Ctrl for Zoom)</string>
    </property>
    <property name="shortcut">
-    <string>Ctrl+7</string>
+    <string>Ctrl+6</string>
    </property>
   </action>
   <action name="actionSelectMove">

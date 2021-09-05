@@ -28,12 +28,11 @@ SOURCES += \
     lib/qgraphicsscene_storage.cpp \
     main.cpp \
     tools/highlight_tool.cpp \
-    tools/pan_tool.cpp \
+    tools/pan_zoom_tool.cpp \
     tools/pen_tool.cpp \
     tools/pointer_tool.cpp \
     tools/select_tool.cpp \
     tools/text_tool.cpp \
-    tools/zoom_tool.cpp \
     views/commands.cpp \
     views/copy_paste_support.cpp \
     views/wb_graphics_scene.cpp \
@@ -53,13 +52,12 @@ HEADERS += \
     lib/qgraphicsscene_storage.h \
     lib/tablet_application.h \
     tools/highlight_tool.h \
-    tools/pan_tool.h \
+    tools/pan_zoom_tool.h \
     tools/pen_tool.h \
     tools/pointer_tool.h \
     tools/select_tool.h \
     tools/text_tool.h \
     tools/tool_base.h \
-    tools/zoom_tool.h \
     views/commands.h \
     views/copy_paste_support.h \
     views/wb_graphics_scene.h \
