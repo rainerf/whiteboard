@@ -65,6 +65,8 @@
    </attribute>
    <addaction name="actionZoomOriginal"/>
    <addaction name="actionZoomFit"/>
+   <addaction name="separator"/>
+   <addaction name="actionGrid"/>
   </widget>
   <widget class="QToolBar" name="toolBarTools">
    <property name="sizePolicy">
@@ -353,6 +355,21 @@
    </property>
    <property name="shortcut">
     <string>Ctrl+X</string>
+   </property>
+  </action>
+  <action name="actionGrid">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="icons.qrc">
+     <normaloff>:/icons/icons/grid_4x4_black_24dp.svg</normaloff>:/icons/icons/grid_4x4_black_24dp.svg</iconset>
+   </property>
+   <property name="text">
+    <string>Grid</string>
+   </property>
+   <property name="toolTip">
+    <string>Toggle Grid</string>
    </property>
   </action>
  </widget>

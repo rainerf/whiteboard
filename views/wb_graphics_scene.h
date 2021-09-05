@@ -41,6 +41,8 @@ public:
     void update();
     void clearSelection();
 
+    void setGrid(bool enabled);
+
     qreal getNewBackgroundZ();
     qreal getNewForegroundZ();
     static qreal getAbsoluteForegroundZ();

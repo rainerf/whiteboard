@@ -128,6 +128,10 @@ void WB_GraphicsView::debugDumpAllItems() {
     m_scene->debugDumpAllItems();
 }
 
+void WB_GraphicsView::setGrid(bool enabled) {
+    m_scene->setGrid(enabled);
+}
+
 void WB_GraphicsView::setFont(const QFont &font) {
     m_textTool.setFont(font);
 }

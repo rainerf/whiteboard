@@ -51,6 +51,8 @@ public slots:
     void deleteSelectedItems();
     void debugDumpAllItems();
 
+    void setGrid(bool enabled);
+
     void setFont(QFont const &font);
     void setFontSize(int size);
 

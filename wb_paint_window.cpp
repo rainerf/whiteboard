@@ -67,7 +67,7 @@ void WB_PaintWindow::setupUiActions() {
     connect(ui->actionClear, &QAction::triggered, ui->graphicsView, &WB_GraphicsView::clear);
     connect(ui->actionZoomOriginal, &QAction::triggered, [=]() { ui->graphicsView->setZoom(1); });
     connect(ui->actionZoomFit, &QAction::triggered, ui->graphicsView, &WB_GraphicsView::zoomToFit);
-    // connect(ui->actionHighlight, &QAction::toggled, [=](bool x) { m_colorSelector->setEnabled(!x); });
+    connect(ui->actionGrid, &QAction::triggered, ui->graphicsView, &WB_GraphicsView::setGrid);
 
     auto *undoAction = ui->graphicsView->getUndoStack()->createUndoAction(this);
     undoAction->setIcon(QIcon(QString::fromUtf8(":/icons/icons/undo_black_24dp.svg")));

@@ -44,7 +44,6 @@ QPixmap createTexture() {
 } // namespace detail
 
 WB_GraphicsScene::WB_GraphicsScene(WB_GraphicsView *parent) : QObject(parent), m_scene(new QGraphicsScene(this)) {
-    m_scene->setBackgroundBrush(QBrush(detail::createTexture()));
     parent->setScene(m_scene);
 }
 
@@ -111,6 +110,13 @@ void WB_GraphicsScene::update() {
 
 void WB_GraphicsScene::clearSelection() {
     m_scene->clearSelection();
+}
+
+void WB_GraphicsScene::setGrid(bool enabled) {
+    if (enabled)
+        m_scene->setBackgroundBrush(QBrush(detail::createTexture()));
+    else
+        m_scene->setBackgroundBrush(QBrush());
 }
 
 qreal WB_GraphicsScene::getNewBackgroundZ() {
