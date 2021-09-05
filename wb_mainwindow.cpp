@@ -24,10 +24,12 @@ constexpr char GEOMETRY_SETTING[] = "paintWindow/geometry";
 
 WB_MainWindow::WB_MainWindow(TabletApplication &app, QWidget *parent) : QMainWindow(parent), m_paintWindow(new WB_PaintWindow(app)) {
     setCentralWidget(m_paintWindow);
-    setWindowTitle("Whiteboard");
+    setWindowTitle("[*] Whiteboard");
     setWindowIcon(QIcon(":/icons/icons/wysiwyg_black_24dp.svg"));
     QSettings settings;
     restoreGeometry(settings.value(detail::GEOMETRY_SETTING).toByteArray());
+
+    connect(m_paintWindow, &WB_PaintWindow::fileModified, [this](bool x) { setWindowModified(x); });
 }
 
 void WB_MainWindow::closeEvent(QCloseEvent *event) {

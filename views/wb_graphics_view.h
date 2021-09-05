@@ -72,6 +72,7 @@ public slots:
 
 signals:
     void toolInUse(bool);
+    void fileModified(bool);
 
 private:
     void tabletEvent(QTabletEvent *event) override;

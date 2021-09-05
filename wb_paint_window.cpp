@@ -19,6 +19,7 @@
 #include <QFileDialog>
 #include <QFontComboBox>
 #include <QLabel>
+#include <QMessageBox>
 #include <QSettings>
 #include <QShortcut>
 //#include <QGLWidget>
@@ -105,6 +106,8 @@ void WB_PaintWindow::setupFontToolbar() {
 WB_PaintWindow::WB_PaintWindow(TabletApplication &app, QWidget *parent) : QMainWindow(parent), ui(new Ui::WB_PaintWindow) {
     ui->setupUi(this);
 
+    connect(ui->graphicsView, &WB_GraphicsView::fileModified, this, &WB_PaintWindow::setFileModified);
+
     setupToolSelectors();
     setupColorActions();
     setupPenActions();
@@ -181,7 +184,7 @@ PenAction *WB_PaintWindow::addPenAction(int thickness, QActionGroup *selector) {
     return newAction;
 }
 
-void WB_PaintWindow::showFileSaveDialog() {
+bool WB_PaintWindow::showFileSaveDialog() {
     QFileDialog dialog(this, "Save Whiteboard", "", "Whiteboard (*.whb);;All Files (*)");
     dialog.setDefaultSuffix(".whb");
     dialog.setAcceptMode(QFileDialog::AcceptSave);
@@ -190,7 +193,10 @@ void WB_PaintWindow::showFileSaveDialog() {
         const auto filename = dialog.selectedFiles().front();
         ui->graphicsView->saveToFile(filename);
         addFileToRecentlyUsed(filename);
+        return true;
     }
+
+    return false;
 }
 
 void WB_PaintWindow::showFileLoadDialog() {
@@ -235,9 +241,36 @@ bool WB_PaintWindow::eventFilter(QObject *obj, QEvent *event) {
 }
 
 void WB_PaintWindow::closeEvent(QCloseEvent *event) {
+    if (m_fileModified) {
+        QMessageBox msgBox;
+        msgBox.setText("The document has been modified.");
+        msgBox.setInformativeText("Do you want to save your changes?");
+        msgBox.setStandardButtons(QMessageBox::Save | QMessageBox::Discard | QMessageBox::Cancel);
+        msgBox.setDefaultButton(QMessageBox::Save);
+        switch (msgBox.exec()) {
+        case QMessageBox::Save:
+            if (showFileSaveDialog())
+                break; // file was saved, we're good
+            else {
+                event->ignore();
+                return;
+            }
+        case QMessageBox::Discard:
+            break;
+        case QMessageBox::Cancel:
+            event->ignore();
+            return;
+        }
+    }
+
     QSettings settings;
     settings.setValue(detail::STATE_SETTING, saveState());
     QMainWindow::closeEvent(event);
+}
+
+void WB_PaintWindow::setFileModified(bool x) {
+    m_fileModified = x;
+    emit fileModified(m_fileModified);
 }
 
 WB_PaintWindow::~WB_PaintWindow() {

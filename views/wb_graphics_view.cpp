@@ -62,6 +62,7 @@ void WB_GraphicsView::tabletEvent(QTabletEvent *event) {
 
 WB_GraphicsView::WB_GraphicsView(QWidget *parent): InteractiveView(parent), m_scene(new WB_GraphicsScene(this)) {
     setCursor(Qt::CrossCursor);
+    connect(&undoStack, &QUndoStack::canUndoChanged, this, &WB_GraphicsView::fileModified);
 }
 
 void WB_GraphicsView::setColor(const QColor &color) {
@@ -153,6 +154,7 @@ void WB_GraphicsView::selectAll() {
 
 void WB_GraphicsView::saveToFile(QString const &filename) {
     m_scene->saveToFile(filename);
+    undoStack.clear();
 }
 
 void WB_GraphicsView::loadFromFile(QString const &filename) {

@@ -36,7 +36,12 @@ public:
 
     void closeEvent(QCloseEvent *event) override;
 
+signals:
+    void fileModified(bool);
+
 public slots:
+    void setFileModified(bool x);
+
     void tabletActive(bool x) {
         m_tabletActive = x;
     }
@@ -44,6 +49,7 @@ public slots:
 private:
     Ui::WB_PaintWindow *ui;
     bool m_tabletActive = false;
+    bool m_fileModified = false;
 
     void setupToolSelectors();
     void setupUiActions();
@@ -54,7 +60,7 @@ private:
     ColorAction *addColorAction(QColor const &color, QActionGroup *selector);
     PenAction *addPenAction(int thickness, QActionGroup *selector);
 
-    void showFileSaveDialog();
+    bool showFileSaveDialog();
     void showFileLoadDialog();
     void loadFromFile(QString filename);
     void addFileToRecentlyUsed(QString filename);
