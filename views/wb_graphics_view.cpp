@@ -36,7 +36,7 @@ void WB_GraphicsView::tabletEvent(QTabletEvent *event) {
             m_deviceDown = true;
             // handle the event; if the function returns true, this means to clear
             // all focused items
-            if (currentTool->handleTabletPress(*this, *event))
+            if (m_currentTool->handleTabletPress(*this, *event))
                 for (auto &&i : scene()->topLevelItems())
                     i->setSelected(false);
             emit toolInUse(true);
@@ -44,13 +44,13 @@ void WB_GraphicsView::tabletEvent(QTabletEvent *event) {
         break;
     case QEvent::TabletMove:
         if (m_deviceDown) {
-            currentTool->handleTabletMove(*this, *event);
+            m_currentTool->handleTabletMove(*this, *event);
         }
         break;
     case QEvent::TabletRelease:
         if (m_deviceDown && event->buttons() == Qt::NoButton) {
             m_deviceDown = false;
-            currentTool->handleTabletRelease(*this, *event);
+            m_currentTool->handleTabletRelease(*this, *event);
             emit toolInUse(false);
         }
         break;
@@ -62,64 +62,64 @@ void WB_GraphicsView::tabletEvent(QTabletEvent *event) {
 
 WB_GraphicsView::WB_GraphicsView(QWidget *parent): InteractiveView(parent), m_scene(new WB_GraphicsScene(this)) {
     setCursor(Qt::CrossCursor);
-    connect(&undoStack, &QUndoStack::canUndoChanged, this, &WB_GraphicsView::fileModified);
+    connect(&m_undoStack, &QUndoStack::canUndoChanged, this, &WB_GraphicsView::fileModified);
 }
 
 void WB_GraphicsView::setColor(const QColor &color) {
-    penTool.setColor(color);
-    textTool.setColor(color);
-    highlightTool.setColor(color);
+    m_penTool.setColor(color);
+    m_textTool.setColor(color);
+    m_highlightTool.setColor(color);
 }
 
 void WB_GraphicsView::setPenThickness(int thickness) {
-    penTool.setPen(thickness);
-    highlightTool.setPen(thickness);
+    m_penTool.setPen(thickness);
+    m_highlightTool.setPen(thickness);
 }
 
 void WB_GraphicsView::setSelectTool() {
     if (m_deviceDown)
         throw std::logic_error("Changing a tool while it's in use should not be possible!");
-    currentTool = &selectTool;
+    m_currentTool = &m_selectTool;
 }
 
 void WB_GraphicsView::setPenTool() {
     if (m_deviceDown)
         throw std::logic_error("Changing a tool while it's in use should not be possible!");
-    currentTool = &penTool;
+    m_currentTool = &m_penTool;
 }
 
 void WB_GraphicsView::setTextTool() {
     if (m_deviceDown)
         throw std::logic_error("Changing a tool while it's in use should not be possible!");
-    currentTool = &textTool;
+    m_currentTool = &m_textTool;
 }
 
 void WB_GraphicsView::setHighlightTool() {
     if (m_deviceDown)
         throw std::logic_error("Changing a tool while it's in use should not be possible!");
-    currentTool = &highlightTool;
+    m_currentTool = &m_highlightTool;
 }
 
 void WB_GraphicsView::setPointerTool() {
     if (m_deviceDown)
         throw std::logic_error("Changing a tool while it's in use should not be possible!");
-    currentTool = &pointerTool;
+    m_currentTool = &m_pointerTool;
 }
 
 void WB_GraphicsView::setZoomTool() {
     if (m_deviceDown)
         throw std::logic_error("Changing a tool while it's in use should not be possible!");
-    currentTool = &zoomTool;
+    m_currentTool = &m_zoomTool;
 }
 
 void WB_GraphicsView::setPanTool() {
     if (m_deviceDown)
         throw std::logic_error("Changing a tool while it's in use should not be possible!");
-    currentTool = &panTool;
+    m_currentTool = &m_panTool;
 }
 
 void WB_GraphicsView::deleteSelectedItems() {
-    undoStack.push(new DeleteCommand(scene()));
+    m_undoStack.push(new DeleteCommand(scene()));
 }
 
 void WB_GraphicsView::debugDumpAllItems() {
@@ -127,15 +127,15 @@ void WB_GraphicsView::debugDumpAllItems() {
 }
 
 void WB_GraphicsView::setFont(const QFont &font) {
-    textTool.setFont(font);
+    m_textTool.setFont(font);
 }
 
 void WB_GraphicsView::setFontSize(int size) {
-    textTool.setFontSize(size);
+    m_textTool.setFontSize(size);
 }
 
 void WB_GraphicsView::paste() {
-    undoStack.push(new PasteCommand(scene()));
+    m_undoStack.push(new PasteCommand(scene()));
 }
 
 void WB_GraphicsView::copy() {
@@ -154,7 +154,7 @@ void WB_GraphicsView::selectAll() {
 
 void WB_GraphicsView::saveToFile(QString const &filename) {
     m_scene->saveToFile(filename);
-    undoStack.clear();
+    m_undoStack.clear();
 }
 
 void WB_GraphicsView::loadFromFile(QString const &filename) {

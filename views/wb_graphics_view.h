@@ -36,7 +36,7 @@ public:
     WB_GraphicsView(QWidget *parent);
 
     QUndoStack * getUndoStack() {
-        return &undoStack;
+        return &m_undoStack;
     }
 
     WB_GraphicsScene *scene() {
@@ -81,16 +81,16 @@ private:
 
     bool m_deviceDown = false;
 
-    PenTool penTool;
-    TextTool textTool;
-    HighlightTool highlightTool;
-    PointerTool pointerTool;
-    ZoomTool zoomTool;
-    PanTool panTool;
-    SelectTool selectTool;
-    ToolBase *currentTool = &penTool;
+    PenTool m_penTool;
+    TextTool m_textTool;
+    HighlightTool m_highlightTool;
+    PointerTool m_pointerTool;
+    ZoomTool m_zoomTool;
+    PanTool m_panTool;
+    SelectTool m_selectTool;
+    ToolBase *m_currentTool = &m_penTool;
 
-    QUndoStack undoStack;
+    QUndoStack m_undoStack;
 };
 
 #endif // WHITEBOARDGRAPHICSVIEW_H
