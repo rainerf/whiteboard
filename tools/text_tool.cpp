@@ -15,6 +15,8 @@
 
 #include "text_tool.h"
 
+#include <QTextCharFormat>
+#include <QTextCursor>
 #include <QUndoCommand>
 
 #include "items/wb_text_item.h"
@@ -73,7 +75,13 @@ bool TextTool::handleTabletPress(WB_GraphicsView &view, QTabletEvent &event) {
     } else {
         item = new WB_TextItem("");
         item->setFocus();
-        item->setDefaultTextColor(m_color);
+
+        QTextCharFormat fmt;
+        fmt.setForeground(QBrush(m_color));
+        QTextCursor cursor = item->textCursor();
+        cursor.setCharFormat(fmt);
+        item->setTextCursor(cursor);
+
         item->setFont(m_font);
         item->enableEditor();
 
