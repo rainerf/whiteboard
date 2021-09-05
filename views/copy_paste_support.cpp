@@ -52,7 +52,7 @@ QImage renderToPixmap(QByteArray &itemData) {
     s.clearSelection();
     s.update();
 
-    int const oversampling = 8;
+    int const oversampling = 2;
 
     auto const boundingRect = s.itemsBoundingRect();
     int width = qCeil(boundingRect.width());
