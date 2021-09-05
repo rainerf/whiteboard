@@ -34,13 +34,8 @@ class WB_GraphicsView : public InteractiveView {
 public:
     WB_GraphicsView(QWidget *parent);
 
-    QUndoStack * getUndoStack() {
-        return &m_undoStack;
-    }
-
-    WB_GraphicsScene *scene() {
-        return m_scene;
-    }
+    QUndoStack *getUndoStack();
+    WB_GraphicsScene *scene();
 
 public slots:
     void setColor(QColor const &color);

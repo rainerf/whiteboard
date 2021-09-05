@@ -65,6 +65,14 @@ WB_GraphicsView::WB_GraphicsView(QWidget *parent): InteractiveView(parent), m_sc
     connect(&m_undoStack, &QUndoStack::canUndoChanged, this, &WB_GraphicsView::fileModified);
 }
 
+QUndoStack *WB_GraphicsView::getUndoStack() {
+    return &m_undoStack;
+}
+
+WB_GraphicsScene *WB_GraphicsView::scene() {
+    return m_scene;
+}
+
 void WB_GraphicsView::setColor(const QColor &color) {
     m_penTool.setColor(color);
     m_textTool.setColor(color);
