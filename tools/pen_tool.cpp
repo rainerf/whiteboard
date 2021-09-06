@@ -61,7 +61,14 @@ public:
         m_scene->addItem(m_group);
     }
 
-    void addPoint(QPointF toPoint, qreal thickness) {
+    void addPoint(QPointF toPoint, qreal thickness, Qt::KeyboardModifiers modifiers) {
+        // use Shift to force vertical lines, Alt to force horizontal ones
+        if (modifiers & Qt::ShiftModifier) {
+            toPoint.setX(m_points.last().x());
+        } else if (modifiers & Qt::AltModifier) {
+            toPoint.setY(m_points.last().y());
+        }
+
         if ((toPoint - m_points.last()).manhattanLength() < 1)
             return;
 
@@ -140,7 +147,9 @@ bool PenTool::handleTabletPress(WB_GraphicsView &view, QTabletEvent &event) {
 }
 
 void PenTool::handleTabletMove(WB_GraphicsView &view, QTabletEvent &event) {
-    m_currentCommand->addPoint(view.mapToScene(event.pos()), event.pressure() * m_maxThickness*3/4 + m_maxThickness/4);
+    m_currentCommand->addPoint(view.mapToScene(event.pos()),
+                               event.pressure() * m_maxThickness*3/4 + m_maxThickness/4,
+                               event.modifiers());
 }
 
 void PenTool::handleTabletRelease(WB_GraphicsView & /*view*/, QTabletEvent &/*event*/) {
