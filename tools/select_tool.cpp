@@ -56,7 +56,8 @@ private:
 
 bool SelectTool::handleTabletPress(WB_GraphicsView &view, QTabletEvent &event) {
     m_first = view.mapToScene(event.pos());
-    if (auto *item = view.scene()->itemAt(m_first, view.transform())) {
+    auto *item = view.scene()->itemAt(m_first, view.transform());
+    if (item && item->isSelected()) {
         // if the item is part of a group, we'll always use the group
         if (item->parentItem())
             item = item->parentItem();
