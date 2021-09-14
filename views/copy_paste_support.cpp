@@ -27,17 +27,12 @@
 
 #include "lib/qgraphicsscene_storage.h"
 
+namespace detail {
 QList<QGraphicsItem*> pasteFromBinary(QByteArray &itemData) {
     QDataStream inData(&itemData, QIODevice::ReadOnly);
     return readItems(inData);
 }
 
-QList<QGraphicsItem*> pasteFromMimeData(QMimeData const *mimeData) {
-    auto binData = mimeData->data(MIME_TYPE);
-    return pasteFromBinary(binData);
-}
-
-namespace detail {
 // This is quite an ugly hack: We're pasting all elements (that were streamed
 // into itemData before) into a temporary QGraphicsScene, which we can then
 // just render as a whole. The former part is ugly, because we're relying on
@@ -66,6 +61,12 @@ QImage renderToPixmap(QByteArray &itemData) {
     s.render(&painter, image.rect(), boundingRect);
     return image;
 }
+
+}
+
+QList<QGraphicsItem*> pasteFromMimeData(QMimeData const *mimeData) {
+    auto binData = mimeData->data(MIME_TYPE);
+    return detail::pasteFromBinary(binData);
 }
 
 void copyGraphicsItems(QList<QGraphicsItem *> items) {
