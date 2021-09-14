@@ -76,8 +76,8 @@ void WB_GraphicsScene::debugDumpAllItems() {
     dumpItems(m_scene->items(), out);
 }
 
-QList<QGraphicsItem*> WB_GraphicsScene::collidingItems(const QGraphicsItem *item, Qt::ItemSelectionMode mode) const {
-    return m_scene->collidingItems(item, mode);
+QList<QGraphicsItem *> WB_GraphicsScene::items(const QRectF &rect, Qt::ItemSelectionMode mode, Qt::SortOrder order, const QTransform &deviceTransform) const {
+    return m_scene->items(rect, mode, order, deviceTransform);
 }
 
 QGraphicsItem *WB_GraphicsScene::itemAt(const QPointF &position, const QTransform &deviceTransform) const {

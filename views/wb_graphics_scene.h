@@ -17,6 +17,7 @@
 #define WB_GRAPHICSSCENE_H
 
 #include <QObject>
+#include <QTransform>
 
 class WB_GraphicsView;
 class QGraphicsItem;
@@ -32,7 +33,7 @@ public:
 
     void debugDumpAllItems();
 
-    QList<QGraphicsItem*> collidingItems(const QGraphicsItem *item, Qt::ItemSelectionMode mode = Qt::IntersectsItemShape) const;
+    QList<QGraphicsItem*> items(const QRectF &rect, Qt::ItemSelectionMode mode = Qt::IntersectsItemShape, Qt::SortOrder order = Qt::DescendingOrder, const QTransform &deviceTransform = QTransform()) const;
     QGraphicsItem *itemAt(const QPointF &position, const QTransform &deviceTransform) const;
     QList<QGraphicsItem*> topLevelItems();
     QList<QGraphicsItem*> selectedItems();

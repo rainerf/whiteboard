@@ -87,11 +87,11 @@ void SelectTool::handleTabletMove(WB_GraphicsView &view, QTabletEvent &event) {
         m_moveCommand->moveBy(delta);
         m_previous = current;
     } else {
-        QRectF rect(m_previous, current);
-        m_selectionRect.setRect(rect.normalized());
+        QRectF rect = QRectF{m_previous, current}.normalized();
+        m_selectionRect.setRect(rect);
 
         view.scene()->clearSelection();
-        for (auto &&i: view.scene()->collidingItems(&m_selectionRect))
+        for (auto &&i: view.scene()->items(rect, Qt::ContainsItemShape))
             i->setSelected(true);
     }
 }
