@@ -97,11 +97,20 @@ void SelectTool::handleTabletMove(WB_GraphicsView &view, QTabletEvent &event) {
     }
 }
 
-void SelectTool::handleTabletRelease(WB_GraphicsView &view, QTabletEvent & /*event*/) {
+void SelectTool::handleTabletRelease(WB_GraphicsView &view, QTabletEvent & event) {
     if (mode == moving) {
         m_moveCommand = nullptr;
     } else {
         view.scene()->removeItem(&m_selectionRect);
+
+        // if first was on an item, nothing was selected, and the selection rectangle
+        // was very small, let's assume that the user "clicked" the item to select it
+        auto *item = view.scene()->itemAt(m_first, view.transform());
+        if (item &&
+                view.scene()->selectedItems().empty() &&
+                (view.mapFromScene(m_first) - event.pos()).manhattanLength() < 5) {
+            item->setSelected(true);
+        }
     }
 }
 
