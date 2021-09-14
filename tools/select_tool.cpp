@@ -55,8 +55,8 @@ private:
 };
 
 bool SelectTool::handleTabletPress(WB_GraphicsView &view, QTabletEvent &event) {
-    m_previous = view.mapToScene(event.pos());
-    if (auto *item = view.scene()->itemAt(m_previous, view.transform())) {
+    m_first = view.mapToScene(event.pos());
+    if (auto *item = view.scene()->itemAt(m_first, view.transform())) {
         // if the item is part of a group, we'll always use the group
         if (item->parentItem())
             item = item->parentItem();
@@ -69,25 +69,25 @@ bool SelectTool::handleTabletPress(WB_GraphicsView &view, QTabletEvent &event) {
         if (view.scene()->selectedItems().isEmpty())
             item->setSelected(true);
 
-        m_moveCommand = new MoveCommand(view.scene()->selectedItems(), m_previous);
+        m_moveCommand = new MoveCommand(view.scene()->selectedItems(), m_first);
         view.getUndoStack()->push(m_moveCommand);
     } else {
         mode = selecting;
 
-        m_selectionRect.setRect(m_previous.x(), m_previous.y(), 1, 1);
+        m_selectionRect.setRect(m_first.x(), m_first.y(), 1, 1);
         view.scene()->addItem(&m_selectionRect);
     }
     return false;
 }
 
 void SelectTool::handleTabletMove(WB_GraphicsView &view, QTabletEvent &event) {
-    QPointF current = view.mapToScene(event.pos());
+    QPointF const current = view.mapToScene(event.pos());
     if (mode == moving) {
-        QPointF const delta = current - m_previous;
+        QPointF const delta = current - m_first;
         m_moveCommand->moveBy(delta);
-        m_previous = current;
+        m_first = current;
     } else {
-        QRectF rect = QRectF{m_previous, current}.normalized();
+        QRectF rect = QRectF{m_first, current}.normalized();
         m_selectionRect.setRect(rect);
 
         view.scene()->clearSelection();
