@@ -47,12 +47,20 @@ WB_GraphicsScene::WB_GraphicsScene(WB_GraphicsView *parent) : QObject(parent), m
     parent->setScene(m_scene);
 }
 
+void WB_GraphicsScene::save() {
+    if (m_filename.isEmpty())
+        throw std::logic_error("Must not call save() without a filename being set!");
+    saveToFile(m_filename);
+}
+
 void WB_GraphicsScene::saveToFile(const QString &filename) {
     QFile fileOut(filename);
     if (fileOut.open(QIODevice::WriteOnly)) {
         QDataStream out(&fileOut);
         saveItems(m_scene->items(), out);
         fileOut.close();
+        m_filename = filename;
+        emit newFilenameSet(m_filename);
     }
 }
 
@@ -66,9 +74,15 @@ void WB_GraphicsScene::loadFromFile(const QString &filename) {
         for (QGraphicsItem *item : items) {
             m_scene->addItem(item);
         }
+        m_filename = filename;
+        emit newFilenameSet(m_filename);
     }
 
     calculateNextZs();
+}
+
+QString WB_GraphicsScene::getFilename() const {
+    return m_filename;
 }
 
 void WB_GraphicsScene::debugDumpAllItems() {

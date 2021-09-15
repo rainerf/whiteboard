@@ -60,7 +60,10 @@ void WB_PaintWindow::setupUiActions() {
     connect(ui->actionCut, &QAction::triggered, ui->graphicsView, &WB_GraphicsView::cut);
     connect(ui->actionPaste, &QAction::triggered, ui->graphicsView, &WB_GraphicsView::paste);
     connect(ui->actionSelectAll, &QAction::triggered, ui->graphicsView, &WB_GraphicsView::selectAll);
-    connect(ui->actionSave, &QAction::triggered, this, &WB_PaintWindow::showFileSaveDialog);
+    connect(ui->actionSave, &QAction::triggered, this, &WB_PaintWindow::save);
+    auto *saveMenu = new QMenu();
+    ui->actionSave->setMenu(saveMenu);
+    saveMenu->addAction("Save as...", [this]() {showFileSaveDialog();} );
     connect(ui->actionOpen, &QAction::triggered, this, &WB_PaintWindow::showFileLoadDialog);
     ui->actionOpen->setMenu(new QMenu()); // recently used menu
     updateRecentlyUsedFiles();
@@ -123,6 +126,8 @@ WB_PaintWindow::WB_PaintWindow(TabletApplication &app, QWidget *parent) : QMainW
     qApp->installEventFilter(this);
     connect(&app, &TabletApplication::sendTabletActive, this, &WB_PaintWindow::tabletActive);
 
+    connect(ui->graphicsView, &WB_GraphicsView::newFilenameSet, this, &WB_PaintWindow::newFilenameSet);
+
     QSettings settings;
     restoreState(settings.value(detail::STATE_SETTING).toByteArray());
 }
@@ -181,6 +186,13 @@ PenAction *WB_PaintWindow::addPenAction(int thickness, QActionGroup *selector) {
     ui->toolBarSettings->addAction(newAction);
     selector->addAction(newAction);
     return newAction;
+}
+
+void WB_PaintWindow::save() {
+    if (!ui->graphicsView->getFilename().isEmpty())
+        ui->graphicsView->save();
+    else
+        showFileSaveDialog();
 }
 
 bool WB_PaintWindow::showFileSaveDialog() {

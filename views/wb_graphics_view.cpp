@@ -63,6 +63,7 @@ void WB_GraphicsView::tabletEvent(QTabletEvent *event) {
 WB_GraphicsView::WB_GraphicsView(QWidget *parent): InteractiveView(parent), m_scene(new WB_GraphicsScene(this)) {
     setCursor(Qt::CrossCursor);
     connect(&m_undoStack, &QUndoStack::canUndoChanged, this, &WB_GraphicsView::fileModified);
+    connect(m_scene, &WB_GraphicsScene::newFilenameSet, this, &WB_GraphicsView::newFilenameSet);
 }
 
 QUndoStack *WB_GraphicsView::getUndoStack() {
@@ -158,6 +159,11 @@ void WB_GraphicsView::selectAll() {
         i->setSelected(true);
 }
 
+void WB_GraphicsView::save() {
+    m_scene->save();
+    m_undoStack.clear();
+}
+
 void WB_GraphicsView::saveToFile(QString const &filename) {
     m_scene->saveToFile(filename);
     m_undoStack.clear();
@@ -171,6 +177,10 @@ void WB_GraphicsView::loadFromFile(QString const &filename) {
     } catch (...) {
         QMessageBox::critical(this, "Whiteboard", "File format incorrect!");
     }
+}
+
+QString WB_GraphicsView::getFilename() const {
+    return m_scene->getFilename();
 }
 
 void WB_GraphicsView::exportToFile(QString const &filename) {

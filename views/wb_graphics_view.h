@@ -61,14 +61,17 @@ public slots:
     void cut();
 
     void selectAll();
+    void save();
     void saveToFile(QString const &filename);
     void loadFromFile(QString const &filename);
+    QString getFilename() const;
     void exportToFile(QString const &filename);
     void clear();
 
 signals:
     void toolInUse(bool);
     void fileModified(bool);
+    void newFilenameSet(QString const &);
 
 private:
     void tabletEvent(QTabletEvent *event) override;

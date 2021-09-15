@@ -25,11 +25,15 @@ class QGraphicsScene;
 
 class WB_GraphicsScene : public QObject
 {
+    Q_OBJECT
+
 public:
     WB_GraphicsScene(WB_GraphicsView *parent);
 
+    void save();
     void saveToFile(QString const &filename);
     void loadFromFile(QString const &filename);
+    QString getFilename() const;
 
     void debugDumpAllItems();
 
@@ -48,8 +52,12 @@ public:
     qreal getNewForegroundZ();
     static qreal getAbsoluteForegroundZ();
 
+signals:
+    void newFilenameSet(QString const &);
+
 private:
     QGraphicsScene *m_scene;
+    QString m_filename;
 
     static constexpr qreal INITIAL_BACKGROUND_Z = std::numeric_limits<int>::min();
     static constexpr qreal INITIAL_FOREGROUND_Z = 0;

@@ -38,6 +38,7 @@ public:
 
 signals:
     void fileModified(bool);
+    void newFilenameSet(QString const &);
 
 public slots:
     void setFileModified(bool x);
@@ -60,6 +61,7 @@ private:
     ColorAction *addColorAction(QColor const &color, QActionGroup *selector);
     PenAction *addPenAction(int thickness, QActionGroup *selector);
 
+    void save();
     bool showFileSaveDialog();
     void showFileLoadDialog();
     void showFileExportDialog();
