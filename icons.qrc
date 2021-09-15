@@ -19,5 +19,6 @@
         <file>icons/select_black_24dp.svg</file>
         <file>icons/content_cut_black_24dp.svg</file>
         <file>icons/grid_4x4_black_24dp.svg</file>
+        <file>icons/export_black_24dp.svg</file>
     </qresource>
 </RCC>

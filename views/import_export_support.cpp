@@ -13,7 +13,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Whiteboard.  If not, see <https://www.gnu.org/licenses/>.
 
-#include "copy_paste_support.h"
+#include "import_export_support.h"
 
 #include <QList>
 #include <QImage>
@@ -28,9 +28,16 @@
 #include "lib/qgraphicsscene_storage.h"
 
 namespace detail {
-QList<QGraphicsItem*> pasteFromBinary(QByteArray &itemData) {
-    QDataStream inData(&itemData, QIODevice::ReadOnly);
+QList<QGraphicsItem*> pasteFromBinary(QByteArray const &itemData) {
+    QDataStream inData(itemData);
     return readItems(inData);
+}
+
+QByteArray saveToByteArray(QList<QGraphicsItem *> items) {
+    QByteArray itemData;
+    QDataStream outData(&itemData, QIODevice::WriteOnly);
+    saveItems(items, outData);
+    return itemData;
 }
 
 // This is quite an ugly hack: We're pasting all elements (that were streamed
@@ -40,7 +47,9 @@ QList<QGraphicsItem*> pasteFromBinary(QByteArray &itemData) {
 // latter part is nice, though: There's no easy way to render just a few
 // items, but QGraphicsScene::render() allows us to render all with a single
 // call.
-QImage renderToPixmap(QByteArray &itemData) {
+QPair<QImage, QByteArray> renderToPixmap(QList<QGraphicsItem *> items) {
+    auto const itemData = saveToByteArray(items);
+
     QGraphicsScene s;
     for (auto &&i: pasteFromBinary(itemData))
         s.addItem(i);
@@ -59,7 +68,7 @@ QImage renderToPixmap(QByteArray &itemData) {
     QPainter painter(&image);
     painter.setRenderHints(QPainter::SmoothPixmapTransform | QPainter::HighQualityAntialiasing);
     s.render(&painter, image.rect(), boundingRect);
-    return image;
+    return {image, itemData};
 }
 
 }
@@ -73,12 +82,17 @@ void copyGraphicsItems(QList<QGraphicsItem *> items) {
     if (items.isEmpty())
         return;
 
-    QByteArray itemData;
-    QDataStream outData(&itemData, QIODevice::WriteOnly);
-    saveItems(items, outData);
+    auto [image, itemData] = detail::renderToPixmap(items);
+
     QMimeData* mimeData = new QMimeData;
     mimeData->setData(MIME_TYPE, itemData);
-    mimeData->setImageData(detail::renderToPixmap(itemData));
+    mimeData->setImageData(image);
 
     QApplication::clipboard()->setMimeData(mimeData);
+}
+
+void exportGraphicsItemsToFile(const QString &filename, QList<QGraphicsItem *> items) {
+    auto [image, _] = detail::renderToPixmap(items);
+
+    image.save(filename);
 }

@@ -117,6 +117,7 @@
    <addaction name="actionPaste"/>
    <addaction name="actionSelectAll"/>
    <addaction name="actionClear"/>
+   <addaction name="actionExport"/>
   </widget>
   <widget class="QToolBar" name="toolBarFont">
    <property name="windowTitle">
@@ -370,6 +371,18 @@
    </property>
    <property name="toolTip">
     <string>Toggle Grid</string>
+   </property>
+  </action>
+  <action name="actionExport">
+   <property name="icon">
+    <iconset resource="icons.qrc">
+     <normaloff>:/icons/icons/export_black_24dp.svg</normaloff>:/icons/icons/export_black_24dp.svg</iconset>
+   </property>
+   <property name="text">
+    <string>Export</string>
+   </property>
+   <property name="toolTip">
+    <string>Export to File</string>
    </property>
   </action>
  </widget>

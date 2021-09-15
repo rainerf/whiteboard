@@ -20,7 +20,7 @@
 #include <QMessageBox>
 
 #include "commands.h"
-#include "copy_paste_support.h"
+#include "import_export_support.h"
 #include "wb_graphics_scene.h"
 
 void WB_GraphicsView::tabletEvent(QTabletEvent *event) {
@@ -171,6 +171,10 @@ void WB_GraphicsView::loadFromFile(QString const &filename) {
     } catch (...) {
         QMessageBox::critical(this, "Whiteboard", "File format incorrect!");
     }
+}
+
+void WB_GraphicsView::exportToFile(QString const &filename) {
+    exportGraphicsItemsToFile(filename, m_scene->topLevelItems());
 }
 
 void WB_GraphicsView::clear() {

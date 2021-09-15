@@ -62,6 +62,7 @@ private:
 
     bool showFileSaveDialog();
     void showFileLoadDialog();
+    void showFileExportDialog();
     void loadFromFile(QString filename);
     void addFileToRecentlyUsed(QString filename);
     void updateRecentlyUsedFiles();

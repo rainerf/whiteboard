@@ -63,6 +63,7 @@ public slots:
     void selectAll();
     void saveToFile(QString const &filename);
     void loadFromFile(QString const &filename);
+    void exportToFile(QString const &filename);
     void clear();
 
 signals:

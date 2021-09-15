@@ -2,7 +2,7 @@ QT       += core gui
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-CONFIG += c++11
+CONFIG += c++17
 CONFIG += debug_and_release
 
 # The following define makes your compiler emit warnings if you use
@@ -34,7 +34,7 @@ SOURCES += \
     tools/select_tool.cpp \
     tools/text_tool.cpp \
     views/commands.cpp \
-    views/copy_paste_support.cpp \
+    views/import_export_support.cpp \
     views/wb_graphics_scene.cpp \
     views/wb_graphics_view.cpp \
     wb_mainwindow.cpp \
@@ -59,7 +59,7 @@ HEADERS += \
     tools/text_tool.h \
     tools/tool_base.h \
     views/commands.h \
-    views/copy_paste_support.h \
+    views/import_export_support.h \
     views/wb_graphics_scene.h \
     views/wb_graphics_view.h \
     wb_mainwindow.h \

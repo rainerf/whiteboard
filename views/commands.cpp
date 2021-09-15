@@ -17,7 +17,7 @@
 #include "items/wb_pixmap_item.h"
 #include "items/wb_text_item.h"
 #include "lib/qgraphicsscene_storage.h"
-#include "copy_paste_support.h"
+#include "import_export_support.h"
 #include "views/wb_graphics_scene.h"
 
 #include <QApplication>

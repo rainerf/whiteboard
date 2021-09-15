@@ -25,5 +25,6 @@ constexpr char MIME_TYPE[] = "application/x-wb-items";
 
 QList<QGraphicsItem*> pasteFromMimeData(QMimeData const *mimeData);
 void copyGraphicsItems(QList<QGraphicsItem*> items);
+void exportGraphicsItemsToFile(const QString &filename, QList<QGraphicsItem *> items);
 
 #endif // WHITEBOARDCOPYPASTESUPPORT_H

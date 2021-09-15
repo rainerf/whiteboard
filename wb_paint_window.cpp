@@ -68,6 +68,7 @@ void WB_PaintWindow::setupUiActions() {
     connect(ui->actionZoomOriginal, &QAction::triggered, [=]() { ui->graphicsView->setZoom(1); });
     connect(ui->actionZoomFit, &QAction::triggered, ui->graphicsView, &WB_GraphicsView::zoomToFit);
     connect(ui->actionGrid, &QAction::triggered, ui->graphicsView, &WB_GraphicsView::setGrid);
+    connect(ui->actionExport, &QAction::triggered, this, &WB_PaintWindow::showFileExportDialog);
 
     auto *undoAction = ui->graphicsView->getUndoStack()->createUndoAction(this);
     undoAction->setIcon(QIcon(QString::fromUtf8(":/icons/icons/undo_black_24dp.svg")));
@@ -204,6 +205,17 @@ void WB_PaintWindow::showFileLoadDialog() {
 
     if (dialog.exec() == QDialog::Accepted) {
         loadFromFile(dialog.selectedFiles().front());
+    }
+}
+
+void WB_PaintWindow::showFileExportDialog() {
+    QFileDialog dialog(this, "Export Whiteboard", "", "Image (*.png);;All Files (*)");
+    dialog.setDefaultSuffix(".png");
+    dialog.setAcceptMode(QFileDialog::AcceptSave);
+
+    if (dialog.exec() == QDialog::Accepted) {
+        const auto filename = dialog.selectedFiles().front();
+        ui->graphicsView->exportToFile(filename);
     }
 }
 
