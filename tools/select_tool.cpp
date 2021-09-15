@@ -95,7 +95,8 @@ void SelectTool::handleTabletMove(WB_GraphicsView &view, QTabletEvent &event) {
         selectionArea.addPolygon(rect);
         selectionArea.closeSubpath();
 
-        view.scene()->setSelectionArea(selectionArea, Qt::ReplaceSelection, Qt::ContainsItemShape);
+        auto const selectionMode = (event.modifiers() & Qt::ControlModifier) ? Qt::AddToSelection : Qt::ReplaceSelection;
+        view.scene()->setSelectionArea(selectionArea, selectionMode, Qt::ContainsItemShape);
     }
 }
 
@@ -105,12 +106,10 @@ void SelectTool::handleTabletRelease(WB_GraphicsView &view, QTabletEvent & event
     } else {
         view.scene()->removeItem(&m_selectionRect);
 
-        // if first was on an item, nothing was selected, and the selection rectangle
-        // was very small, let's assume that the user "clicked" the item to select it
+        // if first was on an item, and the selection rectangle was very small, let's assume
+        // that the user "clicked" the item to select it
         auto *item = view.scene()->itemAt(m_first, view.transform());
-        if (item &&
-                view.scene()->selectedItems().empty() &&
-                (view.mapFromScene(m_first) - event.pos()).manhattanLength() < 5) {
+        if (item && (view.mapFromScene(m_first) - event.pos()).manhattanLength() < 5) {
             item->setSelected(true);
         }
     }
