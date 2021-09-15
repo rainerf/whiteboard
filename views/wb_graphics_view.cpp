@@ -122,7 +122,8 @@ void WB_GraphicsView::setPanZoomTool() {
 }
 
 void WB_GraphicsView::deleteSelectedItems() {
-    m_undoStack.push(new DeleteCommand(scene()));
+    if (!scene()->selectedItems().isEmpty())
+        m_undoStack.push(new DeleteCommand(scene()));
 }
 
 void WB_GraphicsView::debugDumpAllItems() {
