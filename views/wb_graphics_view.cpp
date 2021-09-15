@@ -174,7 +174,11 @@ void WB_GraphicsView::loadFromFile(QString const &filename) {
 }
 
 void WB_GraphicsView::exportToFile(QString const &filename) {
-    exportGraphicsItemsToFile(filename, m_scene->topLevelItems());
+    try {
+        exportGraphicsItemsToFile(filename, m_scene->topLevelItems());
+    } catch (ExportFormatError const &) {
+        QMessageBox::critical(this, "Whiteboard", "File format incorrect!");
+    }
 }
 
 void WB_GraphicsView::clear() {

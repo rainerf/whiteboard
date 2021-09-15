@@ -24,6 +24,7 @@
 #include <QMimeData>
 #include <QApplication>
 #include <QClipboard>
+#include <QSvgGenerator>
 
 #include "lib/qgraphicsscene_storage.h"
 
@@ -40,6 +41,13 @@ QByteArray saveToByteArray(QList<QGraphicsItem *> items) {
     return itemData;
 }
 
+void pasteToScene(QByteArray const &itemData, QGraphicsScene &s) {
+    for (auto &&i: detail::pasteFromBinary(itemData))
+        s.addItem(i);
+    s.clearSelection();
+    s.update();
+}
+
 // This is quite an ugly hack: We're pasting all elements (that were streamed
 // into itemData before) into a temporary QGraphicsScene, which we can then
 // just render as a whole. The former part is ugly, because we're relying on
@@ -47,14 +55,9 @@ QByteArray saveToByteArray(QList<QGraphicsItem *> items) {
 // latter part is nice, though: There's no easy way to render just a few
 // items, but QGraphicsScene::render() allows us to render all with a single
 // call.
-QPair<QImage, QByteArray> renderToPixmap(QList<QGraphicsItem *> items) {
-    auto const itemData = saveToByteArray(items);
-
+QImage renderToPixmap(QByteArray const &itemData) {
     QGraphicsScene s;
-    for (auto &&i: pasteFromBinary(itemData))
-        s.addItem(i);
-    s.clearSelection();
-    s.update();
+    pasteToScene(itemData, s);
 
     int const oversampling = 2;
 
@@ -68,8 +71,26 @@ QPair<QImage, QByteArray> renderToPixmap(QList<QGraphicsItem *> items) {
     QPainter painter(&image);
     painter.setRenderHints(QPainter::SmoothPixmapTransform | QPainter::HighQualityAntialiasing);
     s.render(&painter, image.rect(), boundingRect);
-    return {image, itemData};
+    return image;
 }
+
+void renderToSVG(const QString &filename, QByteArray const &itemData) {
+    QGraphicsScene s;
+    pasteToScene(itemData, s);
+
+    QSize sceneSize = s.sceneRect().size().toSize();
+
+    QSvgGenerator generator;
+    generator.setFileName(filename);
+    generator.setSize(sceneSize);
+    generator.setViewBox(QRect(0, 0, sceneSize.width(), sceneSize.height()));
+    generator.setDescription("Whiteboard SVG");
+    generator.setTitle(filename);
+    QPainter painter;
+    painter.begin(&generator);
+    s.render(&painter);
+}
+
 
 }
 
@@ -82,7 +103,8 @@ void copyGraphicsItems(QList<QGraphicsItem *> items) {
     if (items.isEmpty())
         return;
 
-    auto [image, itemData] = detail::renderToPixmap(items);
+    auto const itemData = detail::saveToByteArray(items);
+    auto const image = detail::renderToPixmap(itemData);
 
     QMimeData* mimeData = new QMimeData;
     mimeData->setData(MIME_TYPE, itemData);
@@ -92,7 +114,14 @@ void copyGraphicsItems(QList<QGraphicsItem *> items) {
 }
 
 void exportGraphicsItemsToFile(const QString &filename, QList<QGraphicsItem *> items) {
-    auto [image, _] = detail::renderToPixmap(items);
+    auto const itemData = detail::saveToByteArray(items);
 
-    image.save(filename);
+    if (filename.endsWith("png", Qt::CaseInsensitive)) {
+        auto image = detail::renderToPixmap(itemData);
+        image.save(filename);
+    } else if (filename.endsWith("svg", Qt::CaseInsensitive)) {
+        detail::renderToSVG(filename, itemData);
+    } else {
+        throw ExportFormatError();
+    }
 }

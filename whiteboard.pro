@@ -1,8 +1,8 @@
 QT       += core gui
 
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+greaterThan(QT_MAJOR_VERSION, 4): QT += widgets svg
 
-CONFIG += c++17
+CONFIG += c++11
 CONFIG += debug_and_release
 
 # The following define makes your compiler emit warnings if you use

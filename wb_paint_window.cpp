@@ -209,7 +209,7 @@ void WB_PaintWindow::showFileLoadDialog() {
 }
 
 void WB_PaintWindow::showFileExportDialog() {
-    QFileDialog dialog(this, "Export Whiteboard", "", "Image (*.png);;All Files (*)");
+    QFileDialog dialog(this, "Export Whiteboard", "", "Image (*.png);;SVG (*.svg);;All Files (*)");
     dialog.setDefaultSuffix(".png");
     dialog.setAcceptMode(QFileDialog::AcceptSave);
 

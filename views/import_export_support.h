@@ -23,6 +23,8 @@ class QMimeData;
 
 constexpr char MIME_TYPE[] = "application/x-wb-items";
 
+class ExportFormatError : public std::exception {};
+
 QList<QGraphicsItem*> pasteFromMimeData(QMimeData const *mimeData);
 void copyGraphicsItems(QList<QGraphicsItem*> items);
 void exportGraphicsItemsToFile(const QString &filename, QList<QGraphicsItem *> items);
