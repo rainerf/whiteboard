@@ -78,6 +78,7 @@ DeleteCommand::DeleteCommand(WB_GraphicsScene *graphicsScene, QUndoCommand *pare
 void DeleteCommand::undo() {
     for (auto &&i: m_items) {
         m_scene->addItem(i);
+        i->setSelected(false);
     }
     m_scene->update();
 }
