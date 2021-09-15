@@ -33,7 +33,6 @@ public:
 
     void debugDumpAllItems();
 
-    QList<QGraphicsItem*> items(const QRectF &rect, Qt::ItemSelectionMode mode = Qt::IntersectsItemShape, Qt::SortOrder order = Qt::DescendingOrder, const QTransform &deviceTransform = QTransform()) const;
     QGraphicsItem *itemAt(const QPointF &position, const QTransform &deviceTransform) const;
     QList<QGraphicsItem*> topLevelItems();
     QList<QGraphicsItem*> selectedItems();
@@ -41,6 +40,7 @@ public:
     void removeItem(QGraphicsItem *item);
     void update();
     void clearSelection();
+    void setSelectionArea(const QPainterPath &path, Qt::ItemSelectionOperation selectionOperation, Qt::ItemSelectionMode mode = Qt::IntersectsItemShape, const QTransform &deviceTransform = QTransform());
 
     void setGrid(bool enabled);
 

@@ -76,10 +76,6 @@ void WB_GraphicsScene::debugDumpAllItems() {
     dumpItems(m_scene->items(), out);
 }
 
-QList<QGraphicsItem *> WB_GraphicsScene::items(const QRectF &rect, Qt::ItemSelectionMode mode, Qt::SortOrder order, const QTransform &deviceTransform) const {
-    return m_scene->items(rect, mode, order, deviceTransform);
-}
-
 QGraphicsItem *WB_GraphicsScene::itemAt(const QPointF &position, const QTransform &deviceTransform) const {
     return m_scene->itemAt(position, deviceTransform);
 }
@@ -110,6 +106,10 @@ void WB_GraphicsScene::update() {
 
 void WB_GraphicsScene::clearSelection() {
     m_scene->clearSelection();
+}
+
+void WB_GraphicsScene::setSelectionArea(const QPainterPath &path, Qt::ItemSelectionOperation selectionOperation, Qt::ItemSelectionMode mode, const QTransform &deviceTransform) {
+    m_scene->setSelectionArea(path, selectionOperation, mode, deviceTransform);
 }
 
 void WB_GraphicsScene::setGrid(bool enabled) {

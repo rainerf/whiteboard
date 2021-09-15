@@ -91,9 +91,11 @@ void SelectTool::handleTabletMove(WB_GraphicsView &view, QTabletEvent &event) {
         QRectF rect = QRectF{m_first, current}.normalized();
         m_selectionRect.setRect(rect);
 
-        view.scene()->clearSelection();
-        for (auto &&i: view.scene()->items(rect, Qt::ContainsItemShape))
-            i->setSelected(true);
+        QPainterPath selectionArea;
+        selectionArea.addPolygon(rect);
+        selectionArea.closeSubpath();
+
+        view.scene()->setSelectionArea(selectionArea, Qt::ReplaceSelection, Qt::ContainsItemShape);
     }
 }
 
