@@ -232,6 +232,9 @@ void WB_PaintWindow::showFileExportDialog() {
 }
 
 void WB_PaintWindow::loadFromFile(QString filename) {
+    if (stopBecauseOfModifiedFile())
+        return;
+
     ui->graphicsView->loadFromFile(filename);
     addFileToRecentlyUsed(filename);
 }
@@ -253,6 +256,27 @@ void WB_PaintWindow::updateRecentlyUsedFiles() {
         ui->actionOpen->menu()->addAction(i, [this, i](){loadFromFile(i);});
 }
 
+bool WB_PaintWindow::stopBecauseOfModifiedFile() {
+    if (!m_fileModified)
+        return false;
+
+    QMessageBox msgBox;
+    msgBox.setText("The document has been modified.");
+    msgBox.setInformativeText("Do you want to save your changes?");
+    msgBox.setStandardButtons(QMessageBox::Save | QMessageBox::Discard | QMessageBox::Cancel);
+    msgBox.setDefaultButton(QMessageBox::Save);
+    switch (msgBox.exec()) {
+    case QMessageBox::Save:
+        return !showFileSaveDialog();
+    case QMessageBox::Discard:
+        return false;
+    case QMessageBox::Cancel:
+        return true;
+    }
+
+    throw std::logic_error("Control must not reach the end of this function!");
+}
+
 bool WB_PaintWindow::eventFilter(QObject *obj, QEvent *event) {
     if (event->type() == QEvent::MouseButtonPress || event->type() == QEvent::MouseMove || event->type() == QEvent::MouseButtonRelease) {
         if (obj == ui->graphicsView->viewport()) {
@@ -263,26 +287,9 @@ bool WB_PaintWindow::eventFilter(QObject *obj, QEvent *event) {
 }
 
 void WB_PaintWindow::closeEvent(QCloseEvent *event) {
-    if (m_fileModified) {
-        QMessageBox msgBox;
-        msgBox.setText("The document has been modified.");
-        msgBox.setInformativeText("Do you want to save your changes?");
-        msgBox.setStandardButtons(QMessageBox::Save | QMessageBox::Discard | QMessageBox::Cancel);
-        msgBox.setDefaultButton(QMessageBox::Save);
-        switch (msgBox.exec()) {
-        case QMessageBox::Save:
-            if (showFileSaveDialog())
-                break; // file was saved, we're good
-            else {
-                event->ignore();
-                return;
-            }
-        case QMessageBox::Discard:
-            break;
-        case QMessageBox::Cancel:
-            event->ignore();
-            return;
-        }
+    if (stopBecauseOfModifiedFile()) {
+        event->ignore();
+        return;
     }
 
     QSettings settings;

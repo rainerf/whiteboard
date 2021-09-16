@@ -68,6 +68,7 @@ private:
     void loadFromFile(QString filename);
     void addFileToRecentlyUsed(QString filename);
     void updateRecentlyUsedFiles();
+    bool stopBecauseOfModifiedFile();
 
     bool eventFilter(QObject *obj, QEvent *event) override;
 };
