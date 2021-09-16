@@ -114,10 +114,6 @@ void WB_GraphicsScene::removeItem(QGraphicsItem *item) {
     m_scene->removeItem(item);
 }
 
-void WB_GraphicsScene::update() {
-    m_scene->update();
-}
-
 void WB_GraphicsScene::clearSelection() {
     m_scene->clearSelection();
 }

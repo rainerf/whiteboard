@@ -68,7 +68,6 @@ void PasteCommand::redo() {
         m_scene->addItem(i);
         i->setSelected(true);
     }
-    m_scene->update();
 }
 
 DeleteCommand::DeleteCommand(WB_GraphicsScene *graphicsScene, QUndoCommand *parent) : QUndoCommand("Delete", parent), m_scene(graphicsScene) {
@@ -80,7 +79,6 @@ void DeleteCommand::undo() {
         m_scene->addItem(i);
         i->setSelected(false);
     }
-    m_scene->update();
 }
 
 void DeleteCommand::redo() {

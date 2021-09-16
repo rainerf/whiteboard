@@ -42,7 +42,6 @@ public:
     QList<QGraphicsItem*> selectedItems();
     void addItem(QGraphicsItem *item);
     void removeItem(QGraphicsItem *item);
-    void update();
     void clearSelection();
     void setSelectionArea(const QPainterPath &path, Qt::ItemSelectionOperation selectionOperation, Qt::ItemSelectionMode mode = Qt::IntersectsItemShape, const QTransform &deviceTransform = QTransform());
 
