@@ -175,6 +175,7 @@ void WB_GraphicsView::loadFromFile(QString const &filename) {
         m_scene->loadFromFile(filename);
         setZoom(1);
         centerOn(0, 0);
+        m_undoStack.clear();
     } catch (...) {
         QMessageBox::critical(this, "Whiteboard", "File format incorrect!");
     }
