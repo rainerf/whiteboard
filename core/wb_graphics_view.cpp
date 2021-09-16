@@ -15,6 +15,8 @@
 
 #include "wb_graphics_view.h"
 
+#include <QApplication>
+#include <QClipboard>
 #include <QGraphicsView>
 #include <QTabletEvent>
 #include <QMessageBox>
@@ -61,8 +63,30 @@ void WB_GraphicsView::tabletEvent(QTabletEvent *event) {
     event->accept();
 }
 
+void WB_GraphicsView::dragEnterEvent(QDragEnterEvent *event) {
+    event->acceptProposedAction();
+}
+
+void WB_GraphicsView::dragMoveEvent(QDragMoveEvent *event) {
+    event->acceptProposedAction();
+}
+
+void WB_GraphicsView::dropEvent(QDropEvent *event) {
+    try {
+        m_undoStack.push(new PasteCommand(event->mimeData(), scene()));
+        event->setDropAction(Qt::CopyAction);
+        event->acceptProposedAction();
+    } catch (NothingToPasteError const &) {
+        // nothing to do: the point is for PasteCommand::PasteCommand() to throw if
+        // nothing is to be pasted, which means we're not going to add it to the undo
+        // stack
+    }
+}
+
 WB_GraphicsView::WB_GraphicsView(QWidget *parent): InteractiveView(parent), m_scene(new WB_GraphicsScene(this)) {
     setCursor(Qt::CrossCursor);
+    setAcceptDrops(true);
+
     connect(&m_undoStack, &QUndoStack::canUndoChanged, this, &WB_GraphicsView::fileModified);
     connect(m_scene, &WB_GraphicsScene::newFilenameSet, this, &WB_GraphicsView::newFilenameSet);
 }
@@ -145,7 +169,8 @@ void WB_GraphicsView::setFontSize(int size) {
 
 void WB_GraphicsView::paste() {
     try {
-        m_undoStack.push(new PasteCommand(scene()));
+        QMimeData const *mimeData = QApplication::clipboard()->mimeData();
+        m_undoStack.push(new PasteCommand(mimeData, scene()));
     } catch (NothingToPasteError const &) {
         // nothing to do: the point is for PasteCommand::PasteCommand() to throw if
         // nothing is to be pasted, which means we're not going to add it to the undo

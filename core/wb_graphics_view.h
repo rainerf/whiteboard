@@ -75,6 +75,9 @@ signals:
 
 private:
     void tabletEvent(QTabletEvent *event) override;
+    void dragEnterEvent(QDragEnterEvent *event) override;
+    void dragMoveEvent(QDragMoveEvent *event) override;
+    void dropEvent(QDropEvent *event) override;
 
     WB_GraphicsScene *m_scene;
 

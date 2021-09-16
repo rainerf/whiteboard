@@ -20,12 +20,13 @@
 
 class WB_GraphicsScene;
 class QGraphicsItem;
+class QMimeData;
 
 class NothingToPasteError : public std::exception {};
 
 class PasteCommand : public QUndoCommand {
 public:
-    explicit PasteCommand(WB_GraphicsScene *graphicsScene, QUndoCommand *parent = nullptr);
+    explicit PasteCommand(QMimeData const *mimeData, WB_GraphicsScene *graphicsScene, QUndoCommand *parent = nullptr);
 
     void undo() override;
     void redo() override;

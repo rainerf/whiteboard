@@ -21,16 +21,11 @@
 #include "import_export_support.h"
 #include "core/wb_graphics_scene.h"
 
-#include <QApplication>
 #include <QMimeData>
-#include <QClipboard>
 #include <QGraphicsItem>
 #include <QMimeDatabase>
 
-PasteCommand::PasteCommand(WB_GraphicsScene *graphicsScene, QUndoCommand *parent) : QUndoCommand("Paste", parent), m_scene(graphicsScene) {
-    const QClipboard *clipboard = QApplication::clipboard();
-    const QMimeData *mimeData = clipboard->mimeData();
-
+PasteCommand::PasteCommand(QMimeData const *mimeData, WB_GraphicsScene *graphicsScene, QUndoCommand *parent) : QUndoCommand("Paste", parent), m_scene(graphicsScene) {
     if (mimeData->formats().contains(MIME_TYPE)) {
         m_items = pasteFromMimeData(mimeData);
     } else if (mimeData->hasUrls()) {
