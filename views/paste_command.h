@@ -13,13 +13,12 @@
 // You should have received a copy of the GNU General Public License
 // along with Whiteboard.  If not, see <https://www.gnu.org/licenses/>.
 
-#ifndef WHITEBOARDCOMMANDS_H
-#define WHITEBOARDCOMMANDS_H
+#ifndef PASTE_COMMAND_H
+#define PASTE_COMMAND_H
 
 #include <QUndoCommand>
 
 class WB_GraphicsScene;
-class QGraphicsScene;
 class QGraphicsItem;
 
 class PasteCommand : public QUndoCommand {
@@ -34,17 +33,4 @@ private:
     WB_GraphicsScene *m_scene;
 };
 
-
-class DeleteCommand : public QUndoCommand {
-public:
-    explicit DeleteCommand(WB_GraphicsScene *graphicsScene, QUndoCommand *parent = nullptr);
-
-    void undo() override;
-    void redo() override;
-
-private:
-    QList<QGraphicsItem*> m_items;
-    WB_GraphicsScene *m_scene;
-};
-
-#endif // WHITEBOARDCOMMANDS_H
+#endif // PASTE_COMMAND_H

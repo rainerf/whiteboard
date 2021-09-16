@@ -13,7 +13,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Whiteboard.  If not, see <https://www.gnu.org/licenses/>.
 
-#include "commands.h"
+#include "paste_command.h"
 #include "items/wb_pixmap_item.h"
 #include "items/wb_text_item.h"
 #include "lib/qgraphicsscene_storage.h"
@@ -67,22 +67,5 @@ void PasteCommand::redo() {
     for (auto &&i: m_items) {
         m_scene->addItem(i);
         i->setSelected(true);
-    }
-}
-
-DeleteCommand::DeleteCommand(WB_GraphicsScene *graphicsScene, QUndoCommand *parent) : QUndoCommand("Delete", parent), m_scene(graphicsScene) {
-    m_items = graphicsScene->selectedItems();
-}
-
-void DeleteCommand::undo() {
-    for (auto &&i: m_items) {
-        m_scene->addItem(i);
-        i->setSelected(false);
-    }
-}
-
-void DeleteCommand::redo() {
-    for (auto &&i : m_items) {
-        m_scene->removeItem(i);
     }
 }

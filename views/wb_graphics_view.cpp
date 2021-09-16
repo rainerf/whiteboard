@@ -19,7 +19,8 @@
 #include <QTabletEvent>
 #include <QMessageBox>
 
-#include "commands.h"
+#include "delete_command.h"
+#include "paste_command.h"
 #include "import_export_support.h"
 #include "wb_graphics_scene.h"
 
