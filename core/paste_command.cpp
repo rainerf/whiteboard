@@ -16,6 +16,7 @@
 #include "paste_command.h"
 #include "items/wb_pixmap_item.h"
 #include "items/wb_text_item.h"
+#include "items/wb_svg_item.h"
 #include "lib/qgraphicsscene_storage.h"
 #include "import_export_support.h"
 #include "core/wb_graphics_scene.h"
@@ -24,6 +25,7 @@
 #include <QMimeData>
 #include <QClipboard>
 #include <QGraphicsItem>
+#include <QMimeDatabase>
 
 PasteCommand::PasteCommand(WB_GraphicsScene *graphicsScene, QUndoCommand *parent) : QUndoCommand("Paste", parent), m_scene(graphicsScene) {
     const QClipboard *clipboard = QApplication::clipboard();
@@ -31,6 +33,12 @@ PasteCommand::PasteCommand(WB_GraphicsScene *graphicsScene, QUndoCommand *parent
 
     if (mimeData->formats().contains(MIME_TYPE)) {
         m_items = pasteFromMimeData(mimeData);
+    } else if (mimeData->hasUrls()) {
+        for (auto &&url: mimeData->urls()) {
+            if (url.isLocalFile() && QMimeDatabase().mimeTypeForFile(url.toLocalFile()).name().contains("svg+xml")) {
+                m_items.append(new WB_SvgItem(url.toLocalFile()));
+            }
+        }
     } else if (mimeData->hasImage()) {
         m_items.append(new WB_PixmapItem(qvariant_cast<QPixmap>(mimeData->imageData())));
     } else if (mimeData->hasHtml()) {

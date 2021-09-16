@@ -23,6 +23,7 @@ SOURCES += \
     actions/pen_action.cpp \
     items/wb_item_group.cpp \
     items/wb_pixmap_item.cpp \
+    items/wb_svg_item.cpp \
     items/wb_text_item.cpp \
     lib/interactive_view.cpp \
     lib/qgraphicsscene_storage.cpp \
@@ -47,6 +48,7 @@ HEADERS += \
     items/wb_item.h \
     items/wb_item_group.h \
     items/wb_pixmap_item.h \
+    items/wb_svg_item.h \
     items/wb_text_item.h \
     lib/interactive_view.h \
     lib/qgraphicsscene_dump.h \
