@@ -14,7 +14,7 @@
 // along with Whiteboard.  If not, see <https://www.gnu.org/licenses/>.
 
 #include "delete_command.h"
-#include "views/wb_graphics_scene.h"
+#include "core/wb_graphics_scene.h"
 
 #include <QGraphicsItem>
 

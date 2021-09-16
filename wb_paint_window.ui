@@ -393,7 +393,7 @@
   <customwidget>
    <class>WB_GraphicsView</class>
    <extends>QGraphicsView</extends>
-   <header>views/wb_graphics_view.h</header>
+   <header>core/wb_graphics_view.h</header>
   </customwidget>
  </customwidgets>
  <resources>

@@ -33,11 +33,11 @@ SOURCES += \
     tools/pointer_tool.cpp \
     tools/select_tool.cpp \
     tools/text_tool.cpp \
-    views/delete_command.cpp \
-    views/import_export_support.cpp \
-    views/paste_command.cpp \
-    views/wb_graphics_scene.cpp \
-    views/wb_graphics_view.cpp \
+    core/delete_command.cpp \
+    core/import_export_support.cpp \
+    core/paste_command.cpp \
+    core/wb_graphics_scene.cpp \
+    core/wb_graphics_view.cpp \
     wb_mainwindow.cpp \
     wb_paint_window.cpp
 
@@ -59,11 +59,11 @@ HEADERS += \
     tools/select_tool.h \
     tools/text_tool.h \
     tools/tool_base.h \
-    views/delete_command.h \
-    views/import_export_support.h \
-    views/paste_command.h \
-    views/wb_graphics_scene.h \
-    views/wb_graphics_view.h \
+    core/delete_command.h \
+    core/import_export_support.h \
+    core/paste_command.h \
+    core/wb_graphics_scene.h \
+    core/wb_graphics_view.h \
     wb_mainwindow.h \
     wb_paint_window.h
 

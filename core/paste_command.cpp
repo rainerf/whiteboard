@@ -18,7 +18,7 @@
 #include "items/wb_text_item.h"
 #include "lib/qgraphicsscene_storage.h"
 #include "import_export_support.h"
-#include "views/wb_graphics_scene.h"
+#include "core/wb_graphics_scene.h"
 
 #include <QApplication>
 #include <QMimeData>

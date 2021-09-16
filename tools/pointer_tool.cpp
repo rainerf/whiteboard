@@ -14,8 +14,8 @@
 // along with Whiteboard.  If not, see <https://www.gnu.org/licenses/>.
 
 #include "pointer_tool.h"
-#include "views/wb_graphics_view.h"
-#include "views/wb_graphics_scene.h"
+#include "core/wb_graphics_view.h"
+#include "core/wb_graphics_scene.h"
 
 
 void PointerTool::setColor(const QColor &color) {

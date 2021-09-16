@@ -20,8 +20,8 @@
 #include <QUndoCommand>
 
 #include "items/wb_text_item.h"
-#include "views/wb_graphics_view.h"
-#include "views/wb_graphics_scene.h"
+#include "core/wb_graphics_view.h"
+#include "core/wb_graphics_scene.h"
 
 
 class TextTool::AddCommand : public QUndoCommand {

@@ -15,8 +15,8 @@
 
 #include "select_tool.h"
 
-#include "views/wb_graphics_view.h"
-#include "views/wb_graphics_scene.h"
+#include "core/wb_graphics_view.h"
+#include "core/wb_graphics_scene.h"
 
 #include <QUndoCommand>
 

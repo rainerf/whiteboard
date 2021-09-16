@@ -14,8 +14,8 @@
 // along with Whiteboard.  If not, see <https://www.gnu.org/licenses/>.
 
 #include "highlight_tool.h"
-#include "views/wb_graphics_view.h"
-#include "views/wb_graphics_scene.h"
+#include "core/wb_graphics_view.h"
+#include "core/wb_graphics_scene.h"
 
 
 void HighlightTool::setColor(QColor const &color) {

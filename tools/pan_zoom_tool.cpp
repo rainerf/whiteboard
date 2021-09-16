@@ -14,7 +14,7 @@
 // along with Whiteboard.  If not, see <https://www.gnu.org/licenses/>.
 
 #include "pan_zoom_tool.h"
-#include "views/wb_graphics_view.h"
+#include "core/wb_graphics_view.h"
 
 bool PanZoomTool::handleTabletPress(WB_GraphicsView &, QTabletEvent &event) {
     m_previous = event.pos();
