@@ -36,6 +36,7 @@ public:
 
     QUndoStack *getUndoStack();
     WB_GraphicsScene *scene();
+    QString getFilename() const;
 
 public slots:
     void setColor(QColor const &color);
@@ -64,7 +65,6 @@ public slots:
     void save();
     void saveToFile(QString const &filename);
     void loadFromFile(QString const &filename);
-    QString getFilename() const;
     void exportToFile(QString const &filename);
     void clear();
 

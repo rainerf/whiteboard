@@ -29,8 +29,8 @@ WB_MainWindow::WB_MainWindow(TabletApplication &app, QWidget *parent) : QMainWin
     QSettings settings;
     restoreGeometry(settings.value(detail::GEOMETRY_SETTING).toByteArray());
 
-    connect(m_paintWindow, &WB_PaintWindow::fileModified, [this](bool x) { setWindowModified(x); });
-    connect(m_paintWindow, &WB_PaintWindow::newFilenameSet, [this](QString const &filename) {setWindowTitle(filename + "[*] - Whiteboard"); } );
+    connect(m_paintWindow, &WB_PaintWindow::fileModified, this, [this](bool x) { setWindowModified(x); });
+    connect(m_paintWindow, &WB_PaintWindow::newFilenameSet, this, [this](QString const &filename) {setWindowTitle(filename + "[*] - Whiteboard"); } );
 }
 
 void WB_MainWindow::closeEvent(QCloseEvent *event) {

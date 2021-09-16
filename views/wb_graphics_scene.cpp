@@ -70,7 +70,7 @@ void WB_GraphicsScene::loadFromFile(const QString &filename) {
         m_scene->clear();
 
         QDataStream in(&fileIn);
-        QList<QGraphicsItem *> items = readItems(in);
+        QList<QGraphicsItem *> const &items = readItems(in);
         for (QGraphicsItem *item : items) {
             m_scene->addItem(item);
         }

@@ -63,12 +63,12 @@ void WB_PaintWindow::setupUiActions() {
     connect(ui->actionSave, &QAction::triggered, this, &WB_PaintWindow::save);
     auto *saveMenu = new QMenu();
     ui->actionSave->setMenu(saveMenu);
-    saveMenu->addAction("Save as...", [this]() {showFileSaveDialog();} );
+    saveMenu->addAction("Save as...", this, [this]() {showFileSaveDialog();} );
     connect(ui->actionOpen, &QAction::triggered, this, &WB_PaintWindow::showFileLoadDialog);
     ui->actionOpen->setMenu(new QMenu()); // recently used menu
     updateRecentlyUsedFiles();
     connect(ui->actionClear, &QAction::triggered, ui->graphicsView, &WB_GraphicsView::clear);
-    connect(ui->actionZoomOriginal, &QAction::triggered, [=]() { ui->graphicsView->setZoom(1); });
+    connect(ui->actionZoomOriginal, &QAction::triggered, this, [this]() { ui->graphicsView->setZoom(1); });
     connect(ui->actionZoomFit, &QAction::triggered, ui->graphicsView, &WB_GraphicsView::zoomToFit);
     connect(ui->actionGrid, &QAction::triggered, ui->graphicsView, &WB_GraphicsView::setGrid);
     connect(ui->actionExport, &QAction::triggered, this, &WB_PaintWindow::showFileExportDialog);
@@ -98,7 +98,7 @@ void WB_PaintWindow::setupFontToolbar() {
     ui->toolBarFont->addWidget(fontSizeBox);
     fontSizeBox->insertItems(0, {"4", "6", "8", "10", "12", "16", "20", "24", "36", "48"});
     fontSizeBox->setEditable(true);
-    connect(fontSizeBox, &QComboBox::currentTextChanged, [=](QString const &text) {
+    connect(fontSizeBox, &QComboBox::currentTextChanged, this, [this](QString const &text) {
         if (int size = text.toInt())
             ui->graphicsView->setFontSize(size);
     });
@@ -201,7 +201,7 @@ bool WB_PaintWindow::showFileSaveDialog() {
     dialog.setAcceptMode(QFileDialog::AcceptSave);
 
     if (dialog.exec() == QDialog::Accepted) {
-        const auto filename = dialog.selectedFiles().front();
+        const auto filename = dialog.selectedFiles().constFirst();
         ui->graphicsView->saveToFile(filename);
         addFileToRecentlyUsed(filename);
         return true;
@@ -216,7 +216,7 @@ void WB_PaintWindow::showFileLoadDialog() {
     dialog.setAcceptMode(QFileDialog::AcceptOpen);
 
     if (dialog.exec() == QDialog::Accepted) {
-        loadFromFile(dialog.selectedFiles().front());
+        loadFromFile(dialog.selectedFiles().constFirst());
     }
 }
 
@@ -226,7 +226,7 @@ void WB_PaintWindow::showFileExportDialog() {
     dialog.setAcceptMode(QFileDialog::AcceptSave);
 
     if (dialog.exec() == QDialog::Accepted) {
-        const auto filename = dialog.selectedFiles().front();
+        const auto filename = dialog.selectedFiles().constFirst();
         ui->graphicsView->exportToFile(filename);
     }
 }
@@ -253,7 +253,7 @@ void WB_PaintWindow::updateRecentlyUsedFiles() {
     QSettings settings;
     auto const files = settings.value("recentlyUsedFiles").toStringList();
     for (auto const &i: files)
-        ui->actionOpen->menu()->addAction(i, [this, i](){loadFromFile(i);});
+        ui->actionOpen->menu()->addAction(i, this, [this, i](){loadFromFile(i);});
 }
 
 bool WB_PaintWindow::stopBecauseOfModifiedFile() {
