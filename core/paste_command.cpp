@@ -51,6 +51,9 @@ PasteCommand::PasteCommand(WB_GraphicsScene *graphicsScene, QUndoCommand *parent
         m_items.append(textItem);
     }
 
+    if (m_items.empty())
+        throw NothingToPasteError();
+
     // ensure that items pasted from our mime data are in the correct z order
     std::sort(std::begin(m_items), std::end(m_items), [](QGraphicsItem *a, QGraphicsItem *b) { return a->zValue() < b->zValue(); });
 

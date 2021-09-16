@@ -144,7 +144,13 @@ void WB_GraphicsView::setFontSize(int size) {
 }
 
 void WB_GraphicsView::paste() {
-    m_undoStack.push(new PasteCommand(scene()));
+    try {
+        m_undoStack.push(new PasteCommand(scene()));
+    } catch (NothingToPasteError const &) {
+        // nothing to do: the point is for PasteCommand::PasteCommand() to throw if
+        // nothing is to be pasted, which means we're not going to add it to the undo
+        // stack
+    }
 }
 
 void WB_GraphicsView::copy() {
