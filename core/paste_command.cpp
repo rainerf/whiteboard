@@ -24,6 +24,7 @@
 #include <QMimeData>
 #include <QGraphicsItem>
 #include <QMimeDatabase>
+#include <QUrl>
 
 PasteCommand::PasteCommand(QMimeData const *mimeData, WB_GraphicsScene *graphicsScene, QPointF const *scenePosition, QUndoCommand *parent) : QUndoCommand("Paste", parent), m_scene(graphicsScene) {
     if (mimeData->formats().contains(MIME_TYPE)) {
