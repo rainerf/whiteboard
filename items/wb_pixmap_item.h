@@ -32,7 +32,7 @@ public:
     QPixmap originalPixmap() const;
 
     void setZoom(qreal zoom);
-    qreal zoom() const;;
+    qreal zoom() const;
     qreal originalWidth() const;
 
 private:
