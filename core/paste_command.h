@@ -26,7 +26,7 @@ class NothingToPasteError : public std::exception {};
 
 class PasteCommand : public QUndoCommand {
 public:
-    explicit PasteCommand(QMimeData const *mimeData, WB_GraphicsScene *graphicsScene, QUndoCommand *parent = nullptr);
+    explicit PasteCommand(QMimeData const *mimeData, WB_GraphicsScene *graphicsScene, QPointF const *scenePosition = nullptr, QUndoCommand *parent = nullptr);
 
     void undo() override;
     void redo() override;

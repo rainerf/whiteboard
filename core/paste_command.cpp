@@ -25,7 +25,7 @@
 #include <QGraphicsItem>
 #include <QMimeDatabase>
 
-PasteCommand::PasteCommand(QMimeData const *mimeData, WB_GraphicsScene *graphicsScene, QUndoCommand *parent) : QUndoCommand("Paste", parent), m_scene(graphicsScene) {
+PasteCommand::PasteCommand(QMimeData const *mimeData, WB_GraphicsScene *graphicsScene, QPointF const *scenePosition, QUndoCommand *parent) : QUndoCommand("Paste", parent), m_scene(graphicsScene) {
     if (mimeData->formats().contains(MIME_TYPE)) {
         m_items = pasteFromMimeData(mimeData);
     } else if (mimeData->hasUrls()) {
@@ -55,6 +55,9 @@ PasteCommand::PasteCommand(QMimeData const *mimeData, WB_GraphicsScene *graphics
     for (auto &&i: m_items) {
         if (i->parentItem())
             continue;
+
+        if (scenePosition)
+            i->setPos(*scenePosition);
 
         if (i->zValue() >= 0)
             i->setZValue(graphicsScene->getNewForegroundZ());

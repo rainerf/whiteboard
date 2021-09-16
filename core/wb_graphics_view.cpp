@@ -73,7 +73,8 @@ void WB_GraphicsView::dragMoveEvent(QDragMoveEvent *event) {
 
 void WB_GraphicsView::dropEvent(QDropEvent *event) {
     try {
-        m_undoStack.push(new PasteCommand(event->mimeData(), scene()));
+        auto const scenePosition = mapToScene(event->pos());
+        m_undoStack.push(new PasteCommand(event->mimeData(), scene(), &scenePosition));
         event->setDropAction(Qt::CopyAction);
         event->acceptProposedAction();
     } catch (NothingToPasteError const &) {
