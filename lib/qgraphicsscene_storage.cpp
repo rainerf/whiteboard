@@ -21,6 +21,7 @@
 #include "items/wb_text_item.h"
 #include "items/wb_item_group.h"
 #include "items/wb_pixmap_item.h"
+#include "items/wb_svg_item.h"
 
 // inspired by https://stackoverflow.com/a/51498180/1683161
 
@@ -231,6 +232,21 @@ QDataStream &operator>>(QDataStream &in, QGraphicsTextItem *item) {
     return in;
 }
 
+QDataStream &operator<<(QDataStream &out, WB_SvgItem *item) {
+    out << dynamic_cast<QGraphicsItem *>(item);
+    out << item->binData();
+    return out;
+}
+
+QDataStream &operator>>(QDataStream &in, WB_SvgItem *item) {
+    QGraphicsItem *tmp = dynamic_cast<QGraphicsItem *>(item);
+    in >> tmp;
+    QByteArray data;
+    in >> data;
+    item->setBinData(std::move(data));
+    return in;
+}
+
 void saveItem(QGraphicsItem *item, QDataStream &out, bool ignoreParent = false);
 QGraphicsItem *readItem(QDataStream &in);
 
@@ -299,6 +315,9 @@ void saveItem(QGraphicsItem *item, QDataStream &out, bool ignoreParent) {
         // special to do here
     case QGraphicsItemGroup::Type:
         out << dynamic_cast<QGraphicsItemGroup *>(item);
+        break;
+    case WB_SvgItem::Type:
+        out << dynamic_cast<WB_SvgItem *>(item);
         break;
     }
 }
@@ -377,6 +396,12 @@ QGraphicsItem *readItem(QDataStream &in) {
     }
     case WB_PixmapItem::Type: {
         WB_PixmapItem *item = new WB_PixmapItem;
+        in >> item;
+        return item;
+        break;
+    }
+    case WB_SvgItem::Type: {
+        WB_SvgItem *item = new WB_SvgItem;
         in >> item;
         return item;
         break;
