@@ -69,7 +69,7 @@ QImage renderToPixmap(QByteArray const &itemData) {
     image.setDotsPerMeterX(image.dotsPerMeterX()*oversampling);
     image.setDotsPerMeterY(image.dotsPerMeterY()*oversampling);
     QPainter painter(&image);
-    painter.setRenderHints(QPainter::SmoothPixmapTransform | QPainter::HighQualityAntialiasing);
+    painter.setRenderHints(QPainter::SmoothPixmapTransform | QPainter::Antialiasing);
     s.render(&painter, image.rect(), boundingRect);
     return image;
 }
