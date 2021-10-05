@@ -17,6 +17,8 @@
 #include "lib/tablet_application.h"
 
 int main(int argc, char *argv[]) {
+    qSetMessagePattern("[%{if-debug}D%{endif}%{if-info}I%{endif}%{if-warning}W%{endif}%{if-critical}C%{endif}%{if-fatal}F%{endif} %{file}:%{line}] %{message}");
+
     TabletApplication a(argc, argv);
     a.setOrganizationName("rainerf");
     WB_MainWindow w(a);

@@ -21,34 +21,54 @@
 #include "import_export_support.h"
 #include "core/wb_graphics_scene.h"
 
+#include <QDebug>
 #include <QMimeData>
 #include <QGraphicsItem>
 #include <QMimeDatabase>
 #include <QUrl>
 
 PasteCommand::PasteCommand(QMimeData const *mimeData, WB_GraphicsScene *graphicsScene, QPointF const *scenePosition, QUndoCommand *parent) : QUndoCommand("Paste", parent), m_scene(graphicsScene) {
+    qDebug() << "Paste data mime formats:" << mimeData->formats();
+
+    // try one format after the other, with the better ones first, to see which one works
     if (mimeData->formats().contains(MIME_TYPE)) {
         m_items = pasteFromMimeData(mimeData);
-    } else if (mimeData->hasUrls()) {
+    }
+
+    if (m_items.empty() && mimeData->hasUrls()) {
+        qDebug() << "Pasting from URIs...";
         for (auto &&url: mimeData->urls()) {
-            if (url.isLocalFile() && QMimeDatabase().mimeTypeForFile(url.toLocalFile()).name().contains("svg+xml")) {
+            auto const mimeType = QMimeDatabase().mimeTypeForFile(url.toLocalFile()).name();
+            qDebug() << "Mime type for" << url << ":" << mimeType;
+            if (url.isLocalFile() && mimeType.contains("svg+xml")) {
                 m_items.append(new WB_SvgItem(url.toLocalFile()));
             }
         }
-    } else if (mimeData->hasImage()) {
+    }
+
+    if (m_items.empty() && mimeData->hasImage()) {
+        qDebug() << "Pasting image";
         m_items.append(new WB_PixmapItem(qvariant_cast<QPixmap>(mimeData->imageData())));
-    } else if (mimeData->hasHtml()) {
+    }
+
+    if (m_items.empty() && mimeData->hasHtml()) {
+        qDebug() << "Pasting HTML:" << mimeData->html();
         auto *textItem = new WB_TextItem();
         textItem->setHtml(mimeData->html());
         m_items.append(textItem);
-    } else if (mimeData->hasText()) {
+    }
+
+    if (m_items.empty() && mimeData->hasText()) {
+        qDebug() << "Pasting (plain) text";
         auto *textItem = new WB_TextItem();
         textItem->setPlainText(mimeData->text());
         m_items.append(textItem);
     }
 
-    if (m_items.empty())
+    if (m_items.empty()) {
+        qDebug() << "Nothing to paste found!";
         throw NothingToPasteError();
+    }
 
     // ensure that items pasted from our mime data are in the correct z order
     std::sort(std::begin(m_items), std::end(m_items), [](QGraphicsItem *a, QGraphicsItem *b) { return a->zValue() < b->zValue(); });
