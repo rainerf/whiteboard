@@ -40,8 +40,8 @@ SOURCES += \
     core/paste_command.cpp \
     core/wb_graphics_scene.cpp \
     core/wb_graphics_view.cpp \
-    wb_mainwindow.cpp \
-    wb_paint_window.cpp
+    ui/wb_mainwindow.cpp \
+    ui/wb_paint_window.cpp
 
 HEADERS += \
     actions/color_action.h \
@@ -67,11 +67,11 @@ HEADERS += \
     core/paste_command.h \
     core/wb_graphics_scene.h \
     core/wb_graphics_view.h \
-    wb_mainwindow.h \
-    wb_paint_window.h
+    ui/wb_mainwindow.h \
+    ui/wb_paint_window.h
 
 FORMS += \
-    wb_paint_window.ui
+    ui/wb_paint_window.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
