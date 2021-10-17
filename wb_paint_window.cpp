@@ -88,6 +88,9 @@ void WB_PaintWindow::setupUiActions() {
 
     auto *dumpShortcut = new QShortcut(QKeySequence("Ctrl+Shift+D"), this);
     connect(dumpShortcut, &QShortcut::activated, ui->graphicsView, &WB_GraphicsView::debugDumpAllItems);
+
+    auto *textEditShortcut = new QShortcut(QKeySequence("F2"), this);
+    connect(textEditShortcut, &QShortcut::activated, ui->graphicsView, &WB_GraphicsView::tryModifyTextItem);
 }
 
 void WB_PaintWindow::setupFontToolbar() {

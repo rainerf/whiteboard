@@ -25,6 +25,7 @@
 #include "paste_command.h"
 #include "import_export_support.h"
 #include "wb_graphics_scene.h"
+#include "items/wb_text_item.h"
 
 void WB_GraphicsView::tabletEvent(QTabletEvent *event) {
     switch (event->type()) {
@@ -229,4 +230,10 @@ void WB_GraphicsView::exportToFile(QString const &filename) {
 void WB_GraphicsView::clear() {
     selectAll();
     deleteSelectedItems();
+}
+
+void WB_GraphicsView::tryModifyTextItem() {
+    if (WB_TextItem *item = qgraphicsitem_cast<WB_TextItem*>(scene()->selectedItems().front())) {
+        item->enableEditor();
+    }
 }

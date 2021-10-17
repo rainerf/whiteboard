@@ -68,6 +68,8 @@ public slots:
     void exportToFile(QString const &filename);
     void clear();
 
+    void tryModifyTextItem();
+
 signals:
     void toolInUse(bool);
     void fileModified(bool);
