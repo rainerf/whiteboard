@@ -16,6 +16,7 @@
 #include "pen_tool.h"
 #include "core/wb_graphics_view.h"
 #include "core/wb_graphics_scene.h"
+#include "items/wb_item_group.h"
 
 #include <QUndoCommand>
 #include <QtMath>

@@ -17,8 +17,8 @@
 #define WB_MAINWINDOW_H
 
 #include <QMainWindow>
-#include "lib/tablet_application.h"
 
+class TabletApplication;
 class WB_PaintWindow;
 
 class WB_MainWindow : public QMainWindow

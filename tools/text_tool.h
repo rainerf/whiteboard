@@ -20,7 +20,6 @@
 #include <QColor>
 
 #include "tool_base.h"
-#include "items/wb_text_item.h"
 
 class TextTool : public ToolBase {
 public:

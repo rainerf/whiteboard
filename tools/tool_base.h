@@ -27,6 +27,8 @@ public:
     virtual bool handleTabletPress(WB_GraphicsView &, QTabletEvent &) = 0;
     virtual void handleTabletMove(WB_GraphicsView &, QTabletEvent &) = 0;
     virtual void handleTabletRelease(WB_GraphicsView &, QTabletEvent &){};
+
+    virtual ~ToolBase() = default;
 };
 
 #endif // WHITEBOARDTOOL_H

@@ -20,6 +20,7 @@
 #include <QMessageBox>
 #include <QFile>
 #include <QPainter>
+#include <QTextStream>
 
 #include "lib/qgraphicsscene_storage.h"
 #include "lib/qgraphicsscene_dump.h"

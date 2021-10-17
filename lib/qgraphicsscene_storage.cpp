@@ -25,6 +25,8 @@
 
 // inspired by https://stackoverflow.com/a/51498180/1683161
 
+namespace detail {
+
 static constexpr quint32 magicNumber = 0x84c2adc1;
 static constexpr quint32 version = 1;
 
@@ -322,15 +324,6 @@ void saveItem(QGraphicsItem *item, QDataStream &out, bool ignoreParent) {
     }
 }
 
-void saveItems(QList<QGraphicsItem *> items, QDataStream &out) {
-    out << magicNumber;
-    out << version;
-
-    for (QGraphicsItem *item : items) {
-        saveItem(item, out);
-    }
-}
-
 QGraphicsItem *readItem(QDataStream &in) {
     int type;
     in >> type;
@@ -410,20 +403,31 @@ QGraphicsItem *readItem(QDataStream &in) {
     return nullptr;
 }
 
+}
+
+void saveItems(QList<QGraphicsItem *> items, QDataStream &out) {
+    out << detail::magicNumber;
+    out << detail::version;
+
+    for (QGraphicsItem *item : items) {
+        detail::saveItem(item, out);
+    }
+}
+
 QList<QGraphicsItem *> readItems(QDataStream &in) {
     QList<QGraphicsItem *> items;
 
-    quint32 magicNumber_, version_;
-    in >> magicNumber_ >> version_;
-    if (magicNumber_ != magicNumber) {
+    quint32 magicNumber, version;
+    in >> magicNumber >> version;
+    if (magicNumber != detail::magicNumber) {
         throw FileFormatError();
     }
-    if (version_ != version) {
+    if (version != detail::version) {
         throw FileVersionError();
     }
 
     while (!in.atEnd()) {
-        if (auto x = readItem(in))
+        if (auto x = detail::readItem(in))
             items << x;
     }
     return items;

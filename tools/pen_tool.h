@@ -19,7 +19,6 @@
 #include <QGraphicsPathItem>
 
 #include "tool_base.h"
-#include "items/wb_item_group.h"
 
 class WB_GraphicsScene;
 

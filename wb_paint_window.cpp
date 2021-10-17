@@ -27,6 +27,7 @@
 #include "actions/color_action.h"
 #include "actions/pen_action.h"
 #include "ui_wb_paint_window.h"
+#include "lib/tablet_application.h"
 
 
 namespace detail {

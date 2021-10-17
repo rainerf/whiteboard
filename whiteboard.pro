@@ -26,6 +26,7 @@ SOURCES += \
     items/wb_svg_item.cpp \
     items/wb_text_item.cpp \
     lib/interactive_view.cpp \
+    lib/qgraphicsscene_dump.cpp \
     lib/qgraphicsscene_storage.cpp \
     main.cpp \
     tools/highlight_tool.cpp \
