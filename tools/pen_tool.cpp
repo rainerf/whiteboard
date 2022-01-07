@@ -63,10 +63,10 @@ public:
     }
 
     void addPoint(QPointF toPoint, qreal thickness, Qt::KeyboardModifiers modifiers) {
-        // use Shift to force vertical lines, Alt to force horizontal ones
+        // use Shift to force vertical lines, Control to force horizontal ones
         if (modifiers & Qt::ShiftModifier) {
             toPoint.setX(m_points.last().x());
-        } else if (modifiers & Qt::AltModifier) {
+        } else if (modifiers & Qt::ControlModifier) {
             toPoint.setY(m_points.last().y());
         }
 
