@@ -20,6 +20,20 @@
 
 #include <QUndoCommand>
 
+
+namespace detail {
+
+QGraphicsItem *mapToToplevelItem(QGraphicsItem *item) {
+    if (!item)
+        return nullptr;
+
+    auto const parent = item->parentItem();
+    return parent ? parent : item;
+}
+
+}
+
+
 class SelectTool::MoveCommand : public QUndoCommand {
 public:
     explicit MoveCommand(QList<QGraphicsItem*> items, QPointF initial, QUndoCommand *parent = nullptr) :
@@ -56,12 +70,8 @@ private:
 
 bool SelectTool::handleTabletPress(WB_GraphicsView &view, QTabletEvent &event) {
     m_first = view.mapToScene(event.pos());
-    auto *item = view.scene()->itemAt(m_first, view.transform());
+    auto *item = detail::mapToToplevelItem(view.scene()->itemAt(m_first, view.transform()));
     if (item && item->isSelected()) {
-        // if the item is part of a group, we'll always use the group
-        if (item->parentItem())
-            item = item->parentItem();
-
         mode = moving;
         // if some items were selected, but not this one, remove the previous selection
         // and only select this one (below)
@@ -108,7 +118,7 @@ void SelectTool::handleTabletRelease(WB_GraphicsView &view, QTabletEvent & event
 
         // if first was on an item, and the selection rectangle was very small, let's assume
         // that the user "clicked" the item to select it
-        auto *item = view.scene()->itemAt(m_first, view.transform());
+        auto *item = detail::mapToToplevelItem(view.scene()->itemAt(m_first, view.transform()));
         if (item && (view.mapFromScene(m_first) - event.pos()).manhattanLength() < 5) {
             item->setSelected(true);
         }
